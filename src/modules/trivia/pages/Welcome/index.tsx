@@ -40,8 +40,11 @@ const WelcomePage = (props: Props) => {
     </div>
 }
 
-const mapDispatchToProps = (dispatch: Dispatch):DispatchProps => ({
-    onGetStart: () => dispatch(onSetQuestionsRequest());
-})
+const mapDispatch = {
+    onGetStart: () => onSetQuestionsRequest(),
+}
 
-export default connect(null, mapDispatchToProps)(WelcomePage);
+export default connect<DispatchProps>(
+    null,
+    mapDispatch
+)(WelcomePage);
