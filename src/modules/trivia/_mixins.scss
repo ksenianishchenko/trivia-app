@@ -1,0 +1,35 @@
+@mixin no-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@mixin flex-block {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin inline-flex-block {
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+@mixin reset {
+  margin: 0;
+  padding: 0;
+}
+
+@mixin transition_all {
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}

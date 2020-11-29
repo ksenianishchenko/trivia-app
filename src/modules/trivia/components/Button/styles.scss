@@ -1,0 +1,21 @@
+@import "../../_mixins.scss";
+@import "../../_variables.scss";
+
+.btn {
+  @include transition_all;
+  display: inline-block;
+  background: transparent;
+  padding: 0.35em 1.2em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn--outline {
+  border: 2px solid $black;
+  color: $black;
+}

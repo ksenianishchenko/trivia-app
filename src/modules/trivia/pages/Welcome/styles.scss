@@ -1,0 +1,6 @@
+@import "../../_mixins.scss";
+
+.welcome-page {
+  @include reset;
+  padding-top: 80px;
+}
