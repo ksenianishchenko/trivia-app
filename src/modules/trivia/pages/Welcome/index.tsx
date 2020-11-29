@@ -1,24 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from 'redux';
+import { Redirect } from "react-router-dom";
 
 import Button from "../../components/Button/index";
-import {onSetQuestionsRequest} from "../../redux/list/reducer";
+import { onSetQuestionsRequest } from "../../redux/list/reducer";
+import { RootState } from "../../redux/store";
+import { ITriviaItem } from "../../redux/list/types";
 
 import "./styles.scss";
+
+interface StateProps {
+    triviaQuestionsList: ITriviaItem[]
+}
 
 interface DispatchProps {
     onGetStart: () => void;
 }
 
-type Props = DispatchProps;
+type Props =  StateProps & DispatchProps;
 
 const WelcomePage = (props: Props) => {
 
-    const {onGetStart} = props;
+    const {onGetStart, triviaQuestionsList} = props;
 
     function onStartQuest() {
         onGetStart();
+    }
+
+    if (triviaQuestionsList.length) {
+        return (
+            <Redirect to="/questions" />
+        )
     }
 
     return <div className="welcome-page">
@@ -40,11 +52,15 @@ const WelcomePage = (props: Props) => {
     </div>
 }
 
+const mapState = (state: RootState) => ({
+    triviaQuestionsList: state.triviaData.triviaQuestionsList
+})
+
 const mapDispatch = {
     onGetStart: () => onSetQuestionsRequest(),
 }
 
-export default connect<DispatchProps>(
-    null,
+export default connect(
+    mapState,
     mapDispatch
 )(WelcomePage);

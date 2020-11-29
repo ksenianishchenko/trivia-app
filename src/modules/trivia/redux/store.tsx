@@ -8,6 +8,8 @@ const rootReducer = combineReducers({
     triviaData: triviaDataReducer
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 const middlewares = [thunk];
 
 const store = createStore(
