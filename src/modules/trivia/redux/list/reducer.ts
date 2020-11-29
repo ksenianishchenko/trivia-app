@@ -1,6 +1,7 @@
 import {ActionTypes} from "./action_types";
 import {ITriviaItemsList, ITriviaItemsListAction, DispatchType} from "./types";
 import {setTriviaItemsList} from "./actions";
+import {AnyAction} from "redux";
 
 const initialState:ITriviaItemsList = {
     triviaQuestionsList: []

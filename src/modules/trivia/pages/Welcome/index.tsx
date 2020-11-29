@@ -1,14 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from 'redux';
 
 import Button from "../../components/Button/index";
 import {onSetQuestionsRequest} from "../../redux/list/reducer";
 
 import "./styles.scss";
 
-const WelcomePage = ({onGetStart}) => {
+interface DispatchProps {
+    onGetStart: () => void;
+}
+
+type Props = DispatchProps;
+
+const WelcomePage = (props: Props) => {
+
+    const {onGetStart} = props;
+
     function onStartQuest() {
-        alert("Lets go!")
+        onGetStart();
     }
 
     return <div className="welcome-page">
@@ -30,10 +40,11 @@ const WelcomePage = ({onGetStart}) => {
     </div>
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    onGetStart: () => {
-        dispatch(onSetQuestionsRequest());
-    }
-})
+const mapDispatch = {
+    onGetStart: () => onSetQuestionsRequest(),
+}
 
-export default connect(null, mapDispatchToProps)(WelcomePage);;
+export default connect<DispatchProps>(
+    null,
+    mapDispatch
+)(WelcomePage);
