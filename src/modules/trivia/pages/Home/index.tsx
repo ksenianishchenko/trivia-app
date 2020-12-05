@@ -20,7 +20,9 @@ const HomePage = (props: Props) => {
     const {triviaList, setList} = props;
 
     useEffect(() => {
-        setList();
+        if (triviaList.length === 0) {
+            setList();
+        }
     })
 
     return <div className="home-page">

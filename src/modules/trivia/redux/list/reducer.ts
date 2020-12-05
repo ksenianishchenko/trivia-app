@@ -9,32 +9,11 @@ const initialState:triviaItemsState = {
     triviaItemsList: []
 };
 
-const trivia = {
-    results: [
-        {
-            id: "1",
-            title: "Harry Potter: Hogwarts' Secrets"
-        },
-        {
-            id: "56",
-            title: "Star Wars: All about the Light Sabres"
-        },
-        {
-            id: "58",
-            title: "Star Wars: All About The Death Star"
-        },
-        {
-            id: "45",
-            title: "Fun Facts: Traditions of Native Uzbeks"
-        }
-    ]
-}
-
 const apiService: IApiService = new LocalApiService();
 
 const onSetTriviaList = () => {
     return (dispatch: DispatchTypeTrivia) => {
-        dispatch(setTriviaItemsList(trivia.results));
+        dispatch(setTriviaItemsList(apiService.listItems()));
     }
 }
 
