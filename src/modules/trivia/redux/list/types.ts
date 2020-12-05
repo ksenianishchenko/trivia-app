@@ -1,25 +1,17 @@
-export interface ITriviaItem {
-    question: string
-    answers: string[]
-    correct: string
+import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem"
+
+export type triviaItemsState = {
+    triviaItemsList: TriviaInfoItem[]
 }
 
-interface ITriviaCategory {
-    id: number
-    category: string[]
-    title: string
-}
-
-export interface ITriviaItemsList {
-    triviaQuestionsList: ITriviaItem[]
-}
-
-export interface ITriviaItemsListAction {
+type triviaItemsListAction = {
     type: string,
-    payload: ITriviaItem[]
+    payload: TriviaInfoItem[]
 }
 
-export type DispatchType = (args: ITriviaItemsListAction) => ITriviaItemsListAction
+export type triviaActions = triviaItemsListAction
+
+export type DispatchTypeTrivia = (args: triviaActions) => triviaActions
 
 
 

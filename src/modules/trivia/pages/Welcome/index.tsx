@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import Button from "../../components/Button/index";
-import { onSetQuestionsRequest } from "../../redux/list/reducer";
+import { onSetTriviaList } from "../../redux/list/reducer";
 import { RootState } from "../../redux/store";
-import { ITriviaItem } from "../../redux/list/types";
+import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 
 import "./styles.scss";
 
+
 interface StateProps {
-    triviaQuestionsList: ITriviaItem[]
+    triviaQuestionsList: TriviaInfoItem[]
 }
 
 interface DispatchProps {
@@ -53,11 +54,11 @@ const WelcomePage = (props: Props) => {
 }
 
 const mapState = (state: RootState) => ({
-    triviaQuestionsList: state.triviaData.triviaQuestionsList
+    triviaQuestionsList: state.triviaData.triviaItemsList
 })
 
 const mapDispatch = {
-    onGetStart: () => onSetQuestionsRequest(),
+    onGetStart: () => onSetTriviaList(),
 }
 
 export default connect(
