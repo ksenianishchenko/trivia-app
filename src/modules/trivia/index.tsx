@@ -15,7 +15,7 @@ const Routes: moduleItem[] = [
         name: "Homepage"
     },
     {
-        url: "/trivia/{triviaId}",
+        url: "/trivia/:triviaId",
         component: WelcomePage,
         name: "WelcomePage"
     }

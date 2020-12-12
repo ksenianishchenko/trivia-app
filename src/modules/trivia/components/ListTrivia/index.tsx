@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 
 interface ListProps {
@@ -13,7 +14,7 @@ const ListTrivia = (props: ListProps) => {
             {
                 list.map((item: TriviaInfoItem, index: number) => {
                     return <div className="list-trivia__item" key={index}>
-                        {item.title}
+                        <Link to={`/trivia/${item.id}`}>{item.title}</Link>
                     </div>
                 })
             }

@@ -7,11 +7,11 @@ import { onSetTriviaList } from "../../../../redux/triviaList/reducer";
 import "./styles.scss";
 
 
-interface DispatchProps {
-    onGetStart: () => void;
+type DispatchProps = {
+    onGetStart: () => void
 }
 
-type Props =  DispatchProps;
+type Props = DispatchProps;
 
 const WelcomePage = (props: Props) => {
 
