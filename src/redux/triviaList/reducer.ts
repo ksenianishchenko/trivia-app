@@ -1,7 +1,6 @@
 import {ActionTypes} from "./action_types";
 import {triviaActions, DispatchTypeTrivia, triviaItemsState} from "./types";
 import {setTriviaItemsList} from "./actions";
-import {AnyAction} from "redux";
 import IApiService from "../../abstractions/api/service/apiService";
 import { LocalApiService } from "../../modules/api/service/localApiService";
 

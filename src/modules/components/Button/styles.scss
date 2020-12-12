@@ -1,5 +1,5 @@
-@import "../../trivia/mixins";
-@import "../../trivia/variables";
+@import "../../../mixins";
+@import "../../../variables";
 
 .btn {
   @include transition_all;
