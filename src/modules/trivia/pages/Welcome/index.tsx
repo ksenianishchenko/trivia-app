@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import Button from "../../components/Button/index";
-import { onSetTriviaList } from "../../redux/list/reducer";
+import Button from "../../../components/Button/index";
+import { onSetTriviaList } from "../../../../store/triviaList/reducer";
 import { RootState } from "../../redux/store";
 import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 
