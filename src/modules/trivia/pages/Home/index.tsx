@@ -2,8 +2,8 @@ import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 import ListTrivia from "../../components/ListTrivia";
-import { RootState } from "../../redux/store";
-import { onSetTriviaList } from "../../redux/list/reducer";
+import { RootState } from "../../../../redux/store";
+import { onSetTriviaList } from "../../../../redux/triviaList/reducer";
 
 type StateProps = {
     triviaList: TriviaInfoItem[]
