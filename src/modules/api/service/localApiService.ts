@@ -22,6 +22,13 @@ const trivia = {
     ]
 }
 
+// GET /api/trivia/{trivia-id} -- WORKFLOW
+// => {startAt: "твой-возраст", states: {"твой-возраст": {"type": "single-trivia-question", "id": "твой-возраст", next: "кто-ты-по-гороскопу"}}}
+// GET /api/trivia/{trivia-id}/{trivia-question-id}
+// Trivia - на кого ты похож из голливудских звезд
+// GET /api/trivia/на-кого-ты-похож/твой-возраст
+// {id: "твой-возраст", "title": "Сколько тебе лет", "answers": ["14-18", "19-30", "31-50"]}
+
 export class LocalApiService implements  IApiService {
     listItems(): TriviaInfoItem[] {
         const triviaList: TriviaInfoItem[] = [];

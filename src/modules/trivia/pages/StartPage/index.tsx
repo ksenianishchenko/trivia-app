@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from 'react-router';
+import { compose } from "redux"
 
 import Button from "../../../components/Button/index";
 import { onSetTriviaList } from "../../../../redux/triviaList/reducer";
+
 
 import "./styles.scss";
 
@@ -11,11 +14,17 @@ type DispatchProps = {
     onGetStart: () => void
 }
 
-type Props = DispatchProps;
+type TriviaItemParams = {
+    triviaId: string; // parameters will always be a string (even if they are numerical)
+};
 
-const WelcomePage = (props: Props) => {
+type TriviaItemProps = RouteComponentProps<TriviaItemParams>
 
-    const {onGetStart} = props;
+type Props = DispatchProps & TriviaItemProps;
+
+const StartPage = (props: Props) => {
+
+    const {onGetStart, match} = props;
 
     function onStartQuest() {
         onGetStart();
@@ -27,6 +36,7 @@ const WelcomePage = (props: Props) => {
                 <div className="column column--6">
                     <h1>Trivia Game</h1>
                     <p>Harry Potter</p>
+                    <div>Trivia ID: {match.params.triviaId}</div>
                     <Button
                         kind={"button"}
                         className={"btn btn--outline"}
@@ -44,7 +54,6 @@ const mapDispatch = {
     onGetStart: () => onSetTriviaList(),
 }
 
-export default connect(
-    null,
-    mapDispatch
-)(WelcomePage);
+const StartPageWithRouter = withRouter(StartPage);
+
+export default connect(null, mapDispatch)(StartPageWithRouter);
