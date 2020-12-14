@@ -18,6 +18,10 @@ p {
   font-size: $font-size-p;
 }
 
+a {
+  text-decoration: none;
+}
+
 .row {
   @include flex-block;
 }
@@ -30,4 +34,17 @@ p {
 
 .page-inner {
   @include inner;
+}
+
+.link {
+  @include transition_all;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+}
+
+.underline {
+  text-decoration: underline;
 }

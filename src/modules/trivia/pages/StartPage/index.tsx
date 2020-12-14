@@ -30,7 +30,7 @@ const StartPage = (props: Props) => {
         onGetStart();
     }
 
-    return <div className="welcome-page">
+    return <div className="start-page">
         <div className="page-inner">
             <div className="row">
                 <div className="column column--6">

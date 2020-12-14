@@ -5,6 +5,8 @@ import ListTrivia from "../../components/ListTrivia";
 import { RootState } from "../../../../redux/store";
 import { onSetTriviaList } from "../../../../redux/triviaList/reducer";
 
+import "./styles.scss";
+
 type StateProps = {
     triviaList: TriviaInfoItem[]
 }
@@ -26,8 +28,9 @@ const HomePage = (props: Props) => {
     })
 
     return <div className="home-page">
-        <h1>Choose your trivia</h1>
-        <ListTrivia list={triviaList} />
+        <div className="page-inner">
+            <ListTrivia list={triviaList} />
+        </div>
     </div>
 }
 

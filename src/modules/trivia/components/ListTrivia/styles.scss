@@ -1,0 +1,12 @@
+@import "../../../../mixins";
+
+.list-trivia__wrap {
+  @include flex-block;
+  @include justify-content(space-between);
+}
+
+.list-trivia__item {
+  width: 30%;
+  min-height: 100px;
+  padding-right: 30px;
+}

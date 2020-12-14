@@ -1,0 +1,23 @@
+@import "../../../../variables";
+@import "../../../../mixins";
+
+.trivia-card {
+  height: 100%;
+  width: 100%;
+  background-color: $trivia-item-background;
+  @include flex-block;
+}
+
+.trivia-card__title {
+  color: $white;
+  font-size: $font-size-link-title;
+}
+
+.trivia-card__wrap {
+  @include flex-block;
+  padding: 15px;
+}
+
+.trivia-card__info {
+  @include flex-block;
+}
