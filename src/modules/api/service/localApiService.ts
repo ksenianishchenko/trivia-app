@@ -24,6 +24,7 @@ const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
         "0": {
             "$id": "0",
             "type": "object",
+            "next": "1",
             "properties": {
                 "answers": {
                     "$id": "/properties/answers",
@@ -37,6 +38,7 @@ const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
         "1": {
             "$id": "1",
             "type": "object",
+            "next": "2",
             "properties": {
                 "answers": {
                     "$id": "/properties/answers",
@@ -52,6 +54,7 @@ const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
         "2": {
             "$id": "2",
             "type": "object",
+            "next": "results",
             "properties": {
                 "answers": {
                     "$id": "/properties/answers",

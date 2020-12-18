@@ -2,6 +2,6 @@ import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionI
 import { ActionTypes } from "./action_types";
 
 export const setTriviaCurrentQuestionShema = (question: TriviaQuestionItem) => ({
-    type: ActionTypes.SET_CURRENT_QUESTION_SHEMA,
+    type: ActionTypes.SET_CURRENT_QUESTION_SCHEMA,
     payload: question
 });

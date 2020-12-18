@@ -1,13 +1,14 @@
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 
 export type triviaQuestionsState = {
-    triviaCurrentQuestionShema: TriviaQuestionItem | null
+    triviaCurrentQuestionSchema: TriviaQuestionItem | null
 }
 
-type triviaQuestionShemaAction = {
+type triviaQuestionSchemaAction = {
     type: string;
     payload: TriviaQuestionItem
 }
 
+export type TriviaQuestionActions = triviaQuestionSchemaAction;
 
-export type TriviaQuestionActions = triviaQuestionShemaAction;
+export type DispatchTypeTriviaQuestion = (arg: TriviaQuestionActions) => TriviaQuestionActions

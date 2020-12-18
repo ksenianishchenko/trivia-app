@@ -13,6 +13,7 @@ type TriviaQuestionItemProperties = {
 type TriviaQuestionItem = {
     $id: string;
     type: string;
+    next: string;
     properties: TriviaQuestionItemProperties;
     required: string[]
 }
