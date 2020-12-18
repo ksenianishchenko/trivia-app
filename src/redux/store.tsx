@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware } from "redux";
 import {combineReducers} from "redux";
 import thunk from "redux-thunk";
 
-import {triviaDataReducer} from "./triviaList/reducer";
+import {triviaDataReducer} from "./modules/triviaList/reducer";
 
 const rootReducer = combineReducers({
     triviaData: triviaDataReducer

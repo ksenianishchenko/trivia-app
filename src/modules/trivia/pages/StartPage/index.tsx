@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from "redux"
 
 import Button from "../../../components/Button/index";
-import { onSetTriviaList } from "../../../../redux/triviaList/reducer";
+import { onSetTriviaList } from "../../../../redux/modules/triviaList/reducer";
 
 
 import "./styles.scss";
@@ -30,13 +30,14 @@ const StartPage = (props: Props) => {
         onGetStart();
     }
 
+    const triviaId = match.params.triviaId;
+
     return <div className="start-page">
         <div className="page-inner">
             <div className="row">
                 <div className="column column--6">
-                    <h1>Trivia Game</h1>
-                    <p>Harry Potter</p>
-                    <div>Trivia ID: {match.params.triviaId}</div>
+                    <h3>Harry Potter</h3>
+                    <p>Description about the trivia content.</p>
                     <Button
                         kind={"button"}
                         className={"btn btn--outline"}

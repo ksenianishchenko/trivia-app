@@ -1,25 +1,70 @@
 import IApiService from "../../../abstractions/api/service/apiService";
 import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
+import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 
 const trivia = {
     results: [
         {
-            id: "1",
-            title: "Harry Potter: Hogwarts' Secrets"
+            id: "harry-potter",
+            title: "Harry Potter"
         },
         {
-            id: "56",
-            title: "Star Wars: All about the Light Sabres"
-        },
-        {
-            id: "58",
+            id: "star-wars-death-star",
             title: "Star Wars: All About The Death Star"
         },
         {
-            id: "45",
-            title: "Fun Facts: Traditions of Native Uzbeks"
+            id: "blow-your-mind",
+            title: "Fun Facts: Blow your mind"
         }
     ]
+}
+
+const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
+    "harry-potter": {
+        "0": {
+            "$id": "0",
+            "type": "object",
+            "properties": {
+                "answers": {
+                    "$id": "/properties/answers",
+                    "title": "In the Harry Potter book series, which character had the wand made of a phoenix bird feather?",
+                    "type": "string",
+                    "enum": ["Hermione", "Tom Riddle", "Ron", "Professor Snape", "Malfoy"]
+                }
+            },
+            "required": ["answers"]
+        },
+        "1": {
+            "$id": "1",
+            "type": "object",
+            "properties": {
+                "answers": {
+                    "$id": "/properties/answers",
+                    "title": "How does Harry first learn that he is a wizard",
+                    "type": "string",
+                    "enum": ["The Dursleys tell him when he is eight", "Dudley accidentally lets it slip", "He reads about it in the Daily Prophet", "Hagrid has to track him down to tell him"]
+                }
+            },
+            "required": [
+                "answers"
+            ]
+        },
+        "2": {
+            "$id": "2",
+            "type": "object",
+            "properties": {
+                "answers": {
+                    "$id": "/properties/answers",
+                    "title": "Who is Fluffy",
+                    "type": "string",
+                    "enum": [ "Hagrid’s dragon", "Harry’s owl", "Hagrid’s three-headed dog", "Dumbledore’s pet snake" ]
+                }
+            },
+            "required": [
+                "answers"
+            ]
+        }
+    }
 }
 
 // GET /api/trivia/{trivia-id} -- WORKFLOW
@@ -41,5 +86,20 @@ export class LocalApiService implements  IApiService {
         })
 
         return triviaList;
+    }
+
+    getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem {
+
+        const trivia = allQuestions[triviaId];
+        let questionSchema: any = undefined;
+        if (trivia) {
+            questionSchema = trivia[questionId];
+        }
+
+        if (!questionSchema) {
+            throw Error("404 Not found");
+        }
+
+        return questionSchema;
     }
 }
