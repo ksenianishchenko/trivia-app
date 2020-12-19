@@ -18,6 +18,15 @@ p {
   font-size: $font-size-p;
 }
 
+.text {
+  font-size: $font-size-p;
+
+  &--sm {
+    font-size: $font-size-p-small;
+  }
+  
+}
+
 a {
   text-decoration: none;
 }

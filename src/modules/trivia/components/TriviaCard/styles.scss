@@ -11,13 +11,16 @@
 .trivia-card__title {
   color: $white;
   font-size: $font-size-link-title;
+  width: 100%;
 }
 
 .trivia-card__wrap {
   @include flex-block;
   padding: 15px;
+  width: 100%;
 }
 
 .trivia-card__info {
   @include flex-block;
+  width: 100%;
 }

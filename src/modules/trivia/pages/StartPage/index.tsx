@@ -1,17 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
-import { compose } from "redux"
+import { Redirect } from "react-router-dom";
+import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
+import { setQuestionSchema } from "../../../../redux/modules/triviaQuestions/reducer";
+import { RootState } from "../../../../redux/store";
 
 import Button from "../../../components/Button/index";
-import { onSetTriviaList } from "../../../../redux/modules/triviaList/reducer";
 
 
 import "./styles.scss";
 
+type StateProps = {
+    triviaCurrentQuestionSchema: TriviaQuestionItem | null
+}
 
 type DispatchProps = {
-    onGetStart: () => void
+    onGetStart: (triviaId: string, questionId: string) => void
 }
 
 type TriviaItemParams = {
@@ -20,17 +25,20 @@ type TriviaItemParams = {
 
 type TriviaItemProps = RouteComponentProps<TriviaItemParams>
 
-type Props = DispatchProps & TriviaItemProps;
+type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const {onGetStart, match} = props;
+    const {triviaCurrentQuestionSchema, onGetStart, match} = props;
+    const triviaId = match.params.triviaId;
 
-    function onStartQuest() {
-        onGetStart();
+    const onStartQuest = () => {
+        onGetStart(triviaId, "0");
     }
 
-    const triviaId = match.params.triviaId;
+    if (triviaCurrentQuestionSchema !== null) {
+        return <Redirect to={`/trivia/${triviaId}/0`} />
+    }
 
     return <div className="start-page">
         <div className="page-inner">
@@ -51,10 +59,14 @@ const StartPage = (props: Props) => {
     </div>
 }
 
+const mapState = (state: RootState) => ({
+    triviaCurrentQuestionSchema: state.triviaQuestion.triviaCurrentQuestionSchema
+})
+
 const mapDispatch = {
-    onGetStart: () => onSetTriviaList(),
+    onGetStart: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
 }
 
 const StartPageWithRouter = withRouter(StartPage);
 
-export default connect(null, mapDispatch)(StartPageWithRouter);
+export default connect(mapState, mapDispatch)(StartPageWithRouter);

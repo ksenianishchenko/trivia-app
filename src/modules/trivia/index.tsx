@@ -1,6 +1,6 @@
-import {FunctionComponent} from 'react';
 import StartPageWithRouter from "./pages/StartPage";
 import HomePage from "./pages/Home";
+import Question from './pages/Question';
 
 type moduleItem = {
     url: string,
@@ -18,6 +18,11 @@ const Routes: moduleItem[] = [
         url: "/trivia/:triviaId",
         component: StartPageWithRouter,
         name: "WelcomePage"
+    },
+    {
+        url: "/trivia/:triviaId/:questionId",
+        component: Question,
+        name: "QuestionPage"
     }
 ];
 export {Routes};
