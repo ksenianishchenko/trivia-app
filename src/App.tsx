@@ -16,7 +16,7 @@ type moduleItem = {
 
 function App() {
     return (
-        <div className="App">
+        <div className="app">
             <Provider store={store}>
                 <Router>
                     <Route exact path="/" component={modules["trivia"][0].component} />

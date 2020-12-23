@@ -13,7 +13,7 @@ type Props = TriviaCardProps
 const TriviaCard = (props: Props) => {
     const {item} = props;
 
-    return <div className="trivia-card">
+    return <div className="trivia-card" style={{backgroundImage: `${item.properties.background}`}}>
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
                 <Link to={`/trivia/${item.id}`} className="link trivia-card__title">{item.title}</Link>

@@ -6,15 +6,24 @@ const trivia = {
     results: [
         {
             id: "harry-potter",
-            title: "Harry Potter"
+            title: "Harry Potter",
+            properties: {
+                background: "url(./resourses/harry-potter.jpg)"
+            }
         },
         {
             id: "star-wars-death-star",
-            title: "Star Wars: All About The Death Star"
+            title: "Star Wars: All About The Death Star",
+            properties: {
+                background: "url(./resourses/star-wars.jpg)"
+            }
         },
         {
             id: "blow-your-mind",
-            title: "Fun Facts: Blow your mind"
+            title: "Fun Facts: Blow your mind",
+            properties: {
+                background: "url(./resourses/white-pink-blue.jpg)"
+            }
         }
     ]
 }
@@ -84,7 +93,8 @@ export class LocalApiService implements  IApiService {
         trivia.results.map((item) => {
             return triviaList.push({
                 id: item.id,
-                title: item.title
+                title: item.title,
+                properties: item.properties
             })
         })
 

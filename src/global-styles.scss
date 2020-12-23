@@ -47,11 +47,6 @@ a {
 
 .link {
   @include transition_all;
-
-  &:hover {
-    opacity: 0.7;
-  }
-
 }
 
 .underline {
