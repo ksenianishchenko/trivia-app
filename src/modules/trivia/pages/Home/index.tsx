@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 import ListTrivia from "../../components/ListTrivia";
 import { RootState } from "../../../../redux/store";
-import { onSetTriviaList } from "../../../../redux/modules/triviaList/reducer";
+import { onSetTriviaList } from "../../../../redux/modules/triviva/triviaList/reducer";
 
 import "./styles.scss";
 

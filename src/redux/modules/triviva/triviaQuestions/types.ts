@@ -1,4 +1,4 @@
-import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
+import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 
 export type triviaQuestionsState = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | null

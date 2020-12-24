@@ -1,5 +1,5 @@
-import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem"
-import TriviaQuestionDefinition from "../../../abstractions/api/models/triviaQuestionsDefinition"
+import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem"
+import TriviaQuestionDefinition from "../../../../abstractions/api/models/triviaQuestionsDefinition"
 
 /// Harry Potter
 

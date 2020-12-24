@@ -1,6 +1,6 @@
-import TriviaQuestionWorkflowStep from "../../../abstractions/api/models/triviaQuestionWorkflowStep";
-import WorkflowDefinition from "../../../abstractions/api/models/workflowDefinition";
-import WorkflowStep from "../../../abstractions/api/models/workflowStep";
+import TriviaQuestionWorkflowStep from "../../../../abstractions/api/models/triviaQuestionWorkflowStep";
+import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
+import WorkflowStep from "../../../../abstractions/api/models/workflowStep";
 
 const harryPotterWorkflow : WorkflowDefinition = {
     startAt: "0",

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import { setQuestionSchema } from "../../../../redux/modules/triviaQuestions/reducer";
+import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaQuestions/reducer";
 import { RootState } from "../../../../redux/store";
 
 import Button from "../../../components/Button/index";

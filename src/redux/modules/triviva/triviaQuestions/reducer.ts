@@ -1,5 +1,5 @@
-import IApiService from "../../../abstractions/api/service/apiService";
-import { LocalApiService } from "../../../modules/api/service/localApiService";
+import IApiService from "../../../../abstractions/api/service/apiService";
+import { LocalApiService } from "../../../../modules/api/service/localApiService";
 import { setTriviaCurrentQuestionShema } from "./actions";
 import { ActionTypes } from "./action_types";
 import { DispatchTypeTriviaQuestion, TriviaQuestionActions, triviaQuestionsState } from "./types";
