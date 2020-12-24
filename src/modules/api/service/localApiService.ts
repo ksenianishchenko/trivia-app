@@ -1,6 +1,30 @@
 import IApiService from "../../../abstractions/api/service/apiService";
 import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
+import WorkflowDefinition from "../../../abstractions/api/models/workflowDefinition";
+import WorkflowStep from "../../../abstractions/api/models/workflowStep";
+import TriviaQuestionWorkflowStep from "../../../abstractions/api/models/triviaQuestionWorkflowStep";
+
+const harryPotterWorkflow : WorkflowDefinition = {
+    startAt: "0",
+    steps: new Map<string, WorkflowStep>()
+};
+
+const hpQuestion0: TriviaQuestionWorkflowStep = {
+    id: "0",
+    next: "1",
+    end: false,
+    type: "TriviaQuestion"
+}
+harryPotterWorkflow.steps.set("0", hpQuestion0);
+
+const hpQuestion1: TriviaQuestionWorkflowStep = {
+    id: "1",
+    end: true,
+    type: "TriviaQuestion",
+    next: undefined
+};
+harryPotterWorkflow.steps.set("1", hpQuestion1);
 
 const trivia = {
     results: [
@@ -28,7 +52,7 @@ const trivia = {
     ]
 }
 
-const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
+const allQuestions: { [name: string]: { [name: string]: TriviaQuestionItem } } = {
     "harry-potter": {
         "0": {
             "$id": "0",
@@ -69,7 +93,7 @@ const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
                     "$id": "/properties/answers",
                     "title": "Who is Fluffy",
                     "type": "string",
-                    "enum": [ "Hagrid’s dragon", "Harry’s owl", "Hagrid’s three-headed dog", "Dumbledore’s pet snake" ]
+                    "enum": ["Hagrid’s dragon", "Harry’s owl", "Hagrid’s three-headed dog", "Dumbledore’s pet snake"]
                 }
             },
             "required": [
@@ -86,8 +110,8 @@ const allQuestions: { [name: string]: {[name: string]: TriviaQuestionItem} } = {
 // GET /api/trivia/на-кого-ты-похож/твой-возраст
 // {id: "твой-возраст", "title": "Сколько тебе лет", "answers": ["14-18", "19-30", "31-50"]}
 
-export class LocalApiService implements  IApiService {
-    listItems(): TriviaInfoItem[] {
+export class LocalApiService implements IApiService {
+    listTrivia(): TriviaInfoItem[] {
         const triviaList: TriviaInfoItem[] = [];
 
         trivia.results.map((item) => {
@@ -101,8 +125,11 @@ export class LocalApiService implements  IApiService {
         return triviaList;
     }
 
-    getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem {
+    getTriviaWorkflow(triviaId: string): WorkflowDefinition {
+        return harryPotterWorkflow;
+    }
 
+    getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem {
         const trivia = allQuestions[triviaId];
         let questionSchema: any = undefined;
         if (trivia) {
