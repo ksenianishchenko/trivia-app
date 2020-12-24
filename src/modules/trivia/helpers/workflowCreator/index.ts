@@ -27,7 +27,7 @@ const hpQuestion2: TriviaQuestionWorkflowStep = {
     id: "2",
     end: true,
     type: "TriviaQuestion",
-    next: "undefined"
+    next: undefined
 }
 
 harryPotterWorkflow.steps.set("2", hpQuestion2);
