@@ -11,6 +11,11 @@ type triviaQuestionSchemaAction = {
     payload: TriviaQuestionItem
 }
 
-export type TriviaWorkflowActions = triviaQuestionSchemaAction;
+type triviaWorkflowAction = {
+    type: string;
+    payload: WorkflowDefinition
+}
+
+export type TriviaWorkflowActions = triviaQuestionSchemaAction | triviaWorkflowAction;
 
 export type DispatchTypeTriviaWorkflow = (arg: TriviaWorkflowActions) => TriviaWorkflowActions

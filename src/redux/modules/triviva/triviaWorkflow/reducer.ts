@@ -1,6 +1,6 @@
 import IApiService from "../../../../abstractions/api/service/apiService";
 import { LocalApiService } from "../../../../modules/api/service/localApiService";
-import { setTriviaCurrentQuestionShema } from "./actions";
+import { setTriviaCurrentQuestionShema, setTriviaCurrentWorkflow } from "./actions";
 import { ActionTypes } from "./action_types";
 import { DispatchTypeTriviaWorkflow, TriviaWorkflowActions, triviaWorkflowState } from "./types";
 
@@ -17,7 +17,13 @@ const setQuestionSchema = (triviaId: string, questionId: string) => {
     }
 }
 
-const triviaQuestionReducer = (state: triviaWorkflowState = initialState, action: TriviaWorkflowActions) => {
+const setCurrentWorkflow = (triviaId: string) => {
+    return (dispatch: DispatchTypeTriviaWorkflow) => {
+        dispatch(setTriviaCurrentWorkflow(apiService.getTriviaWorkflow(triviaId)))
+    }
+}
+
+const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action: TriviaWorkflowActions) => {
     switch(action.type) {
         case ActionTypes.SET_CURRENT_QUESTION_SCHEMA:
             return {
@@ -29,4 +35,4 @@ const triviaQuestionReducer = (state: triviaWorkflowState = initialState, action
     }
 };
 
-export {triviaQuestionReducer, setQuestionSchema};
+export {triviaWorkflowReducer, setQuestionSchema};
