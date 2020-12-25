@@ -3,11 +3,11 @@ import {combineReducers} from "redux";
 import thunk from "redux-thunk";
 
 import {triviaDataReducer} from "./modules/triviva/triviaList/reducer";
-import { triviaQuestionReducer } from "./modules/triviva/triviaQuestions/reducer";
+import { triviaQuestionReducer } from "./modules/triviva/triviaWorkflow/reducer";
 
 const rootReducer = combineReducers({
     triviaData: triviaDataReducer,
-    triviaQuestion: triviaQuestionReducer
+    triviaWorkflow: triviaQuestionReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
