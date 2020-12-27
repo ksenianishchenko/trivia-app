@@ -11,3 +11,8 @@ export const setTriviaCurrentWorkflow = (workflow: WorkflowDefinition) => ({
     type: ActionTypes.SET_CURRENT_WORKFLOW,
     payload: workflow
 });
+
+export const setTriviaId = (id: string) => ({
+    type: ActionTypes.SET_TRIVIA_ID,
+    payload: id
+});

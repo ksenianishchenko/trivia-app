@@ -2,8 +2,9 @@ import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuesti
 import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
 
 export type triviaWorkflowState = {
-    triviaCurrentQuestionSchema: TriviaQuestionItem | null,
-    triviaCurrentWorkflow: WorkflowDefinition | null
+    triviaCurrentQuestionSchema: TriviaQuestionItem | any,
+    triviaCurrentWorkflow: WorkflowDefinition | any,
+    currentTriviaId: string | any
 }
 
 type triviaQuestionSchemaAction = {

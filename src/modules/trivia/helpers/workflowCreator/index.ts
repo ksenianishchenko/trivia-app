@@ -2,10 +2,7 @@ import TriviaQuestionWorkflowStep from "../../../../abstractions/api/models/triv
 import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
 import WorkflowStep from "../../../../abstractions/api/models/workflowStep";
 
-const harryPotterWorkflow : WorkflowDefinition = {
-    startAt: "0",
-    steps: new Map<string, WorkflowStep>()
-};
+const stepsMap = new Map<string, WorkflowStep>();
 
 const hpQuestion0: TriviaQuestionWorkflowStep = {
     id: "0",
@@ -13,7 +10,6 @@ const hpQuestion0: TriviaQuestionWorkflowStep = {
     end: false,
     type: "TriviaQuestion"
 }
-harryPotterWorkflow.steps.set("0", hpQuestion0);
 
 const hpQuestion1: TriviaQuestionWorkflowStep = {
     id: "1",
@@ -21,7 +17,6 @@ const hpQuestion1: TriviaQuestionWorkflowStep = {
     type: "TriviaQuestion",
     next: "2"
 };
-harryPotterWorkflow.steps.set("1", hpQuestion1);
 
 const hpQuestion2: TriviaQuestionWorkflowStep = {
     id: "2",
@@ -30,6 +25,18 @@ const hpQuestion2: TriviaQuestionWorkflowStep = {
     next: undefined
 }
 
-harryPotterWorkflow.steps.set("2", hpQuestion2);
+stepsMap.set("0", hpQuestion0);
+stepsMap.set("1", hpQuestion1);
+stepsMap.set("2", hpQuestion2);
+console.log("Create");
+console.log(stepsMap);
 
+
+const harryPotterWorkflow : WorkflowDefinition = {
+    startAt: "0",
+    steps: stepsMap
+};
+
+console.log(harryPotterWorkflow.steps.get("0"));
+console.log(harryPotterWorkflow);
 export {harryPotterWorkflow};

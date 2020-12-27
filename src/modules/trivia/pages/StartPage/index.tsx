@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Redirect } from "react-router-dom";
-import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
+import { Link, Redirect } from "react-router-dom";
+import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
+import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setCurrentWorkflow } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
 import { RootState } from "../../../../redux/store";
 
 import Button from "../../../components/Button/index";
@@ -12,11 +13,12 @@ import Button from "../../../components/Button/index";
 import "./styles.scss";
 
 type StateProps = {
-    triviaCurrentQuestionSchema: TriviaQuestionItem | null
+    triviaCurrentWorkflow: WorkflowDefinition | null
 }
 
 type DispatchProps = {
-    onGetStart: (triviaId: string, questionId: string) => void
+    onLoadWorkflow: (triviaId: string) => void;
+    handleTriviaId: (triviaId: string) => void;
 }
 
 type TriviaItemParams = {
@@ -29,16 +31,17 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const {triviaCurrentQuestionSchema, onGetStart, match} = props;
-    const triviaId = match.params.triviaId;
+    const [triviaId, setTriviaId] = useState("");
+    const {onLoadWorkflow, handleTriviaId, triviaCurrentWorkflow, match} = props;
 
-    const onStartQuest = () => {
-        onGetStart(triviaId, "0");
-    }
-
-    if (triviaCurrentQuestionSchema !== null) {
-        return <Redirect to={`/trivia/${triviaId}/0`} />
-    }
+    useEffect(() => {
+        setTriviaId(match.params.triviaId);
+        
+        if (triviaId) {
+            handleTriviaId(triviaId);
+            onLoadWorkflow(triviaId);
+        }
+    }, [triviaId])
 
     return <div className="start-page">
         <div className="page-inner">
@@ -46,11 +49,7 @@ const StartPage = (props: Props) => {
                 <div className="column column--6">
                     <h3>Harry Potter</h3>
                     <p>Description about the trivia content.</p>
-                    <Button
-                        kind={"button"}
-                        className={"btn btn--outline"}
-                        handleClick={onStartQuest}
-                    >Get Started!</Button>
+                    <Link to={`/trivia/${triviaId}/0`} className="btn btn--outline">Get Started!</Link>
                 </div>
                 <div className="column column--6">
                 </div>
@@ -60,11 +59,12 @@ const StartPage = (props: Props) => {
 }
 
 const mapState = (state: RootState) => ({
-    triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema
+    triviaCurrentWorkflow: state.triviaWorkflow.triviaCurrentWorkflow
 })
 
 const mapDispatch = {
-    onGetStart: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
+    onLoadWorkflow: (triviaId: string) => setCurrentWorkflow(triviaId),
+    handleTriviaId: (triviaId: string) => setTriviaId(triviaId)
 }
 
 const StartPageWithRouter = withRouter(StartPage);

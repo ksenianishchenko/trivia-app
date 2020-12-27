@@ -6,7 +6,8 @@ import { DispatchTypeTriviaWorkflow, TriviaWorkflowActions, triviaWorkflowState 
 
 const initialState: triviaWorkflowState = {
     triviaCurrentQuestionSchema: null,
-    triviaCurrentWorkflow: null
+    triviaCurrentWorkflow: null,
+    currentTriviaId: null
 };
 
 const apiService: IApiService = new LocalApiService();
@@ -30,9 +31,19 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
                 ...state,
                 triviaCurrentQuestionSchema: action.payload
             }
+        case ActionTypes.SET_CURRENT_WORKFLOW:
+            return {
+                ...state,
+                triviaCurrentWorkflow: action.payload
+            }
+        case ActionTypes.SET_TRIVIA_ID:
+            return {
+                ...state,
+                currentTriviaId: action.payload
+            }
         default:
             return state;
     }
 };
 
-export {triviaWorkflowReducer, setQuestionSchema};
+export {triviaWorkflowReducer, setQuestionSchema, setCurrentWorkflow};
