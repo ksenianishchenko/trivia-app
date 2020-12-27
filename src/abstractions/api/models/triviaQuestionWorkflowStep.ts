@@ -1,4 +1,4 @@
-import WorkflowStep from "./workflowStep";
+import WorkflowStep from "../../workflow/workflowStep";
 
 export default interface TriviaQuestionWorkflowStep extends WorkflowStep {
     type: string;

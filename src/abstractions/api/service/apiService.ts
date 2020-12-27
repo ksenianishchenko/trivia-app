@@ -1,6 +1,6 @@
 import TriviaInfoItem from "../models/triviaInfoItem";
 import TriviaQuestionItem from "../models/triviaQuestionItem";
-import WorkflowDefinition from "../models/workflowDefinition";
+import WorkflowDefinition from "../../workflow/workflowDefinition";
 
 export default interface IApiService {
     listTrivia(): TriviaInfoItem[];

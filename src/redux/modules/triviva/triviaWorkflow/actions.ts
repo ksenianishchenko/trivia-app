@@ -1,5 +1,5 @@
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
+import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { ActionTypes } from "./action_types";
 
 export const setTriviaCurrentQuestionShema = (question: TriviaQuestionItem) => ({

@@ -1,7 +1,7 @@
 import IApiService from "../../../abstractions/api/service/apiService";
 import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
-import WorkflowDefinition from "../../../abstractions/api/models/workflowDefinition";
+import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinition";
 import {harryPotterWorkflow} from "../../trivia/helpers/workflowCreator";
 import { harryPotterQuestionsWorkflow } from "../../trivia/helpers/triviaQuestionsCreator";
 

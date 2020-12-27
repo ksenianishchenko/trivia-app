@@ -1,7 +1,6 @@
 import WorkflowStep from "./workflowStep";
 
-interface IWorkflowRouter {
+export default interface IWorkflowRouter {
+    getType(): string;
     route(step: WorkflowStep): void;
 }
-
-export default IWorkflowRouter;

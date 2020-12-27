@@ -1,6 +1,6 @@
 import TriviaQuestionWorkflowStep from "../../../../abstractions/api/models/triviaQuestionWorkflowStep";
-import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
-import WorkflowStep from "../../../../abstractions/api/models/workflowStep";
+import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
+import WorkflowStep from "../../../../abstractions/workflow/workflowStep";
 
 const stepsMap = new Map<string, WorkflowStep>();
 

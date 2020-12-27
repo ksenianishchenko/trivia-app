@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
-import WorkflowDefinition from "../../../../abstractions/api/models/workflowDefinition";
+import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { setCurrentWorkflow } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
 import { RootState } from "../../../../redux/store";
