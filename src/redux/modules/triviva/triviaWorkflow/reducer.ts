@@ -1,7 +1,5 @@
 import IApiService from "../../../../abstractions/api/service/apiService";
 import { LocalApiService } from "../../../../modules/api/service/localApiService";
-import WorkflowController from "../../../../modules/controllers/workflowController";
-import TriviaQuestionWorkflowRouter from "../../../../modules/trivia/services/triviaQuestionWorkflowRouter";
 import { setTriviaCurrentQuestionShema, setTriviaCurrentWorkflow } from "./actions";
 import { ActionTypes } from "./action_types";
 import { DispatchTypeTriviaWorkflow, TriviaWorkflowActions, triviaWorkflowState } from "./types";
@@ -13,8 +11,6 @@ const initialState: triviaWorkflowState = {
 };
 
 const apiService: IApiService = new LocalApiService();
-const triviaWorkflowController = new WorkflowController();
-triviaWorkflowController.addRouter(new TriviaQuestionWorkflowRouter());
 
 const setQuestionSchema = (triviaId: string, questionId: string) => {
     return (dispatch: DispatchTypeTriviaWorkflow) => {
