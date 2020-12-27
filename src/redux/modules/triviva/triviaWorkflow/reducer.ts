@@ -1,7 +1,7 @@
 import IApiService from "../../../../abstractions/api/service/apiService";
 import { LocalApiService } from "../../../../modules/api/service/localApiService";
 import { setTriviaCurrentQuestionShema, setTriviaCurrentWorkflow } from "./actions";
-import { ActionTypes } from "./action_types";
+import { ActionTypes } from "./actionTypes";
 import { DispatchTypeTriviaWorkflow, TriviaWorkflowActions, triviaWorkflowState } from "./types";
 
 const initialState: triviaWorkflowState = {
