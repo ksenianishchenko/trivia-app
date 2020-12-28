@@ -1,6 +1,6 @@
 import IWorkflowRouter from "../../abstractions/workflow/workflowRouter";
 import { ActionTypes } from "./actionTypes";
-import { WorkflowState } from "./types";
+import { WorkflowActions, WorkflowState } from "./types";
 
 const initialState: WorkflowState = {
     routers: new Map<string, IWorkflowRouter>(),
@@ -8,7 +8,7 @@ const initialState: WorkflowState = {
     currentStepId: null
 }
 
-const workflowReducer = (state: WorkflowState = initialState, action) => {
+const workflowReducer = (state: WorkflowState = initialState, action: WorkflowActions) => {
     switch(action.type) {
         case ActionTypes.SET_ROUTERS:
             return {
@@ -19,3 +19,5 @@ const workflowReducer = (state: WorkflowState = initialState, action) => {
             return state;
     }
 };
+
+export {workflowReducer};

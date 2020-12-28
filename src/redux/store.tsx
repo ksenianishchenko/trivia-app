@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 
 import {triviaDataReducer} from "./modules/triviva/triviaList/reducer";
 import { triviaWorkflowReducer } from "./modules/triviva/triviaWorkflow/reducer";
+import { workflowReducer } from "./workflow/reducer";
 
 const rootReducer = combineReducers({
     triviaData: triviaDataReducer,
-    triviaWorkflow: triviaWorkflowReducer
+    triviaWorkflow: triviaWorkflowReducer,
+    workflow: workflowReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

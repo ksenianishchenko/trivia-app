@@ -6,3 +6,10 @@ export type WorkflowState = {
     workflowDefinition: WorkflowDefinition | null;
     currentStepId: string | null;
 }
+
+type WorkflowRoutersAction = {
+    type: string;
+    payload: Map<string, IWorkflowRouter>
+}
+
+export type WorkflowActions = WorkflowRoutersAction;
