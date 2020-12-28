@@ -4,8 +4,8 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
-import { setCurrentWorkflow } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
 import { RootState } from "../../../../redux/store";
+import { setCurrentWorkflow } from "../../../../redux/workflow/reducer";
 
 import Button from "../../../components/Button/index";
 
