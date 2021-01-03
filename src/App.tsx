@@ -1,15 +1,13 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import { Provider } from "react-redux";
 import { connect } from "react-redux";
-import store from "./redux/store";
-
 import {modules} from "./modules/modules";
 
 import './global-styles.scss';
-import { setRouters } from './redux/workflow/actions';
 import IWorkflowRouter from './abstractions/workflow/workflowRouter';
 import TriviaQuestionWorkflowRouter from './modules/trivia/services/triviaQuestionWorkflowRouter';
+import { setCurrentRouter } from './redux/workflow/reducer';
+import history from "./history";
 
 type moduleItem = {
     url: string,
@@ -18,33 +16,30 @@ type moduleItem = {
 }
 
 type DispatchProps = {
-    onSetRouters: (routers: Map<string, IWorkflowRouter>) => void
+    onSetRouter: (routers: IWorkflowRouter) => void
 }
 
 type Props = DispatchProps;
 
 
-// set routers
-const allRouters = new Map<string, IWorkflowRouter>();
+// set router
 const triviaRouter = new TriviaQuestionWorkflowRouter();
-allRouters.set(triviaRouter.getType(), triviaRouter);
 
 const App = (props: Props) => {
 
-    const [routers, setRouters] = useState(new Map<string, IWorkflowRouter>());
-    const {onSetRouters} = props;
+    const [routers, setRouters] = useState(triviaRouter);
+    const {onSetRouter} = props;
 
     useEffect(() => {
-        setRouters(allRouters);
-        onSetRouters(routers);
+        onSetRouter(routers);
     }, [routers])
 
     return (
         <div className="app">
-            <Router>
-                <Route exact path="/" component={modules["trivia"][0].component} />
+            <Router >
+                <Route exact path="/" component={modules["TriviaQuestion"][0].component} />
                 {
-                    modules["trivia"].map((module: moduleItem) => {
+                    modules["TriviaQuestion"].map((module: moduleItem) => {
                         return (
                             <Route exact path={module.url} component={module.component} key={module.name}/>
                         )
@@ -56,7 +51,7 @@ const App = (props: Props) => {
 }
 
 const mapDispatch = {
-    onSetRouters: (routers: Map<string, IWorkflowRouter>) => setRouters(routers)
+    onSetRouter: (routers: IWorkflowRouter) => setCurrentRouter(routers)
 }
 
 export default connect(null, mapDispatch)(App);

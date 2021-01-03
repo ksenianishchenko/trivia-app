@@ -16,7 +16,7 @@ const TriviaCard = (props: Props) => {
     return <div className="trivia-card" style={{backgroundImage: `${item.properties.background}`}}>
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
-                <Link to={`/trivia/${item.id}`} className="link trivia-card__title">{item.title}</Link>
+                <Link to={`trivia/${item.id}`} className="link trivia-card__title">{item.title}</Link>
             </div>
         </div>
     </div>

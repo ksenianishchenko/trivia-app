@@ -9,7 +9,7 @@ import { workflowReducer } from "./workflow/reducer";
 const rootReducer = combineReducers({
     triviaData: triviaDataReducer,
     triviaWorkflow: triviaWorkflowReducer,
-    workflow: workflowReducer
+    workflow: workflowReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
