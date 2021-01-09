@@ -5,7 +5,7 @@ import "./styles.scss";
 export interface IButton {
     readonly kind: string;
     readonly className?: string;
-    readonly handleClick?: () => void;
+    handleClick?: () => void;
 }
 
 const Button: React.SFC<IButton> = ({kind, className, handleClick, children}) => {

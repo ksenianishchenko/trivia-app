@@ -1,6 +1,6 @@
 import StartPageWithRouter from "./pages/StartPage";
 import HomePage from "./pages/Home";
-import Question from './pages/Question';
+import QuestionPageWithRouter from './pages/QuestionPage';
 
 type moduleItem = {
     url: string,
@@ -21,7 +21,7 @@ const Routes: moduleItem[] = [
     },
     {
         url: "/trivia/:triviaId/:questionId",
-        component: Question,
+        component: QuestionPageWithRouter,
         name: "QuestionPage"
     }
 ];

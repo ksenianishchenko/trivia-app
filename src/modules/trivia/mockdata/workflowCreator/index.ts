@@ -28,15 +28,19 @@ const hpQuestion2: TriviaQuestionWorkflowStep = {
 stepsMap.set("0", hpQuestion0);
 stepsMap.set("1", hpQuestion1);
 stepsMap.set("2", hpQuestion2);
-console.log("Create");
-console.log(stepsMap);
 
 
 const harryPotterWorkflow : WorkflowDefinition = {
     startAt: "0",
     steps: stepsMap
 };
-
-console.log(harryPotterWorkflow.steps.get("0"));
-console.log(harryPotterWorkflow);
 export {harryPotterWorkflow};
+
+// {
+//    "0": {
+//        id: "0",
+//        next: "1",
+//        end: false,
+//        type: "TriviaQuestion"
+//    }
+//}

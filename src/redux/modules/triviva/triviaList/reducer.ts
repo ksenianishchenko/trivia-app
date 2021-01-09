@@ -1,4 +1,4 @@
-import {ActionTypes} from "./action_types";
+import {ActionTypes} from "./actionTypes";
 import {triviaActions, DispatchTypeTrivia, triviaItemsState} from "./types";
 import {setTriviaItemsList} from "./actions";
 import IApiService from "../../../../abstractions/api/service/apiService";

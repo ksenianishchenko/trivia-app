@@ -1,12 +1,11 @@
 import IApiService from "../../../../abstractions/api/service/apiService";
 import { LocalApiService } from "../../../../modules/api/service/localApiService";
-import { setTriviaCurrentQuestionShema, setTriviaCurrentWorkflow } from "./actions";
-import { ActionTypes } from "./action_types";
+import { setTriviaCurrentQuestionShema } from "./actions";
+import { ActionTypes } from "./actionTypes";
 import { DispatchTypeTriviaWorkflow, TriviaWorkflowActions, triviaWorkflowState } from "./types";
 
 const initialState: triviaWorkflowState = {
     triviaCurrentQuestionSchema: null,
-    triviaCurrentWorkflow: null,
     currentTriviaId: null
 };
 
@@ -14,13 +13,8 @@ const apiService: IApiService = new LocalApiService();
 
 const setQuestionSchema = (triviaId: string, questionId: string) => {
     return (dispatch: DispatchTypeTriviaWorkflow) => {
-        dispatch(setTriviaCurrentQuestionShema(apiService.getTriviaQuestion(triviaId, questionId)))
-    }
-}
-
-const setCurrentWorkflow = (triviaId: string) => {
-    return (dispatch: DispatchTypeTriviaWorkflow) => {
-        dispatch(setTriviaCurrentWorkflow(apiService.getTriviaWorkflow(triviaId)))
+        dispatch(setTriviaCurrentQuestionShema(apiService.getTriviaQuestion(triviaId, questionId)));
+        console.log(apiService.getTriviaQuestion(triviaId, questionId));
     }
 }
 
@@ -30,11 +24,6 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
             return {
                 ...state,
                 triviaCurrentQuestionSchema: action.payload
-            }
-        case ActionTypes.SET_CURRENT_WORKFLOW:
-            return {
-                ...state,
-                triviaCurrentWorkflow: action.payload
             }
         case ActionTypes.SET_TRIVIA_ID:
             return {
@@ -46,4 +35,4 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
     }
 };
 
-export {triviaWorkflowReducer, setQuestionSchema, setCurrentWorkflow};
+export {triviaWorkflowReducer, setQuestionSchema};
