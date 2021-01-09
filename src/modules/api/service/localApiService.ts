@@ -2,35 +2,9 @@ import IApiService from "../../../abstractions/api/service/apiService";
 import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinition";
-import {harryPotterWorkflow} from "../../trivia/helpers/workflowCreator";
-import { harryPotterQuestionsWorkflow } from "../../trivia/helpers/triviaQuestionsCreator";
-
-
-const trivia = {
-    results: [
-        {
-            id: "harry-potter",
-            title: "Harry Potter",
-            properties: {
-                background: "url(./resourses/harry-potter.jpg)"
-            }
-        },
-        {
-            id: "star-wars-death-star",
-            title: "Star Wars: All About The Death Star",
-            properties: {
-                background: "url(./resourses/star-wars.jpg)"
-            }
-        },
-        {
-            id: "blow-your-mind",
-            title: "Fun Facts: Blow your mind",
-            properties: {
-                background: "url(./resourses/white-pink-blue.jpg)"
-            }
-        }
-    ]
-}
+import {harryPotterWorkflow} from "../../trivia/mockdata/workflowCreator";
+import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
+import trivia from "../../trivia/mockdata/trivia";
 
 // GET /api/trivia/{trivia-id} -- WORKFLOW
 // => {startAt: "твой-возраст", states: {"твой-возраст": {"type": "single-trivia-question", "id": "твой-возраст", next: "кто-ты-по-гороскопу"}}}
@@ -59,7 +33,7 @@ export class LocalApiService implements IApiService {
     }
 
     getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem {
-        const currentTriviaQuestions = harryPotterQuestionsWorkflow.get(triviaId);
+        const currentTriviaQuestions = QuestionsWorkflow.get(triviaId);
         let questionSchema: any = undefined;
         if (currentTriviaQuestions) {
             questionSchema = currentTriviaQuestions.questions.get(questionId);

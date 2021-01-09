@@ -7,7 +7,6 @@ import './global-styles.scss';
 import IWorkflowRouter from './abstractions/workflow/workflowRouter';
 import TriviaQuestionWorkflowRouter from './modules/trivia/services/triviaQuestionWorkflowRouter';
 import { setCurrentRouter } from './redux/workflow/reducer';
-import history from "./history";
 
 type moduleItem = {
     url: string,
@@ -31,8 +30,9 @@ const App = (props: Props) => {
     const {onSetRouter} = props;
 
     useEffect(() => {
+        setRouters(triviaRouter);
         onSetRouter(routers);
-    }, [routers])
+    }, [routers, onSetRouter])
 
     return (
         <div className="app">

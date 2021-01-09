@@ -13,7 +13,8 @@ const apiService: IApiService = new LocalApiService();
 
 const setQuestionSchema = (triviaId: string, questionId: string) => {
     return (dispatch: DispatchTypeTriviaWorkflow) => {
-        dispatch(setTriviaCurrentQuestionShema(apiService.getTriviaQuestion(triviaId, questionId)))
+        dispatch(setTriviaCurrentQuestionShema(apiService.getTriviaQuestion(triviaId, questionId)));
+        console.log(apiService.getTriviaQuestion(triviaId, questionId));
     }
 }
 
