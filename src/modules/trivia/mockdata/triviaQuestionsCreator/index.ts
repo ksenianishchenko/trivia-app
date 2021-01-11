@@ -99,7 +99,7 @@ harryPotterQuestions.questions.set("1", hpQuestion1);
 const hpQuestion2 = {
     "$id": "2",
     "type": "object",
-    "next": "undefined",
+    "next": undefined,
     "properties": {
         "answers": {
             "$id": "/properties/answers",

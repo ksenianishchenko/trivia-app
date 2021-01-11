@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import {modules} from "./modules/modules";
 
@@ -36,15 +36,17 @@ const App = (props: Props) => {
 
     return (
         <div className="app">
-            <Router >
-                <Route exact path="/" component={modules["TriviaQuestion"][0].component} />
-                {
-                    modules["TriviaQuestion"].map((module: moduleItem) => {
-                        return (
-                            <Route exact path={module.url} component={module.component} key={module.name}/>
-                        )
-                    })
-                }
+            <Router forceRefresh={true}>
+                <Switch>
+                    <Route exact path="/" component={modules["TriviaQuestion"][0].component} />
+                    {
+                        modules["TriviaQuestion"].map((module: moduleItem) => {
+                            return (
+                                <Route exact path={module.url} component={module.component} key={module.name}/>
+                            )
+                        })
+                    }
+                </Switch>
             </Router>
         </div>
     );

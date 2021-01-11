@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
-import { RouteComponentProps, withRouter } from 'react-router';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { useHistory } from "react-router-dom";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | null;
@@ -29,19 +30,21 @@ const QuestionPage = (props: Props) => {
     const [triviaId, setTriviaId] = useState("");
     const [questionId, setQuestionId] = useState("");
 
-    useEffect(() => {
+    let history = useHistory();
+
+    function initParams() {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
+    }
 
-        if (triviaId !== "" && questionId !== "") {
+    useEffect(() => {
+        initParams();
+        if (triviaId !== "" && questionId !== "" && questionId !== "result") {
             onLoadQuestionSchema(triviaId, questionId);
         }
-        
-        setTriviaId(match.params.triviaId);
     })
 
     const handleQuestionSubmit = () => {
-        alert("clicked!");
     }
 
     if (triviaCurrentQuestionSchema) {
@@ -50,22 +53,24 @@ const QuestionPage = (props: Props) => {
                 <div className="content-wrap">
                     <p className="text text-sm">Question 1/0</p>
                     <form className="form">
-                        <h3>In the Harry Potter book series, which character had the wand made of a phoenix bird feather?</h3>
+                        <h3>{triviaCurrentQuestionSchema.properties.answers.title}</h3>
                         <div className="form__btn-wrap">
-                            <div className="radio-group">
+                            {triviaCurrentQuestionSchema.properties.answers.enum.map((option, index) => {
+                                return <div className="radio-group" key={index}>
                                 <label className="radio-group__label" htmlFor="1">
                                     <input
                                         className="radio-group__input"
                                         type="radio"
-                                        name="Hermione"
+                                        name={option}
                                         id="1"
                                     />
-                                    <span>Hermione</span>
+                                    <span>{option}</span>
                                 </label>
                             </div>
+                            })}
                         </div>
                         <Button
-                            kind="Submit"
+                            kind="button"
                             className="btn btn--outline"
                             handleClick={handleQuestionSubmit}
                         > Next </Button>
