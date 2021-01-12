@@ -5,8 +5,8 @@ import {modules} from "./modules/modules";
 
 import './global-styles.scss';
 import IWorkflowRouter from './abstractions/workflow/workflowRouter';
-import TriviaQuestionWorkflowRouter from './modules/trivia/services/triviaQuestionWorkflowRouter';
-import { setCurrentRouter } from './redux/workflow/reducer';
+import { onSetRouter } from './redux/workflow/fetchData';
+import TriviaQuestionWorkflowRouter from './services/triviaWorkflowRouter';
 
 type moduleItem = {
     url: string,
@@ -15,7 +15,7 @@ type moduleItem = {
 }
 
 type DispatchProps = {
-    onSetRouter: (routers: IWorkflowRouter) => void
+    onSetRouter: (router: IWorkflowRouter) => void
 }
 
 type Props = DispatchProps;
@@ -26,13 +26,13 @@ const triviaRouter = new TriviaQuestionWorkflowRouter();
 
 const App = (props: Props) => {
 
-    const [routers, setRouters] = useState(triviaRouter);
+    const [router, setRouter] = useState(triviaRouter);
     const {onSetRouter} = props;
 
     useEffect(() => {
-        setRouters(triviaRouter);
-        onSetRouter(routers);
-    }, [routers, onSetRouter])
+        setRouter(triviaRouter);
+        onSetRouter(router);
+    }, [router, onSetRouter])
 
     return (
         <div className="app">
@@ -53,7 +53,7 @@ const App = (props: Props) => {
 }
 
 const mapDispatch = {
-    onSetRouter: (routers: IWorkflowRouter) => setCurrentRouter(routers)
+    onSetRouter: (router: IWorkflowRouter) => onSetRouter(router)
 }
 
 export default connect(null, mapDispatch)(App);

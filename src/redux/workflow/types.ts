@@ -3,9 +3,10 @@ import IWorkflowRouter from "../../abstractions/workflow/workflowRouter";
 import WorkflowStep from "../../abstractions/workflow/workflowStep";
 
 export type WorkflowState = {
-    router: IWorkflowRouter | undefined;
+    routers: { [key: string]: IWorkflowRouter; } | undefined;
     workflowDefinition: WorkflowDefinition | undefined;
     currentStepId: string | undefined;
+    currentPath: string | undefined;
 }
 
 type WorkflowRouterAction = {
@@ -28,6 +29,15 @@ type WorkflowCurrentStepAction = {
     payload: any
 }
 
-export type WorkflowActions = WorkflowRouterAction | WorkflowCurrentStepIdAction | WorkflowDefinitionAction | WorkflowCurrentStepAction;
+type WorkflowCurrentPathAction = {
+    type: string;
+    payload: string
+}
+
+export type WorkflowActions = WorkflowRouterAction
+    | WorkflowCurrentStepIdAction
+    | WorkflowDefinitionAction
+    | WorkflowCurrentStepAction
+    | WorkflowCurrentPathAction;
 
 export type DispatchTypeWorkflowRouters = (arg: WorkflowActions) => WorkflowActions;

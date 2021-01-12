@@ -3,7 +3,7 @@ import IWorkflowRouter from "../../abstractions/workflow/workflowRouter";
 import WorkflowStep from "../../abstractions/workflow/workflowStep";
 import { ActionTypes } from "./actionTypes";
 
-export const setRouter = (router: IWorkflowRouter) => ({
+export const setRouter = (router: { [key: string]: IWorkflowRouter; }) => ({
     type: ActionTypes.SET_ROUTER,
     payload: router
 });
@@ -21,4 +21,9 @@ export const setCurrentStepId = (id: string) => ({
 export const setCurrentStep = (step: any) => ({
     type: ActionTypes.SET_CURRENT_STEP,
     payload: step
+});
+
+export const setCurrentPath = (path: string) => ({
+    type: ActionTypes.SET_CURRENT_PATH,
+    payload: path
 });
