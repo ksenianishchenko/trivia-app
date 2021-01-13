@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
+import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
+import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 
 type StateProps = {
-    triviaCurrentQuestionSchema: TriviaQuestionItem | null;
+    triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
+    currentPath: string | undefined
 }
 
 type DispatchProps = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => void;
+    onGetNextStep: () => void;
+    onGetCurrentPath: () => void;
 }
 
 type TriviaQuestionParams = {
@@ -26,25 +30,35 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const QuestionPage = (props: Props) => {
 
-    const {triviaCurrentQuestionSchema, onLoadQuestionSchema, match} = props;
+    const {triviaCurrentQuestionSchema, onLoadQuestionSchema, onGetNextStep, onGetCurrentPath, currentPath, match} = props;
     const [triviaId, setTriviaId] = useState("");
     const [questionId, setQuestionId] = useState("");
 
     let history = useHistory();
 
-    function initParams() {
-        setTriviaId(match.params.triviaId);
-        setQuestionId(match.params.questionId);
-    }
+    let prevPath = useRef(currentPath);
 
     useEffect(() => {
-        initParams();
-        if (triviaId !== "" && questionId !== "" && questionId !== "result") {
+        if (currentPath) {
+            if(prevPath.current !== currentPath) {
+                history.replace(`/trivia/${currentPath}`);
+            }
+        }
+        
+    }, [currentPath]);
+
+    useEffect(() => {
+        setTriviaId(match.params.triviaId);
+        setQuestionId(match.params.questionId);
+        if (triviaId !== "" && questionId !== "") {
             onLoadQuestionSchema(triviaId, questionId);
         }
-    })
+        
+    }, [triviaId, questionId, match.params.triviaId, match.params.questionId, onLoadQuestionSchema]);
 
     const handleQuestionSubmit = () => {
+        onGetNextStep();
+        onGetCurrentPath();
     }
 
     if (triviaCurrentQuestionSchema) {
@@ -84,11 +98,14 @@ const QuestionPage = (props: Props) => {
 }
 
 const mapState = (state: RootState | any) => ({
-    triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema
+    triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema,
+    currentPath: state.workflow.currentPath
 })
 
 const mapDispatch = {
-    onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId)
+    onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
+    onGetNextStep: () => handleSubmitQuestion(),
+    onGetCurrentPath: () => setCurrentPathToQuestion()
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);

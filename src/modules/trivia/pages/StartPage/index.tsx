@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { RootState } from "../../../../redux/store";
-import { initializeWorkflow, setCurrentPathToQuestion } from "../../../../redux/workflow/fetchData";
+import { setCurrentPathToQuestion, initializeWorkflow } from "../../../../redux/workflow/fetch";
 
 import Button from "../../../components/Button/index";
 
@@ -48,7 +48,7 @@ const StartPage = (props: Props) => {
             handleTriviaId(triviaId);
             onLoadWorkflow(triviaId);
         }
-    }, [triviaId])
+    }, [triviaId, match.params.triviaId, handleTriviaId, onLoadWorkflow])
 
     if (currentPath) {
         return <Redirect to={currentPath} />

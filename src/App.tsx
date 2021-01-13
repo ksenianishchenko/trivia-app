@@ -5,7 +5,7 @@ import {modules} from "./modules/modules";
 
 import './global-styles.scss';
 import IWorkflowRouter from './abstractions/workflow/workflowRouter';
-import { onSetRouter } from './redux/workflow/fetchData';
+import { onSetRouter } from './redux/workflow/fetch';
 import TriviaQuestionWorkflowRouter from './services/triviaWorkflowRouter';
 
 type moduleItem = {
@@ -36,7 +36,7 @@ const App = (props: Props) => {
 
     return (
         <div className="app">
-            <Router forceRefresh={true}>
+            <Router>
                 <Switch>
                     <Route exact path="/" component={modules["TriviaQuestion"][0].component} />
                     {

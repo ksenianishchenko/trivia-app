@@ -48,6 +48,24 @@ const setCurrentPathToQuestion = (): AppThunk<void> => (dispatch, getState) => {
 
 }
 
+const handleSubmitQuestion = (): AppThunk<void> => (dispatch, getState) => {
+    const _workflowDefinition = getState().workflow.workflowDefinition;
+    let _currentStepId = getState().workflow.currentStepId;
+
+    const currentStepSchema = _workflowDefinition.steps.get(_currentStepId);
+    if(currentStepSchema) {
+        if(currentStepSchema.next) {
+            _currentStepId = currentStepSchema.next;
+            dispatch(setCurrentStepId(_currentStepId));
+        } else if (!currentStepSchema.next) {
+            alert("Finish");
+        }
+    }
+}
 
 
-export {onSetRouter, initializeWorkflow, setCurrentPathToQuestion};
+
+export {onSetRouter,
+    initializeWorkflow,
+    setCurrentPathToQuestion,
+    handleSubmitQuestion};

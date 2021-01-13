@@ -103,9 +103,9 @@ const hpQuestion2 = {
     "properties": {
         "answers": {
             "$id": "/properties/answers",
-            "title": "How does Harry first learn that he is a wizard",
+            "title": "Who is Tom Riddle",
             "type": "string",
-            "enum": ["The Dursleys tell him when he is eight", "Dudley accidentally lets it slip", "He reads about it in the Daily Prophet", "Hagrid has to track him down to tell him"]
+            "enum": ["Lord Volan De Mort", "Dudley", "Harry Potter", "Severus"]
         }
     },
     "required": [

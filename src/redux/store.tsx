@@ -31,11 +31,6 @@ const store = createStore(
     )
 );
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Actions
->
+export type AppThunk<Result> = ThunkAction<Result, RootState, undefined, Actions>
 
 export default store;
