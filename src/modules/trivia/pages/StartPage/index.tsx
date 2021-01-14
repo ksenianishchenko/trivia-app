@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { RootState } from "../../../../redux/store";
-import { setCurrentPathToQuestion, initializeWorkflow } from "../../../../redux/workflow/fetch";
+import { setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 
 import Button from "../../../components/Button/index";
 
@@ -31,7 +31,7 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const {currentPath, onGetCurrentPath, match} = props;
+    const {currentPath, onGetCurrentPath} = props;
 
     const navigateFirstStep = () => {
         onGetCurrentPath();
@@ -47,7 +47,7 @@ const StartPage = (props: Props) => {
                 <div className="column column--6">
                     <h3>Harry Potter</h3>
                     <p>Description about the trivia content.</p>
-                    <Button kind="button" className="btn btn--outline" handleClick={navigateFirstStep}>Get Started!</Button>
+                    <Button kind="button" className="btn btn--outline black" handleClick={navigateFirstStep}>Get Started!</Button>
                 </div>
                 <div className="column column--6">
                 </div>

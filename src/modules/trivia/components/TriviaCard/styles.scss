@@ -30,10 +30,6 @@
   font-size: $font-size-link-title;
   font-weight: 600;;
   width: 100%;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .trivia-card__wrap {
@@ -42,9 +38,4 @@
   width: 100%;
   position: relative;
   z-index: 2;
-}
-
-.trivia-card__info {
-  @include flex-block;
-  width: 100%;
 }

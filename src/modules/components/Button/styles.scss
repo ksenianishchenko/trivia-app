@@ -15,7 +15,12 @@
   cursor: pointer;
 }
 
-.btn--outline {
+.btn--outline.black {
   border: 2px solid $black;
   color: $black;
+}
+
+.btn--outline.white {
+  border: 2px solid $white;
+  color: $white;
 }

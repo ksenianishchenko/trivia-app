@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 import Button from "../../../components/Button";
 import { connect } from "react-redux";
@@ -34,8 +33,8 @@ const TriviaCard = (props: Props) => {
     return <div className="trivia-card" style={{backgroundImage: `${item.properties.background}`}}>
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
-                <Link to={`trivia/${item.id}`} className="link trivia-card__title">{item.title}</Link>
-                <Button kind="button" className="btn btn--outline" handleClick={handleInitializeWorkflow}>Start</Button>
+                <h2 className="trivia-card__title">{item.title}</h2>
+                <Button kind="button" className="btn btn--outline white" handleClick={handleInitializeWorkflow}>Start Trivia</Button>
             </div>
         </div>
     </div>
