@@ -10,6 +10,6 @@ export default class TriviaQuestionWorkflowRouter implements IWorkflowRouter {
         if(step.type !== "TriviaQuestion") {
             return;
         }
-        return `${id}/${questionId}`;
+        return `/trivia/${id}/${questionId}`;
     }
 }

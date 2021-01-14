@@ -22,6 +22,7 @@ const initializeWorkflow = ( id: string ): AppThunk<void> => (dispatch, getState
     definition = apiService.getTriviaWorkflow(id)
     dispatch(setWorkflowDefinition(definition));
     dispatch(setCurrentStepId(definition.startAt));
+    dispatch(setCurrentPath(undefined));
 }
 
 const setCurrentPathToQuestion = (): AppThunk<void> => (dispatch, getState) => {

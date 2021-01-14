@@ -31,7 +31,7 @@ type WorkflowCurrentStepAction = {
 
 type WorkflowCurrentPathAction = {
     type: string;
-    payload: string
+    payload: string | undefined
 }
 
 export type WorkflowActions = WorkflowRouterAction

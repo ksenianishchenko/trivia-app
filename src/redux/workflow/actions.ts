@@ -23,7 +23,7 @@ export const setCurrentStep = (step: any) => ({
     payload: step
 });
 
-export const setCurrentPath = (path: string) => ({
+export const setCurrentPath = (path: string | undefined) => ({
     type: ActionTypes.SET_CURRENT_PATH,
     payload: path
 });

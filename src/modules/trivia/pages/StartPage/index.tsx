@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
-import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { RootState } from "../../../../redux/store";
 import { setCurrentPathToQuestion, initializeWorkflow } from "../../../../redux/workflow/fetch";
 
@@ -19,8 +18,6 @@ type StateProps = {
 }
 
 type DispatchProps = {
-    onLoadWorkflow: (triviaId: string) => void;
-    handleTriviaId: (triviaId: string) => void;
     onGetCurrentPath: () => void;
 }
 
@@ -34,21 +31,11 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const [triviaId, setTriviaId] = useState("");
-    const {onLoadWorkflow, handleTriviaId, currentPath, onGetCurrentPath, match} = props;
+    const {currentPath, onGetCurrentPath, match} = props;
 
     const navigateFirstStep = () => {
         onGetCurrentPath();
     }
-
-    useEffect(() => {
-        setTriviaId(match.params.triviaId);
-        
-        if (triviaId) {
-            handleTriviaId(triviaId);
-            onLoadWorkflow(triviaId);
-        }
-    }, [triviaId, match.params.triviaId, handleTriviaId, onLoadWorkflow])
 
     if (currentPath) {
         return <Redirect to={currentPath} />
@@ -76,8 +63,6 @@ const mapState = (state: RootState | any) => ({
 })
 
 const mapDispatch = {
-    onLoadWorkflow: (triviaId: string) => initializeWorkflow(triviaId),
-    handleTriviaId: (triviaId: string) => setTriviaId(triviaId),
     onGetCurrentPath: () => setCurrentPathToQuestion()
 }
 

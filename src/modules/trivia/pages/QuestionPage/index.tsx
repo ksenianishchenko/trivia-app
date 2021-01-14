@@ -41,7 +41,7 @@ const QuestionPage = (props: Props) => {
     useEffect(() => {
         if (currentPath) {
             if(prevPath.current !== currentPath) {
-                history.replace(`/trivia/${currentPath}`);
+                history.replace(currentPath);
             }
         }
         
@@ -62,7 +62,9 @@ const QuestionPage = (props: Props) => {
     }
 
     if (questionId === "result") {
-        <Redirect to={currentPath} />
+        if(currentPath) {
+            history.replace(currentPath);
+        }
     }
 
     if (triviaCurrentQuestionSchema) {
