@@ -7,6 +7,7 @@ import './global-styles.scss';
 import IWorkflowRouter from './abstractions/workflow/workflowRouter';
 import { onSetRouter } from './redux/workflow/fetch';
 import TriviaQuestionWorkflowRouter from './services/triviaWorkflowRouter';
+import TriviaResultWorkflowRouter from './services/triviaResultWorkflowRouter';
 
 type moduleItem = {
     url: string,
@@ -21,18 +22,22 @@ type DispatchProps = {
 type Props = DispatchProps;
 
 
-// set router
-const triviaRouter = new TriviaQuestionWorkflowRouter();
+// set routers
+const triviaQuestionRouter = new TriviaQuestionWorkflowRouter();
+const triviaResultRouter = new TriviaResultWorkflowRouter();
 
 const App = (props: Props) => {
 
-    const [router, setRouter] = useState(triviaRouter);
+    const [questionRouter, setQuestionRouter] = useState(triviaQuestionRouter);
+    const [resultRouter, setResultRouter] = useState(triviaResultRouter);
     const {onSetRouter} = props;
 
     useEffect(() => {
-        setRouter(triviaRouter);
-        onSetRouter(router);
-    }, [router, onSetRouter])
+        setQuestionRouter(triviaQuestionRouter);
+        setQuestionRouter(resultRouter);
+        onSetRouter(questionRouter);
+        onSetRouter(resultRouter);
+    }, [questionRouter, onSetRouter])
 
     return (
         <div className="app">

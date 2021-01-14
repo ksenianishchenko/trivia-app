@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../../../redux/store";
@@ -45,12 +45,12 @@ const QuestionPage = (props: Props) => {
             }
         }
         
-    }, [currentPath]);
+    }, [currentPath, history]);
 
     useEffect(() => {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
-        if (triviaId !== "" && questionId !== "") {
+        if (triviaId !== "" && questionId !== "" && questionId !== "result") {
             onLoadQuestionSchema(triviaId, questionId);
         }
         
@@ -59,6 +59,10 @@ const QuestionPage = (props: Props) => {
     const handleQuestionSubmit = () => {
         onGetNextStep();
         onGetCurrentPath();
+    }
+
+    if (questionId === "result") {
+        <Redirect to={currentPath} />
     }
 
     if (triviaCurrentQuestionSchema) {

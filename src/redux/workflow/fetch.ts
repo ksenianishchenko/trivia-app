@@ -57,8 +57,6 @@ const handleSubmitQuestion = (): AppThunk<void> => (dispatch, getState) => {
         if(currentStepSchema.next) {
             _currentStepId = currentStepSchema.next;
             dispatch(setCurrentStepId(_currentStepId));
-        } else if (!currentStepSchema.next) {
-            alert("Finish");
         }
     }
 }
