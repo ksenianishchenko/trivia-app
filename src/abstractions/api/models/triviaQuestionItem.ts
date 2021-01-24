@@ -1,20 +1,16 @@
-type TriviaQuestionItemAnswersChoice = {
-    $id: string;
-    title: string;
-    type: string
-    enum: string[];
-}
-
-
-type TriviaQuestionItemProperties = {
-    answers: TriviaQuestionItemAnswersChoice;
+export type TriviaQuestionItemAnswersChoice = {
+    id: string;
+    text: string;
+    imageUrl: string;
 }
 
 type TriviaQuestionItem = {
-    $id: string;
+    id: string;
+    title: string;
+    questionText: string,
     type: string;
     next: string | undefined;
-    properties: TriviaQuestionItemProperties;
+    answers: TriviaQuestionItemAnswersChoice[];
     required: string[]
 }
 

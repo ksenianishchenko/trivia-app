@@ -7,6 +7,7 @@ import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
 import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
+import RadioGroup from "../../../components/RadioGroup";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
@@ -73,20 +74,12 @@ const QuestionPage = (props: Props) => {
                 <div className="content-wrap">
                     <p className="text text-sm">Question 1/0</p>
                     <form className="form">
-                        <h3>{triviaCurrentQuestionSchema.properties.answers.title}</h3>
+                        <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
-                            {triviaCurrentQuestionSchema.properties.answers.enum.map((option, index) => {
-                                return <div className="radio-group" key={index}>
-                                <label className="radio-group__label" htmlFor="1">
-                                    <input
-                                        className="radio-group__input"
-                                        type="radio"
-                                        name={option}
-                                        id="1"
-                                    />
-                                    <span>{option}</span>
-                                </label>
-                            </div>
+                            {triviaCurrentQuestionSchema.answers.map((option, index) => {
+                                return triviaCurrentQuestionSchema.type === "single" ? <RadioGroup 
+                                option={option}
+                                index={index}/> : "Checkbox"
                             })}
                         </div>
                         <Button
