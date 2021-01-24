@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
-import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { RootState } from "../../../../redux/store";
-import { getCurrentStep, setCurrentWorkflow } from "../../../../redux/workflow/reducer";
+import { setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 
 import Button from "../../../components/Button/index";
 
@@ -14,13 +13,12 @@ import "./styles.scss";
 
 type StateProps = {
     currentWorkflow: WorkflowDefinition | null;
-    currentStep: any
+    currentStep: any,
+    currentPath: string | undefined
 }
 
 type DispatchProps = {
-    onLoadWorkflow: (triviaId: string) => void;
-    handleTriviaId: (triviaId: string) => void;
-    onGetCurrentStep: () => void;
+    onGetCurrentPath: () => void;
 }
 
 type TriviaItemParams = {
@@ -33,24 +31,14 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const [triviaId, setTriviaId] = useState("");
-    const {onLoadWorkflow, handleTriviaId, currentStep, onGetCurrentStep, match} = props;
+    const {currentPath, onGetCurrentPath} = props;
 
     const navigateFirstStep = () => {
-        onGetCurrentStep();
+        onGetCurrentPath();
     }
 
-    useEffect(() => {
-        setTriviaId(match.params.triviaId);
-        
-        if (triviaId) {
-            handleTriviaId(triviaId);
-            onLoadWorkflow(triviaId);
-        }
-    }, [triviaId])
-
-    if (currentStep) {
-        return <Redirect to={`${triviaId}/${currentStep.id}`} />
+    if (currentPath) {
+        return <Redirect to={currentPath} />
     }
 
     return <div className="start-page">
@@ -59,7 +47,7 @@ const StartPage = (props: Props) => {
                 <div className="column column--6">
                     <h3>Harry Potter</h3>
                     <p>Description about the trivia content.</p>
-                    <Button kind="button" className="btn btn--outline" handleClick={navigateFirstStep}>Get Started!</Button>
+                    <Button kind="button" className="btn btn--outline black" handleClick={navigateFirstStep}>Get Started!</Button>
                 </div>
                 <div className="column column--6">
                 </div>
@@ -70,13 +58,12 @@ const StartPage = (props: Props) => {
 
 const mapState = (state: RootState | any) => ({
     currentWorkflow: state.workflow.workflowDefinition,
-    currentStep: state.workflow.currentStep
+    currentStep: state.workflow.currentStep,
+    currentPath: state.workflow.currentPath
 })
 
 const mapDispatch = {
-    onLoadWorkflow: (triviaId: string) => setCurrentWorkflow(triviaId),
-    handleTriviaId: (triviaId: string) => setTriviaId(triviaId),
-    onGetCurrentStep: () => getCurrentStep()
+    onGetCurrentPath: () => setCurrentPathToQuestion()
 }
 
 const StartPageWithRouter = withRouter(StartPage);

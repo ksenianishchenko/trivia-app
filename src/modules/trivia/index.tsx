@@ -21,14 +21,15 @@ const Routes: moduleItem[] = [
         name: "WelcomePage"
     },
     {
-        url: "/trivia/:triviaId/:questionId",
-        component: QuestionPageWithRouter,
-        name: "QuestionPage"
-    },
-    {
         url: "/trivia/:triviaId/result",
         component: ReasultPage,
         name: "ResultPage"
+    },
+    {
+        url: "/trivia/:triviaId/:questionId",
+        component: QuestionPageWithRouter,
+        name: "QuestionPage"
     }
+    
 ];
 export {Routes};

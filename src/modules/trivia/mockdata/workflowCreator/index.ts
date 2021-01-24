@@ -22,12 +22,20 @@ const hpQuestion2: TriviaQuestionWorkflowStep = {
     id: "2",
     end: true,
     type: "TriviaQuestion",
+    next: "display-results-step"
+}
+
+const hpResult: TriviaQuestionWorkflowStep = {
+    id: "3",
+    end: true,
+    type: "TriviaResult",
     next: undefined
 }
 
 stepsMap.set("0", hpQuestion0);
 stepsMap.set("1", hpQuestion1);
 stepsMap.set("2", hpQuestion2);
+stepsMap.set("display-results-step", hpResult);
 
 
 const harryPotterWorkflow : WorkflowDefinition = {

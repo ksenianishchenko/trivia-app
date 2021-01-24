@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/reducer";
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
+import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
+import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
+import RadioGroup from "../../../components/RadioGroup";
 
 type StateProps = {
-    triviaCurrentQuestionSchema: TriviaQuestionItem | null;
+    triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
+    currentPath: string | undefined
 }
 
 type DispatchProps = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => void;
+    onGetNextStep: () => void;
+    onGetCurrentPath: () => void;
 }
 
 type TriviaQuestionParams = {
@@ -26,25 +31,41 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const QuestionPage = (props: Props) => {
 
-    const {triviaCurrentQuestionSchema, onLoadQuestionSchema, match} = props;
+    const {triviaCurrentQuestionSchema, onLoadQuestionSchema, onGetNextStep, onGetCurrentPath, currentPath, match} = props;
     const [triviaId, setTriviaId] = useState("");
     const [questionId, setQuestionId] = useState("");
 
     let history = useHistory();
 
-    function initParams() {
-        setTriviaId(match.params.triviaId);
-        setQuestionId(match.params.questionId);
-    }
+    let prevPath = useRef(currentPath);
 
     useEffect(() => {
-        initParams();
+        if (currentPath) {
+            if(prevPath.current !== currentPath) {
+                history.replace(currentPath);
+            }
+        }
+        
+    }, [currentPath, history]);
+
+    useEffect(() => {
+        setTriviaId(match.params.triviaId);
+        setQuestionId(match.params.questionId);
         if (triviaId !== "" && questionId !== "" && questionId !== "result") {
             onLoadQuestionSchema(triviaId, questionId);
         }
-    })
+        
+    }, [triviaId, questionId, match.params.triviaId, match.params.questionId, onLoadQuestionSchema]);
 
     const handleQuestionSubmit = () => {
+        onGetNextStep();
+        onGetCurrentPath();
+    }
+
+    if (questionId === "result") {
+        if(currentPath) {
+            history.replace(currentPath);
+        }
     }
 
     if (triviaCurrentQuestionSchema) {
@@ -53,20 +74,12 @@ const QuestionPage = (props: Props) => {
                 <div className="content-wrap">
                     <p className="text text-sm">Question 1/0</p>
                     <form className="form">
-                        <h3>{triviaCurrentQuestionSchema.properties.answers.title}</h3>
+                        <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
-                            {triviaCurrentQuestionSchema.properties.answers.enum.map((option, index) => {
-                                return <div className="radio-group" key={index}>
-                                <label className="radio-group__label" htmlFor="1">
-                                    <input
-                                        className="radio-group__input"
-                                        type="radio"
-                                        name={option}
-                                        id="1"
-                                    />
-                                    <span>{option}</span>
-                                </label>
-                            </div>
+                            {triviaCurrentQuestionSchema.answers.map((option, index) => {
+                                return triviaCurrentQuestionSchema.type === "single" ? <RadioGroup 
+                                option={option}
+                                index={index}/> : "Checkbox"
                             })}
                         </div>
                         <Button
@@ -84,11 +97,14 @@ const QuestionPage = (props: Props) => {
 }
 
 const mapState = (state: RootState | any) => ({
-    triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema
+    triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema,
+    currentPath: state.workflow.currentPath
 })
 
 const mapDispatch = {
-    onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId)
+    onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
+    onGetNextStep: () => handleSubmitQuestion(),
+    onGetCurrentPath: () => setCurrentPathToQuestion()
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);
