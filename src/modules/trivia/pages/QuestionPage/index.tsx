@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 import RadioGroup from "../../../components/RadioGroup";
+import CheckboxGroup from "../../../components/CheckboxGroup";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
@@ -77,9 +78,15 @@ const QuestionPage = (props: Props) => {
                         <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
                             {triviaCurrentQuestionSchema.answers.map((option, index) => {
-                                return triviaCurrentQuestionSchema.type === "single" ? <RadioGroup 
-                                option={option}
-                                index={index}/> : "Checkbox"
+                                return triviaCurrentQuestionSchema.type === "single" ? 
+                                <RadioGroup 
+                                    option={option}
+                                    index={index}
+                                    name={triviaCurrentQuestionSchema.questionText}/> : 
+                                <CheckboxGroup
+                                    option={option}
+                                    index={index}
+                                />
                             })}
                         </div>
                         <Button

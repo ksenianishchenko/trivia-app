@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render <CheckboxGroup /> component correct should render checkbox group button 1`] = `
+<div
+  className="checkbox-group"
+  key="1"
+>
+  <label
+    className="checkbox-group__label"
+    htmlFor="0"
+  >
+    <input
+      className="checkbox-group__input"
+      id="0"
+      name="Lord Volan De Mort"
+      type="checkbox"
+    />
+    <span>
+      Lord Volan De Mort
+    </span>
+  </label>
+</div>
+`;

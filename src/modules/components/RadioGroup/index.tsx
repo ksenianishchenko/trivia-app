@@ -4,17 +4,19 @@ import { TriviaQuestionItemAnswersChoice } from "../../../abstractions/api/model
 type RadioGroupTypes = {
   option: TriviaQuestionItemAnswersChoice;
   index: number;
+  name: string;
 }
 
 const RadioGroup = (props: RadioGroupTypes) => {
-  const {option, index} = props;
+  const {option, index, name} = props;
 
   return <div className="radio-group" key={index}>
     <label className="radio-group__label" htmlFor={option.id}>
         <input
             className="radio-group__input"
             type="radio"
-            name={option.text}
+            name={name}
+            value={option.text}
             id={option.id}
         />
         <span>{option.text}</span>

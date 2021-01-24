@@ -104,7 +104,7 @@ const hpQuestion1 = {
     "id": "1",
     "title": "Harry Potter book",
     "questionText": "How does Harry first learn that he is a wizard",
-    "type": "single",
+    "type": "multiple",
     "next": "2",
     "answers": [
         {

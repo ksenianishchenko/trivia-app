@@ -12,8 +12,9 @@ exports[`should render <RadioGroup /> component correct should render radio grou
     <input
       className="radio-group__input"
       id="0"
-      name="Lord Volan De Mort"
+      name="name1"
       type="radio"
+      value="Lord Volan De Mort"
     />
     <span>
       Lord Volan De Mort
