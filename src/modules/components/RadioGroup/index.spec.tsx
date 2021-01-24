@@ -12,7 +12,7 @@ describe("should render <RadioGroup /> component correct", () => {
   }
 
   it("should render radio group button", () => {
-      const tree = shallow(<RadioGroup option={mockOption} key={1} />);
+      const tree = shallow(<RadioGroup option={mockOption} index={1} />);
       expect(tree).toMatchSnapshot();
   })
 

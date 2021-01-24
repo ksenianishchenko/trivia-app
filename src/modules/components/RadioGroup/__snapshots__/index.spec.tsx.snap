@@ -3,6 +3,7 @@
 exports[`should render <RadioGroup /> component correct should render radio group button 1`] = `
 <div
   className="radio-group"
+  key="1"
 >
   <label
     className="radio-group__label"
