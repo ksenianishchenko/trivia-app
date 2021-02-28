@@ -12,6 +12,12 @@ provider:
   environment:
     DYNAMODB_TABLE:
       Ref: TriviaDynamoDbTable
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+      Resource: "*"
 
 functions:
   listTrivia:
