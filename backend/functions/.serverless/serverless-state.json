@@ -122,6 +122,12 @@
               "LogGroupName": "/aws/lambda/dev-questionTrivia"
             }
           },
+          "QuestionAnswerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dev-answerTrivia"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -171,6 +177,9 @@
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dev-questionTrivia:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dev-answerTrivia:*"
                           }
                         ]
                       },
@@ -188,6 +197,9 @@
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dev-questionTrivia:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dev-answerTrivia:*:*"
                           }
                         ]
                       },
@@ -231,7 +243,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614557198693-2021-03-01T00:06:38.693Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
               },
               "Handler": "listTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -267,7 +279,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614557198693-2021-03-01T00:06:38.693Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
               },
               "Handler": "workflowFunction.handler",
               "Runtime": "nodejs14.x",
@@ -303,7 +315,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614557198693-2021-03-01T00:06:38.693Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
               },
               "Handler": "questionTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -330,6 +342,42 @@
             },
             "DependsOn": [
               "QuestionTriviaLogGroup"
+            ]
+          },
+          "QuestionAnswerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
+              },
+              "Handler": "questionAnswerFunction.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "dev-answerTrivia",
+              "MemorySize": 512,
+              "Timeout": 10,
+              "Description": "Returns correct answers with user answers",
+              "TracingConfig": {
+                "Mode": "Active"
+              },
+              "Environment": {
+                "Variables": {
+                  "DYNAMODB_TABLE": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"DYNAMODB_TABLE\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "QuestionAnswerLogGroup"
             ]
           },
           "ApiGatewayRestApi": {
@@ -514,7 +562,7 @@
                     "ResponseParameters": {
                       "method.response.header.Access-Control-Allow-Origin": "'*'",
                       "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST,GET'"
                     },
                     "ResponseTemplates": {
                       "application/json": ""
@@ -659,7 +707,50 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1614557196988": {
+          "ApiGatewayMethodV1TriviaTriviaidVarQuestionidVarPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceV1TriviaTriviaidVarQuestionidVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "QuestionAnswerLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1614751083054": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -673,7 +764,8 @@
               "ApiGatewayMethodV1TriviaTriviaidVarQuestionidVarOptions",
               "ApiGatewayMethodV1TriviaGet",
               "ApiGatewayMethodV1TriviaTriviaidVarGet",
-              "ApiGatewayMethodV1TriviaTriviaidVarQuestionidVarGet"
+              "ApiGatewayMethodV1TriviaTriviaidVarQuestionidVarGet",
+              "ApiGatewayMethodV1TriviaTriviaidVarQuestionidVarPost"
             ]
           },
           "ListTriviaLambdaPermissionApiGateway": {
@@ -756,6 +848,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "QuestionTriviaLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "QuestionAnswerLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "QuestionAnswerLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1039,6 +1168,42 @@
         "timeout": 10,
         "runtime": "nodejs14.x",
         "vpc": {}
+      },
+      "questionAnswer": {
+        "handler": "questionAnswerFunction.handler",
+        "name": "dev-answerTrivia",
+        "description": "Returns correct answers with user answers",
+        "events": [
+          {
+            "http": {
+              "path": "v1/trivia/{triviaId}/{questionId}",
+              "method": "post",
+              "memorySize": 128,
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "allowCredentials": false,
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ]
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "package": {},
+        "memory": 512,
+        "timeout": 10,
+        "runtime": "nodejs14.x",
+        "vpc": {}
       }
     },
     "resources": {
@@ -1094,7 +1259,7 @@
     "artifact": "D:\\Projects\\my-projects\\trivia\\backend\\functions\\.serverless\\TriviaApp.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/TriviaApp/dev/1614557198693-2021-03-01T00:06:38.693Z",
+    "artifactDirectoryName": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z",
     "artifact": "TriviaApp.zip"
   }
 }

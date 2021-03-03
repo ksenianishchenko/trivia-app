@@ -55,6 +55,18 @@ functions:
           memorySize: 128
           cors:
             origin: '*'
+
+  questionAnswer:
+    handler: questionAnswerFunction.handler
+    name: ${opt:stage, self:provider.stage, 'dev'}-answerTrivia
+    description: Returns correct answers with user answers
+    events:
+      - http:
+          path: /v1/trivia/{triviaId}/{questionId}
+          method: post
+          memorySize: 128
+          cors:
+            origin: '*'
 resources:
   Resources:
     TriviaDynamoDbTable:
