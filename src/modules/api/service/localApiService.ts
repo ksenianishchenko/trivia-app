@@ -1,10 +1,10 @@
 import IApiService from "../../../abstractions/api/service/apiService";
-import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinition";
 import {harryPotterWorkflow} from "../../trivia/mockdata/workflowCreator";
 import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
 import trivia from "../../trivia/mockdata/trivia";
+import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
 
 // GET /api/trivia/{trivia-id} -- WORKFLOW
 // => {startAt: "твой-возраст", states: {"твой-возраст": {"type": "single-trivia-question", "id": "твой-возраст", next: "кто-ты-по-гороскопу"}}}
@@ -20,8 +20,7 @@ export class LocalApiService implements IApiService {
         trivia.results.map((item) => {
             return triviaList.push({
                 id: item.id,
-                title: item.title,
-                properties: item.properties
+                title: item.title
             })
         })
 

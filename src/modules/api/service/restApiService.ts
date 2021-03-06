@@ -1,22 +1,41 @@
 import IApiService from "../../../abstractions/api/service/apiService";
-import TriviaInfoItem from "../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinition";
 import {harryPotterWorkflow} from "../../trivia/mockdata/workflowCreator";
 import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
-import trivia from "../../trivia/mockdata/trivia";
+import API from "./api";
+import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
+
+type RecordItemType = {
+    id: string;
+    title: string;
+}
+
+type TriviaItemType = {
+    primmary_key: string;
+    secondary_key: string;
+    record: RecordItemType;
+}
 
 export class RestApiService implements IApiService {
     listTrivia(): TriviaInfoItem[] {
-        const triviaList: TriviaInfoItem[] = [];
 
-        trivia.results.map((item) => {
-            return triviaList.push({
-                id: item.id,
-                title: item.title,
-                properties: item.properties
-            })
-        })
+        const triviaList: TriviaInfoItem[] = [];
+        
+        API.get(`/v1/trivia`).then((response) => {
+            const parsedData = JSON.parse(response.data.body);
+            const list = parsedData;
+            list.map((item: TriviaItemType) => {
+                return triviaList.push({
+                    id: item.record.id,
+                    title: item.record.title,
+                });
+            });
+
+            return triviaList;
+        }).catch((error) => {
+            console.error(error);
+        });
 
         return triviaList;
     }

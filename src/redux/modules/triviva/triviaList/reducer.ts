@@ -1,20 +1,9 @@
 import {ActionTypes} from "./actionTypes";
-import {triviaActions, DispatchTypeTrivia, triviaItemsState} from "./types";
-import {setTriviaItemsList} from "./actions";
-import IApiService from "../../../../abstractions/api/service/apiService";
-import { LocalApiService } from "../../../../modules/api/service/localApiService";
+import {triviaActions, triviaItemsState} from "./types";
 
 const initialState:triviaItemsState = {
     triviaItemsList: []
 };
-
-const apiService: IApiService = new LocalApiService();
-
-const onSetTriviaList = () => {
-    return (dispatch: DispatchTypeTrivia) => {
-        dispatch(setTriviaItemsList(apiService.listTrivia()));
-    }
-}
 
 const triviaDataReducer = (state: triviaItemsState = initialState, action: triviaActions) => {
     switch(action.type) {
@@ -28,4 +17,4 @@ const triviaDataReducer = (state: triviaItemsState = initialState, action: trivi
     }
 };
 
-export {triviaDataReducer, onSetTriviaList};
+export {triviaDataReducer};

@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import { connect } from "react-redux";
-import TriviaInfoItem from "../../../../abstractions/api/models/triviaInfoItem";
 import ListTrivia from "../../components/ListTrivia";
 import { RootState } from "../../../../redux/store";
-import { onSetTriviaList } from "../../../../redux/modules/triviva/triviaList/reducer";
 
 import "./styles.scss";
+import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
+import { onSetTriviaList } from "../../../../redux/modules/triviva/triviaList/fetch";
 
 type StateProps = {
     triviaList: TriviaInfoItem[]
@@ -22,10 +22,8 @@ const HomePage = (props: Props) => {
     const {triviaList, setList} = props;
 
     useEffect(() => {
-        if (triviaList.length === 0) {
-            setList();
-        }
-    })
+        setList();
+    }, [triviaList]);
 
     return <div className="home-page">
         <div className="page-inner">

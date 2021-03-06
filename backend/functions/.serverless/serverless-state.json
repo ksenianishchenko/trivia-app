@@ -243,7 +243,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615057755308-2021-03-06T19:09:15.308Z/TriviaApp.zip"
               },
               "Handler": "listTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -279,7 +279,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615057755308-2021-03-06T19:09:15.308Z/TriviaApp.zip"
               },
               "Handler": "workflowFunction.handler",
               "Runtime": "nodejs14.x",
@@ -315,7 +315,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615057755308-2021-03-06T19:09:15.308Z/TriviaApp.zip"
               },
               "Handler": "questionTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -351,7 +351,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615057755308-2021-03-06T19:09:15.308Z/TriviaApp.zip"
               },
               "Handler": "questionAnswerFunction.handler",
               "Runtime": "nodejs14.x",
@@ -475,7 +475,7 @@
                       "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
                     },
                     "ResponseTemplates": {
-                      "application/json": ""
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
                     }
                   }
                 ]
@@ -520,7 +520,7 @@
                       "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
                     },
                     "ResponseTemplates": {
-                      "application/json": ""
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
                     }
                   }
                 ]
@@ -565,7 +565,7 @@
                       "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST,GET'"
                     },
                     "ResponseTemplates": {
-                      "application/json": ""
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
                     }
                   }
                 ]
@@ -750,7 +750,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1614751083054": {
+          "ApiGatewayDeployment1615057752048": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1072,12 +1072,14 @@
               "method": "get",
               "memorySize": 128,
               "cors": {
+                "origins": [
+                  "*"
+                ],
                 "origin": "*",
                 "methods": [
                   "OPTIONS",
                   "GET"
                 ],
-                "allowCredentials": false,
                 "headers": [
                   "Content-Type",
                   "X-Amz-Date",
@@ -1085,7 +1087,8 @@
                   "X-Api-Key",
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent"
-                ]
+                ],
+                "allowCredentials": false
               },
               "integration": "AWS_PROXY"
             }
@@ -1108,12 +1111,14 @@
               "method": "get",
               "memorySize": 128,
               "cors": {
+                "origins": [
+                  "*"
+                ],
                 "origin": "*",
                 "methods": [
                   "OPTIONS",
                   "GET"
                 ],
-                "allowCredentials": false,
                 "headers": [
                   "Content-Type",
                   "X-Amz-Date",
@@ -1121,7 +1126,8 @@
                   "X-Api-Key",
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent"
-                ]
+                ],
+                "allowCredentials": false
               },
               "integration": "AWS_PROXY"
             }
@@ -1144,12 +1150,14 @@
               "method": "get",
               "memorySize": 128,
               "cors": {
+                "origins": [
+                  "*"
+                ],
                 "origin": "*",
                 "methods": [
                   "OPTIONS",
                   "GET"
                 ],
-                "allowCredentials": false,
                 "headers": [
                   "Content-Type",
                   "X-Amz-Date",
@@ -1157,7 +1165,8 @@
                   "X-Api-Key",
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent"
-                ]
+                ],
+                "allowCredentials": false
               },
               "integration": "AWS_PROXY"
             }
@@ -1180,12 +1189,14 @@
               "method": "post",
               "memorySize": 128,
               "cors": {
+                "origins": [
+                  "*"
+                ],
                 "origin": "*",
                 "methods": [
                   "OPTIONS",
                   "POST"
                 ],
-                "allowCredentials": false,
                 "headers": [
                   "Content-Type",
                   "X-Amz-Date",
@@ -1193,7 +1204,8 @@
                   "X-Api-Key",
                   "X-Amz-Security-Token",
                   "X-Amz-User-Agent"
-                ]
+                ],
+                "allowCredentials": false
               },
               "integration": "AWS_PROXY"
             }
@@ -1259,7 +1271,7 @@
     "artifact": "D:\\Projects\\my-projects\\trivia\\backend\\functions\\.serverless\\TriviaApp.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/TriviaApp/dev/1614751084505-2021-03-03T05:58:04.505Z",
+    "artifactDirectoryName": "serverless/TriviaApp/dev/1615057755308-2021-03-06T19:09:15.308Z",
     "artifact": "TriviaApp.zip"
   }
 }

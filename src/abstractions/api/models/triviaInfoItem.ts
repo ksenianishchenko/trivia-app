@@ -2,10 +2,18 @@ type TriviaProperties = {
     background: string
 }
 
-type TriviaInfoItem = {
+export type TriviaInfoItem = {
     id: string;
     title: string;
-    properties: TriviaProperties
 }
 
-export default TriviaInfoItem;
+type RecordItemType = {
+    id: string;
+    title: string;
+}
+
+export type TriviaItemFromRecordType = {
+    primmary_key: string;
+    secondary_key: string;
+    record: RecordItemType;
+}

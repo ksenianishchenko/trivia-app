@@ -29,8 +29,7 @@ functions:
           path: /v1/trivia
           method: get
           memorySize: 128
-          cors:
-            origin: '*'
+          cors: true
             
   workflow:
     handler: workflowFunction.handler
@@ -41,8 +40,7 @@ functions:
           path: /v1/trivia/{triviaId}
           method: get
           memorySize: 128
-          cors:
-            origin: '*'
+          cors: true
           
   questionTrivia:
     handler: questionTriviaFunction.handler
@@ -53,8 +51,7 @@ functions:
           path: /v1/trivia/{triviaId}/{questionId}
           method: get
           memorySize: 128
-          cors:
-            origin: '*'
+          cors: true
 
   questionAnswer:
     handler: questionAnswerFunction.handler
@@ -65,8 +62,7 @@ functions:
           path: /v1/trivia/{triviaId}/{questionId}
           method: post
           memorySize: 128
-          cors:
-            origin: '*'
+          cors: true
 resources:
   Resources:
     TriviaDynamoDbTable:
