@@ -5,6 +5,7 @@ import {harryPotterWorkflow} from "../../trivia/mockdata/workflowCreator";
 import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
 import API from "./api";
 import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
+import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
 
 type RecordItemType = {
     id: string;
@@ -18,7 +19,7 @@ type TriviaItemType = {
 }
 
 export class RestApiService implements IApiService {
-    listTrivia(): TriviaInfoItem[] {
+    listTrivia(dispatch: any): TriviaInfoItem[] {
 
         const triviaList: TriviaInfoItem[] = [];
         
@@ -32,6 +33,8 @@ export class RestApiService implements IApiService {
                 });
             });
 
+            
+            dispatch(setTriviaItemsList(triviaList));
             return triviaList;
         }).catch((error) => {
             console.error(error);
