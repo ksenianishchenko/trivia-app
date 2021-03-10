@@ -4,6 +4,6 @@ import { TriviaInfoItem } from "../models/triviaInfoItem";
 
 export default interface IApiService {
     listTrivia(dispatch: any): TriviaInfoItem[];
-    getTriviaWorkflow(triviaId: string): WorkflowDefinition;
-    getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem;
+    getTriviaWorkflow(triviaId: string, dispatch: any): WorkflowDefinition;
+    getTriviaQuestion(triviaId: string, questionId: string, dispatch: any): TriviaQuestionItem | void;
 }

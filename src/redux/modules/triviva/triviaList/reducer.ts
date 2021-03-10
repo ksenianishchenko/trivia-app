@@ -2,7 +2,7 @@ import {ActionTypes} from "./actionTypes";
 import {triviaActions, triviaItemsState} from "./types";
 
 const initialState:triviaItemsState = {
-    triviaItemsList: []
+    triviaItemsList: undefined
 };
 
 const triviaDataReducer = (state: triviaItemsState = initialState, action: triviaActions) => {

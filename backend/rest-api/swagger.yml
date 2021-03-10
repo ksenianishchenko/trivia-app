@@ -1,0 +1,217 @@
+swagger: "2.0"
+
+info:
+  title: "TriviaApp REST API"
+  description: "Provides API resources for end-user client applications"
+  version: "1.0.0"
+
+host:
+  "Fn::Sub": "execute-api.${AWS::Region}.amazonaws.com"
+
+schemes:
+  - https
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  v1/trivia:
+    get:
+      summary: "Returns a list of all trivia"
+      operationId: ListTrivia
+      responses:
+        200:
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Expose-Headers:
+              type: "string"
+          schema:
+            $ref: '#/definitions/ListTriviaResponseV1'
+        $ref: '../Common/ErrorResponses.yml'
+
+      x-amazon-apigateway-integration:
+        $ref: './x-Integration.yml'
+    options:
+      $ref: './Common/Options.yml'
+
+parameters:
+  $ref: './Common/Parameters.yml'
+
+definitions:
+  ListEnrollmentWorkflowsResponseV1:
+    $ref: './ListEnrollmentWorkflows/ListEnrollmentWorkflowsResponse.yml'
+
+  WorkflowDefinitionV1:
+    $ref: './Common/Schemas/WorkflowDefinition.yml'
+
+  ModifyAccountWorkflowResponseV1:
+    $ref: './GetModifyAccountWorkflow/ModifyAccountWorkflowResponse.yml'
+
+  FinishWorkflowResponseV1:
+    $ref: './FinishWorkflow/FinishWorkflowResponse.yml'
+
+  GetFormSchemaResponseV1:
+    $ref: './GetFormSchema/GetFormSchemaResponse.yml'
+
+  SubmitFormRequestV1:
+    $ref: './SubmitForm/SubmitFormRequest.yml'
+
+  InvestmentAccountStatusV1:
+    $ref: './Common/Schemas/InvestmentAccountStatus.yml'
+
+  ProfitLossV1:
+    $ref: './Common/Schemas/ProfitLoss.yml'
+
+  ListAccountsResponseV1:
+    $ref: './ListAccounts/ListAccountsResponse.yml'
+
+  GetAccountSummaryResponseV1:
+    $ref: './GetAccountSummary/GetAccountSummaryResponse.yml'
+
+  ListAccountTransactionsResponseV1:
+    $ref: './ListAccountTransactions/ListAccountTransactionsResponse.yml'
+
+  AccountPerformanceResponseV1:
+    $ref: './GetAccountPerformance/AccountPerformanceResponse.yml'
+
+  ListInvestmentInstrumentsRequestV1:
+    $ref: './ListInvestmentInstruments/ListInvestmentInstrumentsRequest.yml'
+  ListInvestmentInstrumentsResponseV1:
+    $ref: './ListInvestmentInstruments/ListInvestmentInstrumentsResponse.yml'
+
+  ListStatementsResponseV1:
+    $ref: './ListAccountStatements/ListStatementsResponse.yml'
+
+  StatementDetailsResponseV1:
+    $ref: './GetAccountStatementDetails/StatementDetailsResponse.yml'
+
+  ManualAchAccountDetailsV1:
+    $ref: './ManualAchDeposit/ManualAchAccountDetails.yml'
+
+  AchAccountTransferInfoV1:
+    $ref: './GetTransferSettings/AchAccountTransferInfo.yml'
+  InvestmentAccountTransferInfoV1:
+    $ref: './GetTransferSettings/InvestmentAccountTransferInfo.yml'
+
+  AccountManagementTypeV1:
+    $ref: './Common/Schemas/AccountManagementType.yml'
+
+  TransferFrequencyTypeV1:
+    $ref: './Common/Schemas/TransferFrequencyType.yml'
+
+  RetirementContributionTypeV1:
+    $ref: './ManualAchDeposit/RetirementContributionType.yml'
+  IRADepositDetailsV1:
+    $ref: './ManualAchDeposit/IRADepositDetails.yml'
+
+  RetirementDistributionTypeV1:
+    $ref: './ManualAchWithdrawal/RetirementDistributionType.yml'
+
+  IRAWithdrawalDetailsV1:
+    $ref: './ManualAchWithdrawal/IRAWithdrawalDetails.yml'
+
+  ManualAchDepositRequestV1:
+    $ref: './ManualAchDeposit/ManualAchDepositRequest.yml'
+
+  ObsoleteManualAchDepositRequestV1:
+    $ref: './ObsoleteManualAchDeposit/ManualAchDepositRequest.yml'
+
+  ManualAchDepositResponseV1:
+    $ref: './ManualAchDeposit/ManualAchDepositResponse.yml'
+
+  ManualAchWithdrawalRequestV1:
+    $ref: './ManualAchWithdrawal/ManualAchWithdrawalRequest.yml'
+
+  ObsoleteManualAchWithdrawalRequestV1:
+    $ref: './ObsoleteManualAchWithdrawal/ManualAchWithdrawalRequest.yml'
+
+  ManualAchWithdrawalResponseV1:
+    $ref: './ManualAchWithdrawal/ManualAchWithdrawalResponse.yml'
+
+  GetTransferSettingsResponseV1:
+    $ref: './GetTransferSettings/GetTransferSettingsResponse.yml'
+
+  GetTransferSettings2ResponseV1:
+    $ref: './GetTransferSettings2/GetTransferSettingsResponse.yml'
+
+  TransferableAccountV1:
+    $ref: './GetTransferSettings2/TransferableAccount.yml'
+
+  ListAchTransfersResponseV1:
+    $ref: './ListScheduledTransfers/ListAchTransfersResponse.yml'
+
+  ScheduleAchTransferRequestV1:
+    $ref: './ScheduleTransfer/ScheduleAchTransferRequest.yml'
+
+  ScheduleAchTransferResponseV1:
+    $ref: './ScheduleTransfer/ScheduleAchTransferResponse.yml'
+
+  UpdateAchTransferRequestV1:
+    $ref: './UpdateScheduledTransfer/UpdateAchTransferRequest.yml'
+
+  NotifyProductIssueRequestV1:
+    $ref: './NotifyProductIssue/NotifyProductIssueRequest.yml'
+
+  GetJobStatusResponseV1:
+    $ref: './GetJobState/GetJobStatusResponse.yml'
+
+  FeatureStateV1:
+    $ref: './ListFeatureStates/FeatureState.yml'
+
+  ListFeatureStatesResponseV1:
+    $ref: './ListFeatureStates/ListFeatureStatesResponse.yml'
+
+  GetTextFileDownloadUrlResponseV1:
+    $ref: './GetTextFileDownloadUrl/GetTextFileDownloadUrlResponse.yml'
+
+  CreateUploadLinksRequestV1:
+    $ref: './CreateUploadLinks/CreateUploadLinksRequest.yml'
+
+  CreateUploadLinksResponseV1:
+    $ref: './CreateUploadLinks/CreateUploadLinksResponse.yml'
+
+  ConfirmUploadedFilesRequestV1:
+    $ref: './ConfirmUploadedFiles/ConfirmUploadedFilesRequest.yml'
+
+  ConfirmUploadedFilesResponseV1:
+    $ref: './ConfirmUploadedFiles/ConfirmUploadedFilesResponse.yml'
+
+  SubmitAcatRequestV1:
+    $ref: './SubmitAcat/SubmitAcatRequest.yml'
+
+  SubmitAcatResponseV1:
+    $ref: './SubmitAcat/SubmitAcatResponse.yml'
+
+  GetRebalanceStatusResponseV1:
+    $ref: './GetRebalanceStatus/GetRebalanceStatusResponse.yml'
+
+  RebalanceStatusDetailsV1:
+    $ref: './GetRebalanceStatus/RebalanceStatusDetails.yml'
+
+  Empty:
+    $ref: './Common/Schemas/Empty.yml'
+
+  GetHeraldPingResponseV1:
+    $ref: './GetHeraldPing/GetHeraldPingResponse.yml'
+
+  ErrorResponseV1:
+    $ref: './Common/Schemas/ErrorResponse.yml'
+
+x-amazon-apigateway-gateway-responses:
+  $ref: './Common/x-amazon-apigateway-gateway-responses.yml'
+  
+x-amazon-apigateway-binary-media-types:
+  - application/octet-stream
+  - image/jpeg
+  - image/png
+  - application/pdf
+
+x-amazon-apigateway-request-validators:
+  "basicValidation":
+    validateRequestBody: true
+    validateRequestParameters: true
+    
+x-amazon-apigateway-request-validator: basicValidation

@@ -2,7 +2,7 @@ import { ActionTypes } from "./actionTypes";
 import { TriviaWorkflowActions, triviaWorkflowState } from "./types";
 
 const initialState: triviaWorkflowState = {
-    triviaCurrentQuestionSchema: null,
+    triviaCurrentQuestionSchema: undefined,
     currentTriviaId: null
 };
 

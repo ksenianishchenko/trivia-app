@@ -1,7 +1,7 @@
 import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem"
 
 export type triviaItemsState = {
-    triviaItemsList: TriviaInfoItem[]
+    triviaItemsList: TriviaInfoItem[] | undefined
 }
 
 type triviaItemsListAction = {

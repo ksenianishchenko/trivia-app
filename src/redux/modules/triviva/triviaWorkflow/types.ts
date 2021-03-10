@@ -1,7 +1,7 @@
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 
 export type triviaWorkflowState = {
-    triviaCurrentQuestionSchema: TriviaQuestionItem | any,
+    triviaCurrentQuestionSchema: TriviaQuestionItem | undefined,
     currentTriviaId: string | any
 }
 

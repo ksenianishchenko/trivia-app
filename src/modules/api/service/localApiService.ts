@@ -5,6 +5,9 @@ import {harryPotterWorkflow} from "../../trivia/mockdata/workflowCreator";
 import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
 import trivia from "../../trivia/mockdata/trivia";
 import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
+import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
+import { setCurrentPath, setCurrentStepId, setWorkflowDefinition } from "../../../redux/workflow/actions";
+import { setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
 
 // GET /api/trivia/{trivia-id} -- WORKFLOW
 // => {startAt: "твой-возраст", states: {"твой-возраст": {"type": "single-trivia-question", "id": "твой-возраст", next: "кто-ты-по-гороскопу"}}}
@@ -14,7 +17,7 @@ import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem"
 // {id: "твой-возраст", "title": "Сколько тебе лет", "answers": ["14-18", "19-30", "31-50"]}
 
 export class LocalApiService implements IApiService {
-    listTrivia(): TriviaInfoItem[] {
+    listTrivia(dispatch: any): TriviaInfoItem[] {
         const triviaList: TriviaInfoItem[] = [];
 
         trivia.results.map((item) => {
@@ -23,19 +26,24 @@ export class LocalApiService implements IApiService {
                 title: item.title
             })
         })
+        dispatch(setTriviaItemsList(triviaList));
 
         return triviaList;
     }
 
-    getTriviaWorkflow(triviaId: string): WorkflowDefinition {
+    getTriviaWorkflow(triviaId: string, dispatch: any): WorkflowDefinition {
+        dispatch(setWorkflowDefinition(harryPotterWorkflow));
+        dispatch(setCurrentStepId(harryPotterWorkflow.startAt));
+        dispatch(setCurrentPath(undefined));
         return harryPotterWorkflow;
     }
 
-    getTriviaQuestion(triviaId: string, questionId: string): TriviaQuestionItem {
+    getTriviaQuestion(triviaId: string, questionId: string, dispatch: any): TriviaQuestionItem {
         const currentTriviaQuestions = QuestionsWorkflow.get(triviaId);
         let questionSchema: any = undefined;
         if (currentTriviaQuestions) {
             questionSchema = currentTriviaQuestions.questions.get(questionId);
+            dispatch(setTriviaCurrentQuestionShema(questionSchema));
         }
 
         if (!questionSchema) {

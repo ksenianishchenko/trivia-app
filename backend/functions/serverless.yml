@@ -18,6 +18,7 @@ provider:
         - dynamodb:Query
         - dynamodb:GetItem
       Resource: "*"
+  prefix: ${opt:stage, self:provider.stage, 'dev'}-trivia_app
 
 functions:
   listTrivia:

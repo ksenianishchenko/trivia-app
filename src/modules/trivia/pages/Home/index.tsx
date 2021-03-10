@@ -8,7 +8,7 @@ import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoIt
 import { onSetTriviaList } from "../../../../redux/modules/triviva/triviaList/fetch";
 
 type StateProps = {
-    triviaList: TriviaInfoItem[]
+    triviaList: TriviaInfoItem[] | undefined
 }
 
 type DispatchProps = {
@@ -22,8 +22,14 @@ const HomePage = (props: Props) => {
     const {triviaList, setList} = props;
 
     useEffect(() => {
-        setList();
-    }, [triviaList]);
+        if (triviaList === undefined) {
+            setList();
+        }
+    });
+
+    if (triviaList === undefined) {
+        return <div>Trying to find trivia</div>
+    }
 
     return <div className="home-page">
         <div className="page-inner">

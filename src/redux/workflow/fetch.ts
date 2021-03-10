@@ -1,4 +1,3 @@
-import WorkflowDefinition from "../../abstractions/workflow/workflowDefinition";
 import IWorkflowRouter from "../../abstractions/workflow/workflowRouter";
 import apiService from "../../services/apiService";
 import { AppThunk } from "../store";
@@ -7,8 +6,6 @@ import { setCurrentStepId, setRouter, setWorkflowDefinition, setCurrentPath } fr
 type RouterPayload = {
     [key: string]: IWorkflowRouter;
 }
-
-let definition: WorkflowDefinition;
 
 const onSetRouter = ( router: IWorkflowRouter ): AppThunk<void> => (dispatch, getState) => {
     let type = router.getType();
@@ -19,10 +16,7 @@ const onSetRouter = ( router: IWorkflowRouter ): AppThunk<void> => (dispatch, ge
 }
 
 const initializeWorkflow = ( id: string ): AppThunk<void> => (dispatch, getState) => {
-    definition = apiService.getTriviaWorkflow(id)
-    dispatch(setWorkflowDefinition(definition));
-    dispatch(setCurrentStepId(definition.startAt));
-    dispatch(setCurrentPath(undefined));
+    apiService.getTriviaWorkflow(id, dispatch);
 }
 
 const setCurrentPathToQuestion = (): AppThunk<void> => (dispatch, getState) => {
@@ -35,7 +29,7 @@ const setCurrentPathToQuestion = (): AppThunk<void> => (dispatch, getState) => {
         throw Error("No workflow definition was initialized");
     }
 
-    const currentStepSchema = _workflowDefinition.steps.get(_currentStepId);
+    const currentStepSchema = _workflowDefinition.steps[_currentStepId];
 
     if (!currentStepSchema) {
         return;
@@ -53,7 +47,7 @@ const handleSubmitQuestion = (): AppThunk<void> => (dispatch, getState) => {
     const _workflowDefinition = getState().workflow.workflowDefinition;
     let _currentStepId = getState().workflow.currentStepId;
 
-    const currentStepSchema = _workflowDefinition.steps.get(_currentStepId);
+    const currentStepSchema = _workflowDefinition.steps[_currentStepId];
     if(currentStepSchema) {
         if(currentStepSchema.next) {
             _currentStepId = currentStepSchema.next;

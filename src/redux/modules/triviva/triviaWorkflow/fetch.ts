@@ -4,7 +4,7 @@ import { setTriviaCurrentQuestionShema } from "./actions";
 
 
 const setQuestionSchema = ( triviaId: string, questionId: string ): AppThunk<void> => (dispatch, getState) => {
-    dispatch(setTriviaCurrentQuestionShema(apiService.getTriviaQuestion(triviaId, questionId)));
+    apiService.getTriviaQuestion(triviaId, questionId, dispatch);
 }
 
 export {setQuestionSchema};

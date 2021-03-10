@@ -33,8 +33,8 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 const QuestionPage = (props: Props) => {
 
     const {triviaCurrentQuestionSchema, onLoadQuestionSchema, onGetNextStep, onGetCurrentPath, currentPath, match} = props;
-    const [triviaId, setTriviaId] = useState("");
-    const [questionId, setQuestionId] = useState("");
+    const [triviaId, setTriviaId] = useState(match.params.triviaId);
+    const [questionId, setQuestionId] = useState(match.params.questionId);
 
     let history = useHistory();
 
@@ -52,11 +52,12 @@ const QuestionPage = (props: Props) => {
     useEffect(() => {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
-        if (triviaId !== "" && questionId !== "" && questionId !== "result") {
+
+        if(triviaCurrentQuestionSchema === undefined) {
             onLoadQuestionSchema(triviaId, questionId);
         }
         
-    }, [triviaId, questionId, match.params.triviaId, match.params.questionId, onLoadQuestionSchema]);
+    }, [triviaId, questionId, match.params.triviaId, match.params.questionId]);
 
     const handleQuestionSubmit = () => {
         onGetNextStep();
