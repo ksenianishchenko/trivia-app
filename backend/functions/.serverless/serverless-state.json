@@ -244,7 +244,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1615356784313-2021-03-10T06:13:04.313Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615444352488-2021-03-11T06:32:32.488Z/TriviaApp.zip"
               },
               "Handler": "listTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -280,7 +280,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1615356784313-2021-03-10T06:13:04.313Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615444352488-2021-03-11T06:32:32.488Z/TriviaApp.zip"
               },
               "Handler": "workflowFunction.handler",
               "Runtime": "nodejs14.x",
@@ -316,7 +316,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1615356784313-2021-03-10T06:13:04.313Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615444352488-2021-03-11T06:32:32.488Z/TriviaApp.zip"
               },
               "Handler": "questionTriviaFunction.handler",
               "Runtime": "nodejs14.x",
@@ -352,7 +352,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/TriviaApp/dev/1615356784313-2021-03-10T06:13:04.313Z/TriviaApp.zip"
+                "S3Key": "serverless/TriviaApp/dev/1615444352488-2021-03-11T06:32:32.488Z/TriviaApp.zip"
               },
               "Handler": "questionAnswerFunction.handler",
               "Runtime": "nodejs14.x",
@@ -751,7 +751,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1615356780833": {
+          "ApiGatewayDeployment1615444351119": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1272,7 +1272,7 @@
     "artifact": "D:\\Projects\\my-projects\\trivia\\backend\\functions\\.serverless\\TriviaApp.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/TriviaApp/dev/1615356784313-2021-03-10T06:13:04.313Z",
+    "artifactDirectoryName": "serverless/TriviaApp/dev/1615444352488-2021-03-11T06:32:32.488Z",
     "artifact": "TriviaApp.zip"
   }
 }

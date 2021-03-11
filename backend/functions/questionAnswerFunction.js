@@ -5,7 +5,12 @@ exports.handler = (event, context, callback) => {
 
     const response = {
         statusCode: 501,
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { 
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Methods": "OPTIONS,GET, POST"
+        },
         body: 'Couldn\'t update answers',
     };
 
@@ -34,7 +39,6 @@ exports.handler = (event, context, callback) => {
 
             if (!result.Item) {
                 response.statusCode = 404;
-                response.headers = { 'Content-Type': 'text/plain' };
                 response.body = 'The question was not found';
                 return;
             }

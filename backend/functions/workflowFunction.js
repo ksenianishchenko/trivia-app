@@ -5,17 +5,22 @@ exports.handler = (event, context, callback) => {
   
     const response = {
         statusCode: 501,
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { 
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Methods": "OPTIONS,GET"
+         },
         body: 'Couldn\'t fetch the workflow',
     };
 
-    if (!event.workflow_type || !event.workflow_id) {
+    if (!event.pathParameters.triviaId) {
         response.statusCode = 400;
         response.body = 'Workflow Type or Workflow Id is missing';
         return response;
     }
 
-    const secondaryKey = `${event.workflow_type}/${event.workflow_id}`;
+    const secondaryKey = `trivia/${event.pathParameters.triviaId}`;
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
         Key: {
