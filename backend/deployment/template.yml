@@ -1,0 +1,307 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Description: "TriviaApp"
+
+Globals:
+  Function:
+    MemorySize: 1024
+    Runtime: nodejs14.x
+    Timeout: 10
+    Environment:
+      Variables:
+        DYNAMODB_TABLE:
+          Ref: TriviaDynamoDbTable
+  Api:
+    Cors:
+      AllowMethods: "'POST,DELETE,PUT,GET'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+      AllowOrigin: "'*'"
+    GatewayResponses:
+      DEFAULT_4XX:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+            Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+        ResponseTemplates:
+          'application/json': |
+            {
+              "errors": [
+                {
+                  "errorCode": "BAD_REQUEST",
+                  "errorMessage": $context.error.messageString
+                }]
+            }
+
+      DEFAULT_5XX:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+            Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+        ResponseTemplates:
+          'application/json': |
+            {
+              "errors": [
+                {
+                  "errorCode": "API.INTERNAL_SERVER_ERROR",
+                  "errorMessage": $context.error.messageString
+                }]
+            }
+
+      UNAUTHORIZED:
+        StatusCode: 401
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+            Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+        ResponseTemplates:
+          'application/json': |
+            {
+              "errors": [
+                {
+                  "errorCode": "API.UNAUTHORIZED",
+                  "errorMessage": $context.error.messageString
+                }]
+            }
+
+      BAD_REQUEST_PARAMETERS:
+        StatusCode: 400
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+        ResponseTemplates:
+          'application/json': |
+            {
+              "errors": [
+                {
+                  "errorCode": "API.BAD_REQUEST_PARAMETERS",
+                  "errorMessage": $context.error.messageString,
+                  "details": [
+                    {
+                      "name": "$context.error.responseType",
+                      "value":"$context.error.validationErrorString"
+                    }
+                  ]
+                }]
+            }
+
+      BAD_REQUEST_BODY:
+        StatusCode: 400
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+        ResponseTemplates:
+          'application/json': |
+            {
+              "errors": [
+                {
+                  "errorCode":"API.BAD_REQUEST_BODY",
+                  "errorMessage": $context.error.messageString,
+                  "details": [
+                    {
+                      "name":"$context.error.responseType",
+                      "value":"$context.error.validationErrorString"
+                    }]
+                }]
+            }
+    TracingEnabled: true
+    MethodSettings:
+      -
+        DataTraceEnabled: false
+        HttpMethod: "*"
+        LoggingLevel: INFO
+        ResourcePath: "/*"
+        MetricsEnabled: true
+
+Resources:
+  RestApiGatewayRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+        Version: "2012-10-17"
+      Path:
+        "Fn::Sub": "/trivia-app/apiGateway/"
+      Policies:
+        - PolicyDocument:
+            Statement:
+              - Action:
+                  - lambda:InvokeFunction
+                Effect: Allow
+                Resource:
+                  - "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:trivia-app-*"
+              - Action:
+                  - iam:PassRole
+                Effect: Allow
+                Resource:
+                  - "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/trivia-app-*"
+          PolicyName: PermitApiGateway
+
+  RestApiCloudWatchRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action: "sts:AssumeRole"
+      Path: "/trivia-app/apiGateway/"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+
+  RestApiCloudWatchAccount:
+    Type: "AWS::ApiGateway::Account"
+    Properties:
+      CloudWatchRoleArn:
+        "Fn::GetAtt": [ RestApiCloudWatchRole, Arn ]
+
+  RestApiLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName:
+        "Fn::Sub": "/aws/api-gateway/trivia-app-rest-api"
+
+  RestApi:
+    Type: "AWS::Serverless::Api"
+    Properties:
+      StageName: "dev"
+      MinimumCompressionSize: 1024
+      TracingEnabled: true
+      AccessLogSetting:
+        DestinationArn:
+          "Fn::GetAtt": [ RestApiLogGroup, Arn ]
+        Format: '{ "requestId":"$context.requestId", "ip": "$context.identity.sourceIp", "caller":"$context.identity.caller", "user":"$context.identity.user","requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod","resourcePath":"$context.resourcePath", "status":"$context.status","protocol":"$context.protocol", "responseLength":"$context.responseLength" }'
+      DefinitionBody:
+        "Fn::Transform":
+          Name: "AWS::Include"
+          Parameters:
+            Location: "./swagger.yml"
+
+  DefaultLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Path: "/trivia-app/lambda/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        -
+          PolicyName: "TracingLogsAccess"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "logs:CreateLogStream"
+                  - "logs:DescribeLogGroups"
+                  - "logs:DescribeLogStreams"
+                  - "logs:GetLogEvents"
+                  - "logs:FilterLogEvents"
+                Resource:
+                  - "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*:*:*"
+              -
+                Effect: "Allow"
+                Action:
+                  - "logs:PutLogEvents"
+                Resource:
+                  - "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*:*:*"
+              -
+                Effect: "Allow"
+                Action:
+                  - "logs:CreateLogGroup"
+                Resource: "*"
+              -
+                Effect: "Allow"
+                Action:
+                  - "xray:Put*"
+                  - "xray:Get*"
+                Resource: "*"
+        -
+          PolicyName: "DynamoDBAccess"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "dynamodb:GetItem"
+                  - "dynamodb:Scan"
+                  - "dynamodb:Query"
+                  - "dynamodb:BatchGetItem"
+                  - "dynamodb:DescribeTable"
+                  - "dynamodb:PutItem"
+                  - "dynamodb:UpdateItem"
+                  - "dynamodb:BatchWriteItem"
+                  - "dynamodb:DeleteItem"
+                Resource:
+                  - "Fn::GetAtt": [ TriviaDynamoDbTable, Arn ]
+
+  TriviaDynamoDbTable:
+    Type: "AWS::DynamoDB::Table"
+    DeletionPolicy: Retain
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: primary_key
+          AttributeType: S
+        -
+          AttributeName: secondary_key
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: primary_key
+          KeyType: HASH
+        -
+          AttributeName: secondary_key
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  ListTriviaFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Description: Returns a list of all trivia available
+      Handler: listTriviaFunction.handler
+      CodeUri: "./../functions/listTriviaFunction.js"
+      Role:
+        "Fn::GetAtt": [ DefaultLambdaRole, Arn ]
+
+  GetWorkflowFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Description: "Returns a requested trivia workflow"
+      Handler: workflowFunction.handler
+      CodeUri: "./../functions/workflowFunction.js"
+      Role:
+        "Fn::GetAtt": [ DefaultLambdaRole, Arn ]
+
+  GetTriviaQuestionFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Description: "Returns a requested trivia question by ID"
+      Handler: questionTriviaFunction.handler
+      CodeUri: "./../functions/questionTriviaFunction.js"
+      Role:
+        "Fn::GetAtt": [ DefaultLambdaRole, Arn ]
+
+  SubmitTriviaAnswerFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Description: "Returns a requested trivia question's answer"
+      Handler: questionAnswerFunction.handler
+      CodeUri: "./../functions/questionAnswerFunction.js"
+      Role:
+        "Fn::GetAtt": [ DefaultLambdaRole, Arn ]

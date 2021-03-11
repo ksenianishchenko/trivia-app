@@ -5,7 +5,10 @@ exports.handler = (event, context, callback) => {
 
     const response = {
         statusCode: 501,
-        headers: { 'Content-Type': 'text/plain' },
+        headers: {
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*'
+        },
         body: 'Couldn\'t update answers',
     };
 
@@ -34,11 +37,11 @@ exports.handler = (event, context, callback) => {
 
             if (!result.Item) {
                 response.statusCode = 404;
-                response.headers = { 'Content-Type': 'text/plain' };
                 response.body = 'The question was not found';
                 return;
             }
             else {
+                response.headers["Content-Type"] = "application/json";
                 response.body = JSON.stringify(result.Item.record[questionId].correct);
                 response.statusCode = 200;
             }

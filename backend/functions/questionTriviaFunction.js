@@ -3,11 +3,19 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => { 
     const response = {
-        statusCode: 400
+        statusCode: 400,
+        headers: {
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*'
+        }
     };
 
     const triviaId = event.pathParameters.triviaId;
     const questionId = event.pathParameters.questionId;
+    if (!triviaId || !questionId) {
+        callback(null, response);
+        return;
+    }
 
     const primaryKey = `trivia/question/${triviaId}`;
     const secondaryKey = questionId;
@@ -29,14 +37,15 @@ exports.handler = (event, context, callback) => {
 
             console.log(params);
 
-            if (!result.Item) {
+            if (!result?.Item?.record) {
                 response.statusCode = 404;
-                response.headers = { 'Content-Type': 'text/plain' };
                 response.body = 'No such question schema';
                 return;
             }
             else {
-                response.body = JSON.stringify(result.Item.record);
+                const question = result.Item.record;
+                response.headers["Content-Type"] = "application/json";
+                response.body = JSON.stringify(question);
                 response.statusCode = 200;
             }
         }

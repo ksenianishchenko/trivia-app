@@ -1,0 +1,216 @@
+openapi: "3.0.1"
+info:
+  title: "TriviaApp REST API"
+  description: "The TriviaApp Public REST API"
+  version: "1.0"
+
+host:
+  "Fn::Sub": "execute-api.${AWS::Region}.amazonaws.com"
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  "/v1/trivia":
+    get:
+      operationId: "List Trivia"
+      responses:
+        "200":
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Expose-Headers:
+              schema:
+                type: "string"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/TriviaListResponseV1"
+      "x-amazon-apigateway-integration":
+        type: "aws_proxy"
+        httpMethod: "POST"
+        passthroughBehavior: "WHEN_NO_TEMPLATES"
+        credentials:
+          "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+        uri:
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ListTriviaFunction}/invocations"
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+  "/v1/trivia/{triviaId}":
+    get:
+      operationId: "Get Trivia Workflow"
+      responses:
+        "200":
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Expose-Headers:
+              schema:
+                type: "string"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/WorkflowResponseV1"
+        "400":
+          description: Bad Request
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Expose-Headers:
+              type: "string"
+        "404":
+          description: Not Found
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Expose-Headers:
+              type: "string"
+        "501":
+          description: Internal Errpr
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Expose-Headers:
+              type: "string"
+
+      "x-amazon-apigateway-integration":
+        type: "aws"
+        httpMethod: "POST"
+        credentials:
+          "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+        uri:
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${GetWorkflowFunction}/invocations"
+        passthroughBehavior: NEVER
+        requestTemplates:
+          application/json: |
+            {
+              "workflow_type": "trivia",
+              "workflow_id": "$util.urlDecode($input.params('triviaId'))"
+            }
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+          ".*400.*":
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+          ".*404.*":
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+          ".*501.*":
+            statusCode: "501"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+
+  "/v1/trivia/{triviaId}/{questionId}":
+    get:
+      operationId: "Get Trivia Question"
+      responses:
+        "200":
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Expose-Headers:
+              schema:
+                type: "string"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/TriviaQuestionResponseV1"
+      "x-amazon-apigateway-integration":
+        type: "aws_proxy"
+        httpMethod: "POST"
+        passthroughBehavior: "WHEN_NO_TEMPLATES"
+        credentials:
+          "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+        uri:
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${GetTriviaQuestionFunction}/invocations"
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+    post:
+      operationId: "Submit Trivia Answer"
+      responses:
+        "200":
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Expose-Headers:
+              schema:
+                type: "string"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/TriviaAnswerResponseV1"
+      "x-amazon-apigateway-integration":
+        type: "aws_proxy"
+        httpMethod: "POST"
+        passthroughBehavior: "WHEN_NO_TEMPLATES"
+        credentials:
+          "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+        uri:
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${SubmitTriviaAnswerFunction}/invocations"
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+components:
+  schemas:
+    TriviaListResponseV1:
+      type: "array"
+      items:
+        "$ref": "#/components/schemas/TriviaListItemV1"
+    TriviaListItemV1:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+      required:
+        - id
+
+    WorkflowResponseV1:
+      type: "object"
+
+    TriviaQuestionResponseV1:
+      type: "object"
+
+    TriviaAnswerResponseV1:
+      type: "object"
+
+x-amazon-apigateway-cors:
+  allowOrigins:
+    - "*"
+  allowMethods:
+    - GET
+    - OPTIONS
+    - POST
+  allowHeaders:
+    - "x-amzm-header"
+    - "x-apigateway-header"
+    - "x-api-key"
+    - "authorization"
+    - "x-amz-date"
+    - "content-type"
