@@ -51,8 +51,7 @@ export class RestApiService implements IApiService {
         };
 
         API.get(`/v1/trivia/${triviaId}`).then((response) => {
-            const parsedData = JSON.parse(response.data.body);
-            workflow = parsedData;
+            workflow = response.data;
 
             dispatch(setWorkflowDefinition(workflow));
             dispatch(setCurrentStepId(workflow.startAt));
@@ -69,8 +68,7 @@ export class RestApiService implements IApiService {
         
         API.get(`/v1/trivia/${triviaId}/${questionId}`).then((response) => {
             let questionSchema: any = undefined;
-            const parsedData = JSON.parse(response.data.body);
-            questionSchema = parsedData;
+            questionSchema = response.data;
 
             dispatch(setTriviaCurrentQuestionShema(questionSchema));
 

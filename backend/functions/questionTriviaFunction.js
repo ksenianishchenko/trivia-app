@@ -4,9 +4,11 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 exports.handler = (event, context, callback) => { 
     const response = {
         statusCode: 400,
-        headers: {
-            'Content-Type': 'text/plain',
-            'Access-Control-Allow-Origin': '*'
+        headers: { 
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Methods": "OPTIONS,GET"
         }
     };
 
@@ -43,9 +45,8 @@ exports.handler = (event, context, callback) => {
                 return;
             }
             else {
-                const question = result.Item.record;
                 response.headers["Content-Type"] = "application/json";
-                response.body = JSON.stringify(question);
+                response.body = JSON.stringify(result.Item.record[questionId]);
                 response.statusCode = 200;
             }
         }

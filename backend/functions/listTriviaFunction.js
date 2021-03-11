@@ -5,9 +5,11 @@ exports.handler = (event, context, callback) => {
 
     const response = {
         statusCode: 501,
-        headers: {
-            'Content-Type': 'text/plain',
-            'Access-Control-Allow-Origin': '*'
+        headers: { 
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Methods": "OPTIONS,GET"
         },
         body: 'Couldn\'t fetch the trivia items.',
     };
