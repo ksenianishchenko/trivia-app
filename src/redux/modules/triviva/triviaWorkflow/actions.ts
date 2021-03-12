@@ -10,3 +10,8 @@ export const setTriviaId = (id: string) => ({
     type: ActionTypes.SET_TRIVIA_ID,
     payload: id
 });
+
+export const setCorrectAnswers = (answers: []) => ({
+    type: ActionTypes.SET_CORRECT_ANSWERS,
+    payload: answers
+});

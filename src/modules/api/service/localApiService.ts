@@ -52,4 +52,8 @@ export class LocalApiService implements IApiService {
 
         return questionSchema;
     }
+
+    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): [] {
+        return [];
+    }
 }

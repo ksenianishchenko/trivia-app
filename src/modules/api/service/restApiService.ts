@@ -7,7 +7,7 @@ import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem"
 import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
 import { setCurrentPath, setCurrentStepId, setWorkflowDefinition } from "../../../redux/workflow/actions";
 import WorkflowStep from "../../../abstractions/workflow/workflowStep";
-import { setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setCorrectAnswers, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
 
 type RecordItemType = {
     id: string;
@@ -74,5 +74,10 @@ export class RestApiService implements IApiService {
         }).catch((error) => {
             console.error(error);
         });
+    }
+
+    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): [] {
+        dispatch(setCorrectAnswers([]));
+        return [];
     }
 }

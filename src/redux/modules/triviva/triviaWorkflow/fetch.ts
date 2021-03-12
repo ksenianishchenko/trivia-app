@@ -7,4 +7,8 @@ const setQuestionSchema = ( triviaId: string, questionId: string ): AppThunk<voi
     apiService.getTriviaQuestion(triviaId, questionId, dispatch);
 }
 
-export {setQuestionSchema};
+const setCorrectAnswers = ( triviaId: string, questionId: string ): AppThunk<void> => (dispatch, getState) => {
+    apiService.getCorrectAnswers(triviaId, questionId, dispatch);
+}
+
+export {setQuestionSchema, setCorrectAnswers};

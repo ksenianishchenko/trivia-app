@@ -52,10 +52,7 @@ const QuestionPage = (props: Props) => {
     useEffect(() => {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
-
-        if(triviaCurrentQuestionSchema === undefined) {
-            onLoadQuestionSchema(triviaId, questionId);
-        }
+        onLoadQuestionSchema(triviaId, questionId);
         
     }, [triviaId, questionId, match.params.triviaId, match.params.questionId]);
 
