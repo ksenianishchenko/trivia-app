@@ -26,8 +26,7 @@ export class RestApiService implements IApiService {
         let triviaList: TriviaInfoItem[] = [];
         
         API.get(`/v1/trivia`).then((response) => {
-            const parsedData = JSON.parse(response.data.body);
-            const list = parsedData;
+            const list = response.data;
             triviaList = list.map((item: TriviaItemType) => {
                 return {
                     id: item.record.id,
