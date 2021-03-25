@@ -3,7 +3,7 @@ import { TriviaWorkflowActions, triviaWorkflowState } from "./types";
 
 const initialState: triviaWorkflowState = {
     triviaCurrentQuestionSchema: undefined,
-    currentTriviaId: null,
+    currentTriviaId: "",
     correctAnswers: []
 };
 

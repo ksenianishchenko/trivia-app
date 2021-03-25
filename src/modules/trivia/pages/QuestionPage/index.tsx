@@ -5,20 +5,21 @@ import { RootState } from "../../../../redux/store";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
-import { setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
+import { setCorrectAnswers, setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 import RadioGroup from "../../../components/RadioGroup";
 import CheckboxGroup from "../../../components/CheckboxGroup";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
-    currentPath: string | undefined
+    currentPath: string | undefined,
 }
 
 type DispatchProps = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => void;
     onGetNextStep: () => void;
     onGetCurrentPath: () => void;
+    onGetCorrectAnswers: (triviaId: string, questionId: string) => void;
 }
 
 type TriviaQuestionParams = {
@@ -32,9 +33,19 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const QuestionPage = (props: Props) => {
 
-    const {triviaCurrentQuestionSchema, onLoadQuestionSchema, onGetNextStep, onGetCurrentPath, currentPath, match} = props;
+    const { 
+        triviaCurrentQuestionSchema,
+        onLoadQuestionSchema,
+        onGetNextStep,
+        onGetCurrentPath,
+        currentPath,
+        match,
+        onGetCorrectAnswers
+    } = props;
+
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
     const [questionId, setQuestionId] = useState(match.params.questionId);
+    const [userAnswers, setUserAnswers] = useState<string[]>([]);
 
     let history = useHistory();
 
@@ -59,6 +70,23 @@ const QuestionPage = (props: Props) => {
     const handleQuestionSubmit = () => {
         onGetNextStep();
         onGetCurrentPath();
+
+        //reset usersAnswers
+        setUserAnswers([]);
+    }
+
+    const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        // get user answers
+        if (evt.target.checked) {
+            setUserAnswers([...userAnswers, evt.target.id]);
+        }
+    }
+
+    const handleAnswers = () => {
+        onGetCorrectAnswers(triviaId, questionId);
+
+        //reset usersAnswers
+        setUserAnswers([]);
     }
 
     if (questionId === "result") {
@@ -80,13 +108,21 @@ const QuestionPage = (props: Props) => {
                                 <RadioGroup 
                                     option={option}
                                     index={index}
-                                    name={triviaCurrentQuestionSchema.questionText}/> : 
+                                    name={triviaCurrentQuestionSchema.questionText}
+                                    handleChange={handleUsersAnswers}
+                                /> : 
                                 <CheckboxGroup
                                     option={option}
                                     index={index}
+                                    handleChange={handleUsersAnswers}
                                 />
                             })}
                         </div>
+                        <Button
+                            kind="button"
+                            className="btn btn--outline"
+                            handleClick={handleAnswers}
+                        > Answer </Button>
                         <Button
                             kind="button"
                             className="btn btn--outline"
@@ -109,7 +145,8 @@ const mapState = (state: RootState | any) => ({
 const mapDispatch = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
     onGetNextStep: () => handleSubmitQuestion(),
-    onGetCurrentPath: () => setCurrentPathToQuestion()
+    onGetCurrentPath: () => setCurrentPathToQuestion(),
+    onGetCorrectAnswers: (triviaId: string, questionId: string) => setCorrectAnswers(triviaId, questionId)
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);

@@ -1,7 +1,5 @@
 import IApiService from "../../../abstractions/api/service/apiService";
-import TriviaQuestionItem from "../../../abstractions/api/models/triviaQuestionItem";
 import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinition";
-import { QuestionsWorkflow } from "../../trivia/mockdata/triviaQuestionsCreator/index";
 import API from "./api";
 import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
 import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
@@ -76,8 +74,15 @@ export class RestApiService implements IApiService {
         });
     }
 
-    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): [] {
-        dispatch(setCorrectAnswers([]));
-        return [];
+    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): void {
+
+        API.post(`/v1/trivia/${triviaId}/${questionId}`, {}).then((response) => {
+            let correctAnswers = response.data;
+
+            dispatch(setCorrectAnswers(correctAnswers));
+
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 }

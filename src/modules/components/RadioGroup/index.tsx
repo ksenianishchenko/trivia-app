@@ -5,10 +5,11 @@ type RadioGroupTypes = {
   option: TriviaQuestionItemAnswersChoice;
   index: number;
   name: string;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioGroup = (props: RadioGroupTypes) => {
-  const {option, index, name} = props;
+  const {option, index, name, handleChange} = props;
 
   return <div className="radio-group" key={index}>
     <label className="radio-group__label" htmlFor={option.id}>
@@ -18,6 +19,7 @@ const RadioGroup = (props: RadioGroupTypes) => {
             name={name}
             value={option.text}
             id={option.id}
+            onChange={handleChange}
         />
         <span>{option.text}</span>
     </label>

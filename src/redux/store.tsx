@@ -11,8 +11,8 @@ import { WorkflowActions } from "./workflow/types";
 
 const rootReducer = combineReducers({
     triviaData: triviaDataReducer,
-    triviaWorkflow: triviaWorkflowReducer,
     workflow: workflowReducer,
+    triviaWorkflow: triviaWorkflowReducer,
 });
 
 type Actions = WorkflowActions
