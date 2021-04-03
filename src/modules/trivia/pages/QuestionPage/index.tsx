@@ -69,10 +69,14 @@ const QuestionPage = (props: Props) => {
     useEffect(() => {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
+        
+    }, [match.params.triviaId, match.params.questionId]);
+
+    useEffect(() => {
         onLoadQuestionSchema(triviaId, questionId);
         onGetCorrectAnswers(triviaId, questionId);
         
-    }, [triviaId, questionId, match.params.triviaId, match.params.questionId]);
+    }, [triviaId, questionId]);
 
     const handleQuestionSubmit = () => {
         onGetNextStep();
