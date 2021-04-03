@@ -1,5 +1,6 @@
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 import { ActionTypes } from "./actionTypes";
+import { UserAnswer } from "./types";
 
 export const setTriviaCurrentQuestionShema = (question: TriviaQuestionItem) => ({
     type: ActionTypes.SET_CURRENT_QUESTION_SCHEMA,
@@ -13,5 +14,10 @@ export const setTriviaId = (id: string) => ({
 
 export const setCorrectAnswers = (answers: []) => ({
     type: ActionTypes.SET_CORRECT_ANSWERS,
+    payload: answers
+});
+
+export const setUserAnswers = (answers: UserAnswer) => ({
+    type: ActionTypes.SET_USER_ANSWERS,
     payload: answers
 });

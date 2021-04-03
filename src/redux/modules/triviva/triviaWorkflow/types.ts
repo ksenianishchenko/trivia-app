@@ -1,9 +1,14 @@
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 
+export type UserAnswer = {
+    [id: string]: string
+}
+
 export type triviaWorkflowState = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined,
     currentTriviaId: string | any,
-    correctAnswers: []
+    correctAnswers: string[],
+    userAnswers: UserAnswer
 }
 
 type triviaQuestionSchemaAction = {

@@ -3,16 +3,19 @@ import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
-import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { useHistory } from "react-router-dom";
 import { setCorrectAnswers, setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 import RadioGroup from "../../../components/RadioGroup";
 import CheckboxGroup from "../../../components/CheckboxGroup";
+import { setUserAnswers } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
+import { UserAnswer } from "../../../../redux/modules/triviva/triviaWorkflow/types";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
     currentPath: string | undefined,
+    correctAnswers: string[]
 }
 
 type DispatchProps = {
@@ -20,6 +23,7 @@ type DispatchProps = {
     onGetNextStep: () => void;
     onGetCurrentPath: () => void;
     onGetCorrectAnswers: (triviaId: string, questionId: string) => void;
+    onGetUsersAnswers: (answers: UserAnswer) => void;
 }
 
 type TriviaQuestionParams = {
@@ -40,12 +44,14 @@ const QuestionPage = (props: Props) => {
         onGetCurrentPath,
         currentPath,
         match,
-        onGetCorrectAnswers
+        onGetCorrectAnswers,
+        onGetUsersAnswers,
+        correctAnswers
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
     const [questionId, setQuestionId] = useState(match.params.questionId);
-    const [userAnswers, setUserAnswers] = useState<string[]>([]);
+    const [userAnswers, setUserAnswers] = useState<UserAnswer>({});
 
     let history = useHistory();
 
@@ -64,6 +70,7 @@ const QuestionPage = (props: Props) => {
         setTriviaId(match.params.triviaId);
         setQuestionId(match.params.questionId);
         onLoadQuestionSchema(triviaId, questionId);
+        onGetCorrectAnswers(triviaId, questionId);
         
     }, [triviaId, questionId, match.params.triviaId, match.params.questionId]);
 
@@ -72,21 +79,26 @@ const QuestionPage = (props: Props) => {
         onGetCurrentPath();
 
         //reset usersAnswers
-        setUserAnswers([]);
+        setUserAnswers({});
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
         // get user answers
         if (evt.target.checked) {
-            setUserAnswers([...userAnswers, evt.target.id]);
+            let currentOptionId = evt.target.id;
+            let answer:UserAnswer = {};
+
+            if (correctAnswers.length > 0 && correctAnswers.indexOf(currentOptionId) > -1) {
+                answer[currentOptionId] = "correct";
+            } else {
+                answer[currentOptionId] = "error";
+            }
+
+            setUserAnswers({...userAnswers, ...answer});
         }
-    }
 
-    const handleAnswers = () => {
-        onGetCorrectAnswers(triviaId, questionId);
-
-        //reset usersAnswers
-        setUserAnswers([]);
+        //set users answers in redux store (don't use right now)
+        onGetUsersAnswers(userAnswers);
     }
 
     if (questionId === "result") {
@@ -110,19 +122,16 @@ const QuestionPage = (props: Props) => {
                                     index={index}
                                     name={triviaCurrentQuestionSchema.questionText}
                                     handleChange={handleUsersAnswers}
+                                    classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
                                 /> : 
                                 <CheckboxGroup
                                     option={option}
                                     index={index}
                                     handleChange={handleUsersAnswers}
+                                    classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
                                 />
                             })}
                         </div>
-                        <Button
-                            kind="button"
-                            className="btn btn--outline"
-                            handleClick={handleAnswers}
-                        > Answer </Button>
                         <Button
                             kind="button"
                             className="btn btn--outline"
@@ -139,14 +148,16 @@ const QuestionPage = (props: Props) => {
 
 const mapState = (state: RootState | any) => ({
     triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema,
-    currentPath: state.workflow.currentPath
+    currentPath: state.workflow.currentPath,
+    correctAnswers: state.triviaWorkflow.correctAnswers
 })
 
 const mapDispatch = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
     onGetNextStep: () => handleSubmitQuestion(),
     onGetCurrentPath: () => setCurrentPathToQuestion(),
-    onGetCorrectAnswers: (triviaId: string, questionId: string) => setCorrectAnswers(triviaId, questionId)
+    onGetCorrectAnswers: (triviaId: string, questionId: string) => setCorrectAnswers(triviaId, questionId),
+    onGetUsersAnswers: (answers: UserAnswer) => setUserAnswers(answers)
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);
