@@ -37,7 +37,7 @@ const App = (props: Props) => {
         setQuestionRouter(resultRouter);
         onSetRouter(questionRouter);
         onSetRouter(resultRouter);
-    }, [questionRouter, onSetRouter])
+    })
 
     return (
         <div className="app">

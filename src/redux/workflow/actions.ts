@@ -13,7 +13,7 @@ export const setWorkflowDefinition = (definition: WorkflowDefinition) => ({
     payload: definition
 });
 
-export const setCurrentStepId = (id: string) => ({
+export const setCurrentStepId = (id: string | undefined) => ({
     type: ActionTypes.SET_CURRENT_STEP_ID,
     payload: id
 });
