@@ -105,6 +105,19 @@ const QuestionPage = (props: Props) => {
         onGetUsersAnswers(userAnswers);
     }
 
+    const handleAnswers = () => {
+        for (let key in userAnswers) {
+            if (correctAnswers.length > 0 && correctAnswers.indexOf(key) > -1) {
+                setUserAnswers({...userAnswers, key: "correct"});
+            } else {
+                setUserAnswers({...userAnswers, key: "error"});
+            }
+        }
+
+        //reset usersAnswers
+        setUserAnswers({});
+    }
+
     if (questionId === "result") {
         if(currentPath) {
             history.replace(currentPath);
@@ -136,6 +149,11 @@ const QuestionPage = (props: Props) => {
                                 />
                             })}
                         </div>
+                        <Button
+                            kind="button"
+                            className="btn btn--outline"
+                            handleClick={handleAnswers}
+                        > Answer </Button>
                         <Button
                             kind="button"
                             className="btn btn--outline"
