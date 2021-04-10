@@ -27,3 +27,8 @@ export const setCurrentPath = (path: string | undefined) => ({
     type: ActionTypes.SET_CURRENT_PATH,
     payload: path
 });
+
+export const setTotalQuestions = (total: number | undefined) => ({
+    type: ActionTypes.SET_TOTAL_QUESTIONS,
+    payload: total
+});

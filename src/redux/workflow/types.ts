@@ -7,6 +7,7 @@ export type WorkflowState = {
     workflowDefinition: WorkflowDefinition | undefined;
     currentStepId: string | undefined;
     currentPath: string | undefined;
+    totalQuestions: number | undefined;
 }
 
 type WorkflowRouterAction = {

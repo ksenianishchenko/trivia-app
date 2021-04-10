@@ -5,7 +5,8 @@ const initialState: WorkflowState = {
     routers: undefined,
     workflowDefinition: undefined,
     currentStepId: undefined,
-    currentPath: undefined
+    currentPath: undefined,
+    totalQuestions: undefined
 }
 
 const workflowReducer = (state: WorkflowState = initialState, action: WorkflowActions) => {
@@ -34,6 +35,11 @@ const workflowReducer = (state: WorkflowState = initialState, action: WorkflowAc
             return {
                 ...state,
                 currentPath: action.payload
+            }
+        case ActionTypes.SET_TOTAL_QUESTIONS:
+            return {
+                ...state,
+                totalQuestions: action.payload
             }
         default:
             return state;

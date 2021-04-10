@@ -14,8 +14,9 @@ import { UserAnswer } from "../../../../redux/modules/triviva/triviaWorkflow/typ
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
-    currentPath: string | undefined,
-    correctAnswers: string[]
+    currentPath: string | undefined;
+    correctAnswers: string[];
+    totalQuestions: number | undefined
 }
 
 type DispatchProps = {
@@ -46,12 +47,14 @@ const QuestionPage = (props: Props) => {
         match,
         onGetCorrectAnswers,
         onGetUsersAnswers,
-        correctAnswers
+        correctAnswers,
+        totalQuestions
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
     const [questionId, setQuestionId] = useState(match.params.questionId);
     const [userAnswers, setUserAnswers] = useState<UserAnswer>({});
+    const [answersCount, setAnswersCount] = useState(1);
 
     let history = useHistory();
 
@@ -84,6 +87,7 @@ const QuestionPage = (props: Props) => {
 
         //reset usersAnswers
         setUserAnswers({});
+        setAnswersCount(answersCount + 1);
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +96,8 @@ const QuestionPage = (props: Props) => {
             let currentOptionId = evt.target.id;
             let answer:UserAnswer = {};
 
-            if (correctAnswers.length > 0 && correctAnswers.indexOf(currentOptionId) > -1) {
-                answer[currentOptionId] = "correct";
-            } else {
-                answer[currentOptionId] = "error";
-            }
+            //set users answers by questions id without values
+            answer[currentOptionId] = "";
 
             setUserAnswers({...userAnswers, ...answer});
         }
@@ -105,17 +106,15 @@ const QuestionPage = (props: Props) => {
         onGetUsersAnswers(userAnswers);
     }
 
-    const handleAnswers = () => {
+    const checkAnswers = () => {
+        // add values (correct or error) to the answer by checking with correct answers
         for (let key in userAnswers) {
             if (correctAnswers.length > 0 && correctAnswers.indexOf(key) > -1) {
-                setUserAnswers({...userAnswers, key: "correct"});
+                setUserAnswers({...userAnswers, [key]: "correct"});
             } else {
-                setUserAnswers({...userAnswers, key: "error"});
+                setUserAnswers({...userAnswers, [key]: "error"});
             }
         }
-
-        //reset usersAnswers
-        setUserAnswers({});
     }
 
     if (questionId === "result") {
@@ -128,7 +127,7 @@ const QuestionPage = (props: Props) => {
         return <div className="question-page">
             <div className="page-inner">
                 <div className="content-wrap">
-                    <p className="text text-sm">Question 1/0</p>
+                    <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
                     <form className="form">
                         <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
@@ -152,7 +151,7 @@ const QuestionPage = (props: Props) => {
                         <Button
                             kind="button"
                             className="btn btn--outline"
-                            handleClick={handleAnswers}
+                            handleClick={checkAnswers}
                         > Answer </Button>
                         <Button
                             kind="button"
@@ -170,6 +169,7 @@ const QuestionPage = (props: Props) => {
 
 const mapState = (state: RootState | any) => ({
     triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema,
+    totalQuestions: state.workflow.totalQuestions,
     currentPath: state.workflow.currentPath,
     correctAnswers: state.triviaWorkflow.correctAnswers
 })

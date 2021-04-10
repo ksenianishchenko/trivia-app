@@ -3,7 +3,7 @@ import WorkflowDefinition from "../../../abstractions/workflow/workflowDefinitio
 import API from "./api";
 import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem";
 import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
-import { setCurrentPath, setCurrentStepId, setWorkflowDefinition } from "../../../redux/workflow/actions";
+import { setCurrentPath, setCurrentStepId, setTotalQuestions, setWorkflowDefinition } from "../../../redux/workflow/actions";
 import WorkflowStep from "../../../abstractions/workflow/workflowStep";
 import { setCorrectAnswers, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
 
@@ -49,10 +49,12 @@ export class RestApiService implements IApiService {
 
         API.get(`/v1/trivia/${triviaId}`).then((response) => {
             workflow = response.data;
+            let totalQuestions = Object.keys(workflow.steps).length - 1
 
             dispatch(setWorkflowDefinition(workflow));
             dispatch(setCurrentStepId(workflow.startAt));
             dispatch(setCurrentPath(undefined));
+            dispatch(setTotalQuestions(totalQuestions));
 
         }).catch((error) => {
             console.error(error);
