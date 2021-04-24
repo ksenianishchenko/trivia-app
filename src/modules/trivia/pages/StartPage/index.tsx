@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
+import { setUserTotalAnswers } from "../../../../redux/modules/triviva/triviaResult/actions";
 import { RootState } from "../../../../redux/store";
 import { setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 
@@ -19,6 +20,7 @@ type StateProps = {
 
 type DispatchProps = {
     onGetCurrentPath: () => void;
+    onSetTotalAnswers: (total: number) => void;
 }
 
 type TriviaItemParams = {
@@ -31,9 +33,12 @@ type Props = StateProps & DispatchProps & TriviaItemProps;
 
 const StartPage = (props: Props) => {
 
-    const {currentPath, onGetCurrentPath} = props;
+    const {currentPath,
+        onGetCurrentPath,
+        onSetTotalAnswers } = props;
 
     const navigateFirstStep = () => {
+        onSetTotalAnswers(0);
         onGetCurrentPath();
     }
 
@@ -63,7 +68,8 @@ const mapState = (state: RootState | any) => ({
 })
 
 const mapDispatch = {
-    onGetCurrentPath: () => setCurrentPathToQuestion()
+    onGetCurrentPath: () => setCurrentPathToQuestion(),
+    onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
 }
 
 const StartPageWithRouter = withRouter(StartPage);

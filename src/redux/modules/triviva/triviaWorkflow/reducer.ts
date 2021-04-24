@@ -4,8 +4,7 @@ import { TriviaWorkflowActions, triviaWorkflowState } from "./types";
 const initialState: triviaWorkflowState = {
     triviaCurrentQuestionSchema: undefined,
     currentTriviaId: "",
-    correctAnswers: [],
-    userAnswers: {}
+    correctAnswers: []
 };
 
 const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action: TriviaWorkflowActions) => {
@@ -24,11 +23,6 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
             return {
                 ...state,
                 correctAnswers: action.payload
-            }
-        case ActionTypes.SET_USER_ANSWERS:
-            return {
-                ...state,
-                userAnswers: action.payload
             }
         default:
             return state;

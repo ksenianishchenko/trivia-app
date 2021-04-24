@@ -3,22 +3,33 @@ import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setCurrentPath, setCurrentStepId } from "../../../../redux/workflow/actions";
+import { RootState } from "../../../../redux/store";
+import { setUserTotalAnswers } from "../../../../redux/modules/triviva/triviaResult/actions";
+
+type StateProps = {
+    correctAnswersTotal: number;
+}
 
 type DispatchProps = {
     onResetCurrentPath: () => void;
     onResetCurrentStepId: () => void;
+    onSetTotalAnswers: (total: number) => void;
 }
 
-type Props = DispatchProps;
+type Props = StateProps & DispatchProps;
 
 const ReasultPage = (props: Props) => {
 
-    const {onResetCurrentPath, onResetCurrentStepId} = props;
+    const {onResetCurrentPath,
+        onResetCurrentStepId,
+        correctAnswersTotal,
+        onSetTotalAnswers } = props;
     let history = useHistory();
 
     const resetPath = () => {
         onResetCurrentStepId();
         onResetCurrentPath();
+        onSetTotalAnswers(0);
 
         history.push("/");
     }
@@ -26,6 +37,7 @@ const ReasultPage = (props: Props) => {
     return <div className="result-page">
         <div className="page-inner">
             <h3>Trivia completed!</h3>
+            <h2>Your result: {correctAnswersTotal}</h2>
             <Button
                 kind="button"
                 className="btn btn--outline"
@@ -35,9 +47,14 @@ const ReasultPage = (props: Props) => {
     </div>
 }
 
-const mapDispatch = (dispatch: any) => ({
-    onResetCurrentPath: () => dispatch(setCurrentPath(undefined)),
-    onResetCurrentStepId: () => dispatch(setCurrentStepId(undefined))
+const mapState = (state: RootState | any) => ({
+    correctAnswersTotal: state.triviaResult.correctAnswersTotal
 })
 
-export default connect(null, mapDispatch)(ReasultPage);
+const mapDispatch = (dispatch: any) => ({
+    onResetCurrentPath: () => dispatch(setCurrentPath(undefined)),
+    onResetCurrentStepId: () => dispatch(setCurrentStepId(undefined)),
+    onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
+})
+
+export default connect(mapState, mapDispatch)(ReasultPage);

@@ -9,14 +9,15 @@ import { setCorrectAnswers, setQuestionSchema } from "../../../../redux/modules/
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 import RadioGroup from "../../../components/RadioGroup";
 import CheckboxGroup from "../../../components/CheckboxGroup";
-import { setUserAnswers } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { UserAnswer } from "../../../../redux/modules/triviva/triviaWorkflow/types";
+import { setUserTotalAnswers } from "../../../../redux/modules/triviva/triviaResult/actions";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
     currentPath: string | undefined;
     correctAnswers: string[];
-    totalQuestions: number | undefined
+    totalQuestions: number | undefined;
+    correctAnswersTotal: number;
 }
 
 type DispatchProps = {
@@ -24,7 +25,7 @@ type DispatchProps = {
     onGetNextStep: () => void;
     onGetCurrentPath: () => void;
     onGetCorrectAnswers: (triviaId: string, questionId: string) => void;
-    onGetUsersAnswers: (answers: UserAnswer) => void;
+    onSetTotalAnswers: (total: number) => void;
 }
 
 type TriviaQuestionParams = {
@@ -46,9 +47,10 @@ const QuestionPage = (props: Props) => {
         currentPath,
         match,
         onGetCorrectAnswers,
-        onGetUsersAnswers,
         correctAnswers,
-        totalQuestions
+        totalQuestions,
+        onSetTotalAnswers,
+        correctAnswersTotal
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
@@ -82,6 +84,7 @@ const QuestionPage = (props: Props) => {
     }, [triviaId, questionId]);
 
     const handleQuestionSubmit = () => {
+        
         onGetNextStep();
         onGetCurrentPath();
 
@@ -99,20 +102,20 @@ const QuestionPage = (props: Props) => {
             //set users answers by questions id without values
             answer[currentOptionId] = "";
 
-            setUserAnswers({...userAnswers, ...answer});
+            setUserAnswers({...answer});
+            
         }
-
-        //set users answers in redux store (don't use right now)
-        onGetUsersAnswers(userAnswers);
     }
 
     const checkAnswers = () => {
+        let totalCorrect = correctAnswersTotal;
         // add values (correct or error) to the answer by checking with correct answers
         for (let key in userAnswers) {
             if (correctAnswers.length > 0 && correctAnswers.indexOf(key) > -1) {
-                setUserAnswers({...userAnswers, [key]: "correct"});
+                setUserAnswers({[key]: "correct"});
+                onSetTotalAnswers(totalCorrect + 1);
             } else {
-                setUserAnswers({...userAnswers, [key]: "error"});
+                setUserAnswers({[key]: "error"});
             }
         }
     }
@@ -127,25 +130,18 @@ const QuestionPage = (props: Props) => {
         return <div className="question-page">
             <div className="page-inner">
                 <div className="content-wrap">
-                    <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
+                    <p className="text text-sm">{`Question 1/${totalQuestions}`}</p>
                     <form className="form">
                         <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
                             {triviaCurrentQuestionSchema.answers.map((option, index) => {
-                                return triviaCurrentQuestionSchema.type === "single" ? 
-                                <RadioGroup 
-                                    option={option}
-                                    index={index}
-                                    name={triviaCurrentQuestionSchema.questionText}
-                                    handleChange={handleUsersAnswers}
-                                    classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
-                                /> : 
-                                <CheckboxGroup
-                                    option={option}
-                                    index={index}
-                                    handleChange={handleUsersAnswers}
-                                    classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
-                                />
+                                return <RadioGroup 
+                                option={option}
+                                index={index}
+                                name={triviaCurrentQuestionSchema.questionText}
+                                handleChange={handleUsersAnswers}
+                                classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
+                            />
                             })}
                         </div>
                         <Button
@@ -171,7 +167,8 @@ const mapState = (state: RootState | any) => ({
     triviaCurrentQuestionSchema: state.triviaWorkflow.triviaCurrentQuestionSchema,
     totalQuestions: state.workflow.totalQuestions,
     currentPath: state.workflow.currentPath,
-    correctAnswers: state.triviaWorkflow.correctAnswers
+    correctAnswers: state.triviaWorkflow.correctAnswers,
+    correctAnswersTotal: state.triviaResult.correctAnswersTotal
 })
 
 const mapDispatch = {
@@ -179,7 +176,7 @@ const mapDispatch = {
     onGetNextStep: () => handleSubmitQuestion(),
     onGetCurrentPath: () => setCurrentPathToQuestion(),
     onGetCorrectAnswers: (triviaId: string, questionId: string) => setCorrectAnswers(triviaId, questionId),
-    onGetUsersAnswers: (answers: UserAnswer) => setUserAnswers(answers)
+    onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);

@@ -1,6 +1,5 @@
 import apiService from "../../../../services/apiService";
 import { AppThunk } from "../../../store";
-import { setTriviaCurrentQuestionShema } from "./actions";
 
 
 const setQuestionSchema = ( triviaId: string, questionId: string ): AppThunk<void> => (dispatch, getState) => {

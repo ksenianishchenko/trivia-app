@@ -16,8 +16,3 @@ export const setCorrectAnswers = (answers: []) => ({
     type: ActionTypes.SET_CORRECT_ANSWERS,
     payload: answers
 });
-
-export const setUserAnswers = (answers: UserAnswer) => ({
-    type: ActionTypes.SET_USER_ANSWERS,
-    payload: answers
-});

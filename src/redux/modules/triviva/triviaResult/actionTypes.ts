@@ -1,0 +1,3 @@
+export const ActionTypes = {
+  SET_CORRECT_ANSWERS_TOTAL: `SET_CORRECT_ANSWERS_TOTAL`
+};

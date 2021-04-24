@@ -7,8 +7,7 @@ export type UserAnswer = {
 export type triviaWorkflowState = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined,
     currentTriviaId: string | any,
-    correctAnswers: string[],
-    userAnswers: UserAnswer
+    correctAnswers: string[]
 }
 
 type triviaQuestionSchemaAction = {
