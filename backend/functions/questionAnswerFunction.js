@@ -14,11 +14,12 @@ exports.handler = (event, context, callback) => {
         body: 'Couldn\'t update answers',
     };
 
-    const answers = ["Harry Potter"];
+    const userAnswers = JSON.parse(event.body);
     const triviaId = event.pathParameters.triviaId;
     const questionId = event.pathParameters.questionId;
     const primaryKey = `trivia/question/${triviaId}`;
     const secondaryKey = questionId;
+    let score;
 
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
@@ -36,6 +37,7 @@ exports.handler = (event, context, callback) => {
             }
 
             console.log(params);
+            console.log(userAnswers);
 
             if (!result.Item) {
                 response.statusCode = 404;
@@ -44,7 +46,8 @@ exports.handler = (event, context, callback) => {
             }
             else {
                 response.headers["Content-Type"] = "application/json";
-                response.body = JSON.stringify(result.Item.record[questionId].correct);
+                let correctAnswers = JSON.stringify(result.Item.record[questionId].correct);
+                response.body = correctAnswers;
                 response.statusCode = 200;
             }
         }
@@ -52,5 +55,4 @@ exports.handler = (event, context, callback) => {
             callback(null, response);
         }
     });
-
 };

@@ -24,7 +24,7 @@ type DispatchProps = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => void;
     onGetNextStep: () => void;
     onGetCurrentPath: () => void;
-    onGetCorrectAnswers: (triviaId: string, questionId: string) => void;
+    onGetCorrectAnswers: (triviaId: string, questionId: string, answers: string[]) => void;
     onSetTotalAnswers: (total: number) => void;
 }
 
@@ -55,7 +55,7 @@ const QuestionPage = (props: Props) => {
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
     const [questionId, setQuestionId] = useState(match.params.questionId);
-    const [userAnswers, setUserAnswers] = useState<UserAnswer>({});
+    const [userAnswers, setUserAnswers] = useState<string[]>([]);
     const [answersCount, setAnswersCount] = useState(1);
 
     let history = useHistory();
@@ -78,9 +78,7 @@ const QuestionPage = (props: Props) => {
     }, [match.params.triviaId, match.params.questionId]);
 
     useEffect(() => {
-        onLoadQuestionSchema(triviaId, questionId);
-        onGetCorrectAnswers(triviaId, questionId);
-        
+        onLoadQuestionSchema(triviaId, questionId);       
     }, [triviaId, questionId]);
 
     const handleQuestionSubmit = () => {
@@ -89,35 +87,25 @@ const QuestionPage = (props: Props) => {
         onGetCurrentPath();
 
         //reset usersAnswers
-        setUserAnswers({});
-        setAnswersCount(answersCount + 1);
+        setUserAnswers([]);
+        //setAnswersCount(answersCount + 1);
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
         // get user answers
         if (evt.target.checked) {
             let currentOptionId = evt.target.id;
-            let answer:UserAnswer = {};
 
-            //set users answers by questions id without values
-            answer[currentOptionId] = "";
+            //add question id in user answers object
 
-            setUserAnswers({...answer});
+            setUserAnswers([...userAnswers, currentOptionId]);
             
         }
     }
 
     const checkAnswers = () => {
-        let totalCorrect = correctAnswersTotal;
-        // add values (correct or error) to the answer by checking with correct answers
-        for (let key in userAnswers) {
-            if (correctAnswers.length > 0 && correctAnswers.indexOf(key) > -1) {
-                setUserAnswers({[key]: "correct"});
-                onSetTotalAnswers(totalCorrect + 1);
-            } else {
-                setUserAnswers({[key]: "error"});
-            }
-        }
+        // post user answers 
+        onGetCorrectAnswers(triviaId, questionId, userAnswers);
     }
 
     if (questionId === "result") {
@@ -140,7 +128,7 @@ const QuestionPage = (props: Props) => {
                                 index={index}
                                 name={triviaCurrentQuestionSchema.questionText}
                                 handleChange={handleUsersAnswers}
-                                classAdd={userAnswers[option.id] ? `${userAnswers[option.id]}` : ``}
+                                classAdd={``}
                             />
                             })}
                         </div>
@@ -175,7 +163,7 @@ const mapDispatch = {
     onLoadQuestionSchema: (triviaId: string, questionId: string) => setQuestionSchema(triviaId, questionId),
     onGetNextStep: () => handleSubmitQuestion(),
     onGetCurrentPath: () => setCurrentPathToQuestion(),
-    onGetCorrectAnswers: (triviaId: string, questionId: string) => setCorrectAnswers(triviaId, questionId),
+    onGetCorrectAnswers: (triviaId: string, questionId: string, answers: string[]) => setCorrectAnswers(triviaId, questionId, answers),
     onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
 }
 

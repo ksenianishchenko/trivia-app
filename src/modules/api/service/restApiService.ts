@@ -76,9 +76,9 @@ export class RestApiService implements IApiService {
         });
     }
 
-    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): void {
-
-        API.post(`/v1/trivia/${triviaId}/${questionId}`, {}).then((response) => {
+    getCorrectAnswers(triviaId: string, questionId: string, answers: string[], dispatch: any): void {
+        console.log(answers);
+        API.post(`/v1/trivia/${triviaId}/${questionId}`, {data: answers}).then((response) => {
             let correctAnswers = response.data;
 
             dispatch(setCorrectAnswers(correctAnswers));

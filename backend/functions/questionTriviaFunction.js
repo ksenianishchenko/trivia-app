@@ -37,8 +37,6 @@ exports.handler = (event, context, callback) => {
                 return;
             }
 
-            console.log(params);
-
             if (!result?.Item?.record) {
                 response.statusCode = 404;
                 response.body = 'No such question schema';
@@ -46,7 +44,9 @@ exports.handler = (event, context, callback) => {
             }
             else {
                 response.headers["Content-Type"] = "application/json";
-                response.body = JSON.stringify(result.Item.record[questionId]);
+                const question = result.Item.record[questionId];
+                delete question.correct;
+                response.body = JSON.stringify(question);
                 response.statusCode = 200;
             }
         }

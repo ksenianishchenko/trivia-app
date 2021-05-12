@@ -6,5 +6,5 @@ export default interface IApiService {
     listTrivia(dispatch: any): TriviaInfoItem[];
     getTriviaWorkflow(triviaId: string, dispatch: any): WorkflowDefinition;
     getTriviaQuestion(triviaId: string, questionId: string, dispatch: any): TriviaQuestionItem | void;
-    getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): [] | void;
+    getCorrectAnswers(triviaId: string, questionId: string, answers: string[], dispatch: any): [] | void;
 }

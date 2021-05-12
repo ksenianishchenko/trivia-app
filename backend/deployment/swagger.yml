@@ -205,20 +205,20 @@ paths:
             "application/json":
               schema:
                 "$ref": "#/components/schemas/TriviaResultResponseV1"
-    "x-amazon-apigateway-integration":
-      type: "aws_proxy"
-      httpMethod: "POST"
-      passthroughBehavior: "WHEN_NO_TEMPLATES"
-      credentials:
-        "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
-      uri:
-        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${GetTriviaResultFunction}/invocations"
-      responses:
-        "default":
-          statusCode: "200"
-          responseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-            method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+      "x-amazon-apigateway-integration":
+        type: "aws_proxy"
+        httpMethod: "POST"
+        passthroughBehavior: "WHEN_NO_TEMPLATES"
+        credentials:
+          "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+        uri:
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${GetTriviaResultFunction}/invocations"
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
 
 components:
   schemas:
