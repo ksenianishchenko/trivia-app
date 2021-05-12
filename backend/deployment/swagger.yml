@@ -150,6 +150,17 @@ paths:
               method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
     post:
       operationId: "Submit Trivia Answer"
+      "parameters": [
+          {
+            "in": "body",
+            "name": "TriviaAnsweBodyV1",
+            "description": "User's answers",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TriviaAnswerBodyV1"
+            }
+          }
+        ],
       responses:
         "200":
           headers:
@@ -177,16 +188,51 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: "'*'"
               method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+
+  "/v1/trivia/scores/{triviaId}/kseniia":
+    get:
+      operationId: "Get Trivia Result"
+      responses:
+        "200": 
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: "string"
+            Access-Control-Expose-Headers:
+              schema:
+                type: "string"
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/TriviaResultResponseV1"
+    "x-amazon-apigateway-integration":
+      type: "aws_proxy"
+      httpMethod: "POST"
+      passthroughBehavior: "WHEN_NO_TEMPLATES"
+      credentials:
+        "Fn::GetAtt": [ RestApiGatewayRole, Arn ]
+      uri:
+        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${GetTriviaResultFunction}/invocations"
+      responses:
+        "default":
+          statusCode: "200"
+          responseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+            method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
+
 components:
   schemas:
     TriviaListResponseV1:
       type: "array"
       items:
         "$ref": "#/components/schemas/TriviaListItemV1"
+
     TriviaListItemV1:
       type: "object"
       properties:
         id:
+          type: "string"
+        title:
           type: "string"
       required:
         - id
@@ -199,6 +245,13 @@ components:
 
     TriviaAnswerResponseV1:
       type: "object"
+
+    TriviaAnswerBodyV1:
+      type: "object"
+
+    TriviaResultResponseV1:
+      type: "number"
+
 
 x-amazon-apigateway-cors:
   allowOrigins:

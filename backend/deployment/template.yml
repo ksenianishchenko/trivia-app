@@ -305,3 +305,11 @@ Resources:
       CodeUri: "./../functions/questionAnswerFunction.js"
       Role:
         "Fn::GetAtt": [ DefaultLambdaRole, Arn ]
+  GetTriviaResultFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Description: "Returns a score of trivia for specific user"
+      Handler: triviaResultFunction.handler
+      CodeUri: "./../functions/triviaResultFunction.js"
+      Role:
+        "Fn::GetAtt": [ DefaultLambdaRole, Arn ]
