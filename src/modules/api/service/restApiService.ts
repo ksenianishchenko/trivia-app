@@ -6,6 +6,7 @@ import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/ac
 import { setCurrentPath, setCurrentStepId, setTotalQuestions, setWorkflowDefinition } from "../../../redux/workflow/actions";
 import WorkflowStep from "../../../abstractions/workflow/workflowStep";
 import { setCorrectAnswers, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setScore } from "../../../redux/modules/triviva/triviaResult/actions";
 
 type RecordItemType = {
     id: string;
@@ -77,7 +78,7 @@ export class RestApiService implements IApiService {
     }
 
     getCorrectAnswers(triviaId: string, questionId: string, answers: string[], dispatch: any): void {
-        console.log(answers);
+
         API.post(`/v1/trivia/${triviaId}/${questionId}`, {data: answers}).then((response) => {
             let correctAnswers = response.data;
 
@@ -86,5 +87,18 @@ export class RestApiService implements IApiService {
         }).catch((error) => {
             console.error(error);
         });
+    }
+
+    getTriviaScore(triviaId: string, dispatch: any): void {
+
+        API.get(`/v1/trivia/scores/${triviaId}`).then((response) => {
+            let data = response.data;
+
+            dispatch(setScore(data.score));
+
+        }).catch((error) => {
+            console.error(error);
+        });
+
     }
 }

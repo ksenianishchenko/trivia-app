@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
-import { setUserTotalAnswers } from "../../../../redux/modules/triviva/triviaResult/actions";
+import { setScore } from "../../../../redux/modules/triviva/triviaResult/actions";
 import { RootState } from "../../../../redux/store";
 import { setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 
@@ -69,7 +69,7 @@ const mapState = (state: RootState | any) => ({
 
 const mapDispatch = {
     onGetCurrentPath: () => setCurrentPathToQuestion(),
-    onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
+    onSetTotalAnswers: (total: number) => setScore(total)
 }
 
 const StartPageWithRouter = withRouter(StartPage);

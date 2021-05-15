@@ -10,7 +10,7 @@ import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redu
 import RadioGroup from "../../../components/RadioGroup";
 import CheckboxGroup from "../../../components/CheckboxGroup";
 import { UserAnswer } from "../../../../redux/modules/triviva/triviaWorkflow/types";
-import { setUserTotalAnswers } from "../../../../redux/modules/triviva/triviaResult/actions";
+import { setScore } from "../../../../redux/modules/triviva/triviaResult/actions";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
@@ -164,7 +164,7 @@ const mapDispatch = {
     onGetNextStep: () => handleSubmitQuestion(),
     onGetCurrentPath: () => setCurrentPathToQuestion(),
     onGetCorrectAnswers: (triviaId: string, questionId: string, answers: string[]) => setCorrectAnswers(triviaId, questionId, answers),
-    onSetTotalAnswers: (total: number) => setUserTotalAnswers(total)
+    onSetTotalAnswers: (total: number) => setScore(total)
 }
 
 const QuestionPageWithRouter = withRouter(QuestionPage);

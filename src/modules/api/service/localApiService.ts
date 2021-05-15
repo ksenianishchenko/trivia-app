@@ -56,4 +56,8 @@ export class LocalApiService implements IApiService {
     getCorrectAnswers(triviaId: string, questionId: string, dispatch: any): [] {
         return [];
     }
+
+    getTriviaScore(triviaId: string, dispatch: any): void {
+        console.log("Trivia Score");
+    }
 }

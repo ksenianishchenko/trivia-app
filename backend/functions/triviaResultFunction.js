@@ -15,8 +15,8 @@ exports.handler = (event, context, callback) => {
   };
 
   const triviaId = event.pathParameters.triviaId;
-  const userId = event.pathParameters.userId;
-  if (!triviaId || !userId) {
+
+  if (!triviaId) {
       callback(null, response);
       return;
   }
@@ -38,6 +38,9 @@ exports.handler = (event, context, callback) => {
             console.error(error);
             return;
         }
+
+        console.log(params);
+        console.log(result);
 
         if (!result?.Item?.record) {
             response.statusCode = 404;

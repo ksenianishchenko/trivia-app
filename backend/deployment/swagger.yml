@@ -150,17 +150,14 @@ paths:
               method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
     post:
       operationId: "Submit Trivia Answer"
-      "parameters": [
-          {
-            "in": "body",
-            "name": "TriviaAnsweBodyV1",
-            "description": "User's answers",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/TriviaAnswerBodyV1"
-            }
-          }
-        ],
+      parameters:
+        -
+          in: "body"
+          name: "TriviaAnswerRequestV1"
+          description: "User's answers"
+          required: false
+          schema:
+            "$ref": "#/components/schemas/TriviaAnswerRequestV1"
       responses:
         "200":
           headers:
@@ -189,7 +186,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: "'*'"
               method.response.header.Access-Control-Expose-Headers: "'X-Amzn-RequestId'"
 
-  "/v1/trivia/scores/{triviaId}/kseniia":
+  "/v1/trivia/scores/{triviaId}":
     get:
       operationId: "Get Trivia Result"
       responses:
@@ -245,13 +242,12 @@ components:
 
     TriviaAnswerResponseV1:
       type: "object"
-
-    TriviaAnswerBodyV1:
+    
+    TriviaAnswerRequestV1:
       type: "object"
 
     TriviaResultResponseV1:
-      type: "number"
-
+      type: "object"
 
 x-amazon-apigateway-cors:
   allowOrigins:

@@ -1,6 +1,6 @@
 import { ActionTypes } from "./actionTypes";
 
-export const setUserTotalAnswers = (total: number) => ({
+export const setScore = (score: number) => ({
   type: ActionTypes.SET_CORRECT_ANSWERS_TOTAL,
-  payload: total
+  payload: score
 });
