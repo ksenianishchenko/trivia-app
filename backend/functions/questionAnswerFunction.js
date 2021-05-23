@@ -19,21 +19,13 @@ exports.handler = async (event, context, callback) => {
     const questionId = event.pathParameters.questionId;
     const primaryKey = `trivia/question/${triviaId}`;
     const secondaryKey = questionId;
-    let score;
+    const table = process.env.DYNAMODB_TABLE;
 
     const params = {
-        TableName: process.env.DYNAMODB_TABLE,
+        TableName: table,
         Key: {
             "primary_key": primaryKey,
             "secondary_key": secondaryKey
-        }
-    };
-
-    let paramsForScore = {
-            TableName: process.env.DYNAMODB_TABLE,
-            Key: {
-                "primary_key": `scores`,
-                "secondary_key": `trivia/${triviaId}/kseniia`
         }
     };
 
@@ -47,12 +39,23 @@ exports.handler = async (event, context, callback) => {
         }
 
         response.headers["Content-Type"] = "application/json";
-        let correctAnswers = JSON.stringify(getQuestionResp.Item.record[questionId].correct);
-        response.body = correctAnswers;
+        let correctAnswers = getQuestionResp.Item.record[questionId].correct;
+        response.body = JSON.stringify(correctAnswers);
         response.statusCode = 200;
 
+        console.log(correctAnswers);
+
         // logic for score
-        const userScoreResp = await dynamoDb.get(paramsForScore).promise();
+        const userScoreResp = await dynamoDb.get({
+            TableName: table,
+            Key: {
+                "primary_key": `scores`,
+                "secondary_key": `trivia/${triviaId}/kseniia`
+            }
+        }).promise();
+
+        console.log(userScoreResp);
+        console.log(userAnswers);
 
         //create a record in db if there is no one
         if (!userScoreResp) {
@@ -60,22 +63,35 @@ exports.handler = async (event, context, callback) => {
         }
 
         if (userScoreResp) {
-            let score = userScoreResp.Item;
-            let isCorrectAnswer;
+            console.log("User score:", userScoreResp.Item.record.score);
+            let isCorrectAnswer = false;
 
-            if (score) {
-                if(correctAnswers.length === userAnswers.length) {
-                    isCorrectAnswer = correctAnswers.every(value => userAnswers.includes(value));
+            isCorrectAnswer = correctAnswers.every(value => userAnswers.includes(value));
+            console.log("User isCorrectAnswer:", isCorrectAnswer);
+
+            if (isCorrectAnswer !== false) {
+                //increase score by 1
+                const updateScore = await dynamoDb.update({
+                    TableName: table,
+                    Key: {
+                        "primary_key": `scores`,
+                        "secondary_key": `trivia/${triviaId}/kseniia`
+                    },
+                    UpdateExpression: "set #dynobase_record.score = #dynobase_record.score + :val",
+                    ExpressionAttributeValues:{
+                        ":val": 1
+                    },
+                    ExpressionAttributeNames: { "#dynobase_record": "record" },
+                    ReturnValues:"UPDATED_NEW"
+                }).promise();
+
+                console.log("User updateScore:", updateScore);
+
+                if(updateScore) {
+                    console.log("Updated item:", JSON.stringify(updateScore));
                 }
 
-                if (isCorrectAnswer) {
-                    //increase score by 1
-                    score = score + 1;
-
-                    console.log(correctAnswers);
-                    console.log(userAnswers);
-                    console.log(score);
-                }
+                console.log(userAnswers);
             }
         }
         
