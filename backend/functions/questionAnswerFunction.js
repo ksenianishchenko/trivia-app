@@ -65,8 +65,9 @@ exports.handler = async (event, context, callback) => {
         if (userScoreResp) {
             console.log("User score:", userScoreResp.Item.record.score);
             let isCorrectAnswer = false;
+            let userAnswersData = userAnswers.data;
 
-            isCorrectAnswer = correctAnswers.every(value => userAnswers.includes(value));
+            isCorrectAnswer = correctAnswers.every(value => userAnswersData.includes(value));
             console.log("User isCorrectAnswer:", isCorrectAnswer);
 
             if (isCorrectAnswer !== false) {
