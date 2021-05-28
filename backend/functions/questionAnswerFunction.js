@@ -21,6 +21,12 @@ exports.handler = async (event, context, callback) => {
     const secondaryKey = questionId;
     const table = process.env.DYNAMODB_TABLE;
 
+    let bodyResponse = {
+        "correctAnswers": [],
+        "score": 0,
+        "isCorrectAnswer": false
+    }
+
     const params = {
         TableName: table,
         Key: {
@@ -40,10 +46,7 @@ exports.handler = async (event, context, callback) => {
 
         response.headers["Content-Type"] = "application/json";
         let correctAnswers = getQuestionResp.Item.record[questionId].correct;
-        response.body = JSON.stringify(correctAnswers);
-        response.statusCode = 200;
-
-        console.log(correctAnswers);
+        bodyResponse.correctAnswers = correctAnswers;
 
         // logic for score
         const userScoreResp = await dynamoDb.get({
@@ -54,16 +57,12 @@ exports.handler = async (event, context, callback) => {
             }
         }).promise();
 
-        console.log(userScoreResp);
-        console.log(userAnswers);
-
         //create a record in db if there is no one
         if (!userScoreResp) {
             console.log("No such record");
         }
 
         if (userScoreResp) {
-            console.log("User score:", userScoreResp.Item.record.score);
             let isCorrectAnswer = false;
             let userAnswersData = userAnswers.data;
 
@@ -86,16 +85,19 @@ exports.handler = async (event, context, callback) => {
                     ReturnValues:"UPDATED_NEW"
                 }).promise();
 
-                console.log("User updateScore:", updateScore);
-
                 if(updateScore) {
+                    bodyResponse.score = updateScore.Attributes.record.score;
                     console.log("Updated item:", JSON.stringify(updateScore));
                 }
 
-                console.log(userAnswers);
+                bodyResponse.isCorrectAnswer = true;
             }
+
+            console.log(bodyResponse);
+
+            response.body = JSON.stringify(bodyResponse);
+            response.statusCode = 200;
         }
-        
     } catch (err) {
         console.error(err);
         response.statusCode = 501;
