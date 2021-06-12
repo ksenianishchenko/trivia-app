@@ -15,7 +15,6 @@ type StateProps = {
 type DispatchProps = {
     onResetCurrentPath: () => void;
     onResetCurrentStepId: () => void;
-    onSetTotalAnswers: (total: number) => void;
     onGetTotalScore: (triviaId: string) => void;
 }
 
@@ -32,7 +31,6 @@ const ReasultPage = (props: Props) => {
     const {onResetCurrentPath,
         onResetCurrentStepId,
         correctAnswersTotal,
-        onSetTotalAnswers,
         onGetTotalScore,
         match
     } = props;
@@ -53,7 +51,6 @@ const ReasultPage = (props: Props) => {
     const resetPath = () => {
         onResetCurrentStepId();
         onResetCurrentPath();
-        onSetTotalAnswers(0);
 
         history.push("/");
     }

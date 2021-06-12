@@ -79,7 +79,7 @@ const QuestionPage = (props: Props) => {
 
     useEffect(() => {
         onLoadQuestionSchema(triviaId, questionId);       
-    }, [triviaId, questionId]);
+    }, [triviaId, questionId, onLoadQuestionSchema]);
 
     const handleQuestionSubmit = () => {
         
@@ -101,6 +101,7 @@ const QuestionPage = (props: Props) => {
             setUserAnswers([...userAnswers, currentOptionId]);
             
         }
+        
     }
 
     const checkAnswers = () => {
@@ -123,13 +124,13 @@ const QuestionPage = (props: Props) => {
                         <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
                             {triviaCurrentQuestionSchema.answers.map((option, index) => {
-                                return <RadioGroup 
+                                return <div key={index}><RadioGroup 
                                 option={option}
                                 index={index}
                                 name={triviaCurrentQuestionSchema.questionText}
                                 handleChange={handleUsersAnswers}
                                 classAdd={``}
-                            />
+                            /></div>
                             })}
                         </div>
                         <Button

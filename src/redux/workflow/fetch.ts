@@ -26,7 +26,8 @@ const setCurrentPathToQuestion = (): AppThunk<void> => (dispatch, getState) => {
     const _currentTrivivaId = getState().triviaWorkflow.currentTriviaId;
     
     if (!_workflowDefinition) {
-        throw Error("No workflow definition was initialized");
+        //throw Error("No workflow definition was initialized");
+        return;
     }
 
     const currentStepSchema = _workflowDefinition.steps[_currentStepId];
