@@ -32,9 +32,10 @@ const HomePage = (props: Props) => {
     }
 
     return <div className="home-page">
-        <div className="page-inner">
+        <div className="page-inner" >
             <ListTrivia list={triviaList} />
         </div>
+        
     </div>
 }
 

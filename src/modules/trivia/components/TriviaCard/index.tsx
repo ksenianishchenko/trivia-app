@@ -7,6 +7,7 @@ import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/ac
 
 import "./styles.scss";
 import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
+import { url } from "inspector";
 
 type TriviaCardProps = {
     item: TriviaInfoItem
@@ -30,10 +31,11 @@ const TriviaCard = (props: Props) => {
         history.push(`trivia/${item.id}`);
     }
 
-    return <div className="trivia-card">
+    return <div className="trivia-card" style={{backgroundImage: `url("./resourses/stars.jpg")`}}>
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
                 <h2 className="trivia-card__title">{item.title}</h2>
+                <p>Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
                 <Button kind="button" className="btn btn--outline white" handleClick={handleInitializeWorkflow}>Start Trivia</Button>
             </div>
         </div>

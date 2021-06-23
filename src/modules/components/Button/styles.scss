@@ -5,12 +5,14 @@
   @include transition_all;
   display: inline-block;
   background: transparent;
-  padding: 0.35em 1.2em;
+  width: 160px;
+  padding: 18px 30px;
   margin: 0 0.3em 0.3em 0;
   border-radius: 0.12em;
   box-sizing: border-box;
   text-decoration: none;
   font-weight: 400;
+  font-size: 16px;
   text-align: center;
   cursor: pointer;
 }

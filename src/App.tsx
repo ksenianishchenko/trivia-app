@@ -21,7 +21,6 @@ type DispatchProps = {
 
 type Props = DispatchProps;
 
-
 // set routers
 const triviaQuestionRouter = new TriviaQuestionWorkflowRouter();
 const triviaResultRouter = new TriviaResultWorkflowRouter();

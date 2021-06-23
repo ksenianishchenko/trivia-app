@@ -2,15 +2,16 @@
 @import "../../../../mixins";
 
 .trivia-card {
-  height: 100%;
-  width: 100%;
-  padding-top: 30px;
-  background-color: $trivia-item-background;
+  min-width: 400px;
+  min-height: 400px;
+  background-color: rgba(0,0,0,0.5);
   @include flex-block;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  text-align: center;
+  color: $white;
 
   &::after {
     content: "";
@@ -26,16 +27,24 @@
 }
 
 .trivia-card__title {
-  color: $white;
   font-size: $font-size-link-title;
-  font-weight: 600;;
-  width: 100%;
+  font-weight: 600;
 }
 
 .trivia-card__wrap {
-  @include flex-block;
-  padding: 15px;
   width: 100%;
+  padding: 40px;
+  position: relative;
+
+  p {
+    font-weight: 300;
+    margin-bottom: 25px;
+  }
+}
+
+.trivia-card__info {
+  width: 100%;
+  text-align: center;
   position: relative;
   z-index: 2;
 }

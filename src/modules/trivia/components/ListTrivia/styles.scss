@@ -1,12 +1,13 @@
 @import "../../../../mixins";
 
 .list-trivia__wrap {
-  @include flex-block;
-  @include justify-content(space-between);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(200px, auto);
+  column-gap: 10px;
+  row-gap: 10px;
 }
 
 .list-trivia__item {
-  width: 30%;
-  min-height: 150px;
-  padding-right: 30px;
+  height: 100%;
 }
