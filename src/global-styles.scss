@@ -42,6 +42,7 @@ a {
 
 .page-inner {
   @include inner;
+  height: 100%;
 }
 
 .link {
@@ -50,4 +51,45 @@ a {
 
 .underline {
   text-decoration: underline;
+}
+
+.align-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dark-background {
+  position: relative;
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 0;
+  }
+}
+
+.dark-background-inner {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.title-large {
+  font-size: 38px;
+}
+
+.content-wrap {
+  padding: 20px;
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
 }

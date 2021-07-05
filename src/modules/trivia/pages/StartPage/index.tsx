@@ -46,15 +46,19 @@ const StartPage = (props: Props) => {
         return <Redirect to={currentPath} />
     }
 
-    return <div className="start-page">
-        <div className="page-inner">
-            <div className="row">
-                <div className="column column--6">
-                    <h3>Harry Potter</h3>
-                    <p>Description about the trivia content.</p>
-                    <Button kind="button" className="btn btn--outline black" handleClick={navigateFirstStep}>Get Started!</Button>
-                </div>
-                <div className="column column--6">
+    return <div className="start-page dark-background" style={{backgroundImage: `url("../resourses/harry-potter.jpg")`}}>
+        <div className="page-inner dark-background-inner">
+            <div className="content-wrap">
+                <div className="row">
+                    <div className="column column--4">
+                    </div>
+                    <div className="column column--4">
+                        <h3 className="title-large">Harry Potter</h3>
+                        <p>No matter how good or bad you do on these Harry Potter trivia questions, though, you know you have friends at Hogwarts.</p>
+                        <Button kind="button" className="btn btn--outline white" handleClick={navigateFirstStep}>Get Started!</Button>
+                    </div>
+                    <div className="column column--4">
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,4 +3,9 @@
 .start-page {
   @include reset;
   padding-top: 80px;
+  min-height: 100vh;
+  background-color: rgb(30, 30, 77);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

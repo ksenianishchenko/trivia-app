@@ -8,9 +8,9 @@ import { useHistory } from "react-router-dom";
 import { setCorrectAnswers, setQuestionSchema } from "../../../../redux/modules/triviva/triviaWorkflow/fetch";
 import { handleSubmitQuestion, setCurrentPathToQuestion } from "../../../../redux/workflow/fetch";
 import RadioGroup from "../../../components/RadioGroup";
-import CheckboxGroup from "../../../components/CheckboxGroup";
-import { UserAnswer } from "../../../../redux/modules/triviva/triviaWorkflow/types";
 import { setScore } from "../../../../redux/modules/triviva/triviaResult/actions";
+
+import "./styles.scss";
 
 type StateProps = {
     triviaCurrentQuestionSchema: TriviaQuestionItem | undefined;
@@ -115,9 +115,9 @@ const QuestionPage = (props: Props) => {
         }
     }
 
-    if (triviaCurrentQuestionSchema) {
-        return <div className="question-page">
-            <div className="page-inner">
+    if (triviaCurrentQuestionSchema) { 
+        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
+            <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
                     <p className="text text-sm">{`Question 1/${totalQuestions}`}</p>
                     <form className="form">
@@ -135,12 +135,12 @@ const QuestionPage = (props: Props) => {
                         </div>
                         <Button
                             kind="button"
-                            className="btn btn--outline"
+                            className="btn btn--outline white"
                             handleClick={checkAnswers}
                         > Answer </Button>
                         <Button
                             kind="button"
-                            className="btn btn--outline"
+                            className="btn btn--outline white"
                             handleClick={handleQuestionSubmit}
                         > Next </Button>
                     </form>
