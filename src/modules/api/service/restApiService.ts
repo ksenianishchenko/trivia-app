@@ -5,7 +5,7 @@ import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem"
 import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
 import { setCurrentPath, setCurrentStepId, setTotalQuestions, setWorkflowDefinition } from "../../../redux/workflow/actions";
 import WorkflowStep from "../../../abstractions/workflow/workflowStep";
-import { setCorrectAnswers, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setCorrectAnswers, setCurrentAnswerStatus, setLocalScore, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
 import { setScore } from "../../../redux/modules/triviva/triviaResult/actions";
 
 type RecordItemType = {
@@ -80,9 +80,12 @@ export class RestApiService implements IApiService {
     getCorrectAnswers(triviaId: string, questionId: string, answers: string[], dispatch: any): void {
 
         API.post(`/v1/trivia/${triviaId}/${questionId}`, {data: answers}).then((response) => {
-            let correctAnswers = response.data;
+            dispatch(setCorrectAnswers(response.data.correctAnswers));
 
-            dispatch(setCorrectAnswers(correctAnswers));
+            if (response.data.isCorrectAnswer === true) {
+                dispatch(setCurrentAnswerStatus(true));
+                dispatch(setLocalScore());
+            } 
 
         }).catch((error) => {
             console.error(error);
@@ -93,7 +96,6 @@ export class RestApiService implements IApiService {
 
         API.get(`/v1/trivia/scores/${triviaId}`).then((response) => {
             let data = response.data;
-
             dispatch(setScore(data.score));
 
         }).catch((error) => {

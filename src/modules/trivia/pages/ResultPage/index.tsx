@@ -12,6 +12,7 @@ import "./styles.scss";
 type StateProps = {
     correctAnswersTotal: number;
     currentTriviaId: string;
+    localScore: number;
 }
 
 type DispatchProps = {
@@ -34,10 +35,12 @@ const ReasultPage = (props: Props) => {
         onResetCurrentStepId,
         correctAnswersTotal,
         onGetTotalScore,
+        localScore,
         match
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
+    const [score, setScore] = useState(0);
 
     let history = useHistory();
 
@@ -47,8 +50,12 @@ const ReasultPage = (props: Props) => {
 
     useEffect(() => {
         onGetTotalScore(triviaId);
-        console.log("result");
     }, [triviaId]);
+
+    useEffect(() => {
+        console.log(localScore);
+        setScore(localScore);
+    });
 
     const resetPath = () => {
         onResetCurrentStepId();
@@ -61,7 +68,7 @@ const ReasultPage = (props: Props) => {
         <div className="page-inner">
             <div className="content-wrap">
                 <h3>Trivia completed!</h3>
-                <h2>Your result: {correctAnswersTotal}</h2>
+                <h2>Your result: {score}</h2>
                 <Button
                     kind="button"
                     className="btn btn--outline white"
@@ -74,7 +81,8 @@ const ReasultPage = (props: Props) => {
 
 const mapState = (state: RootState | any) => ({
     correctAnswersTotal: state.triviaResult.correctAnswersTotal,
-    currentTriviaId: state.triviaWorkflow.currentTriviaId
+    currentTriviaId: state.triviaWorkflow.currentTriviaId,
+    localScore: state.triviaWorkflow.localStore
 })
 
 const mapDispatch = (dispatch: any) => ({

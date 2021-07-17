@@ -47,16 +47,14 @@ const QuestionPage = (props: Props) => {
         currentPath,
         match,
         onGetCorrectAnswers,
-        correctAnswers,
         totalQuestions,
-        onSetTotalAnswers,
-        correctAnswersTotal
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
     const [questionId, setQuestionId] = useState(match.params.questionId);
     const [userAnswers, setUserAnswers] = useState<string[]>([]);
     const [answersCount, setAnswersCount] = useState(1);
+    const [activeButton, setActiveButton] = useState(true);
 
     let history = useHistory();
 
@@ -89,6 +87,7 @@ const QuestionPage = (props: Props) => {
         //reset usersAnswers
         setUserAnswers([]);
         setAnswersCount(answersCount + 1);
+        setActiveButton(true);
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,9 +103,12 @@ const QuestionPage = (props: Props) => {
         
     }
 
-    const checkAnswers = () => {
+    const onAnswersButtonClick = () => {
         // post user answers 
         onGetCorrectAnswers(triviaId, questionId, userAnswers);
+        setActiveButton(false);
+
+        console.log()
     }
 
     if (questionId === "result") {
@@ -116,7 +118,7 @@ const QuestionPage = (props: Props) => {
     }
 
     if (triviaCurrentQuestionSchema) { 
-        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
+        return <div className="question-page dark-background">
             <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
                     <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
@@ -133,16 +135,20 @@ const QuestionPage = (props: Props) => {
                             /></div>
                             })}
                         </div>
-                        <Button
-                            kind="button"
-                            className="btn btn--outline white"
-                            handleClick={checkAnswers}
-                        > Answer </Button>
-                        <Button
-                            kind="button"
-                            className="btn btn--outline white"
-                            handleClick={handleQuestionSubmit}
-                        > Next </Button>
+                        <div className="button-wrap">
+                            {
+                                    activeButton ? <Button
+                                    kind="button"
+                                    className="btn btn--outline white"
+                                    handleClick={onAnswersButtonClick}
+                                > Answer </Button> : <Button
+                                    kind="button"
+                                    className="btn btn--outline white"
+                                    handleClick={handleQuestionSubmit}
+                                > Next </Button>
+                            }
+                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -151,7 +157,6 @@ const QuestionPage = (props: Props) => {
         return <div className="question-page dark-background" >
                 <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
-                    <div className="message" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>No question found</div>
                 </div>
             </div>
         </div>
