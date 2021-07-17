@@ -88,7 +88,7 @@ const QuestionPage = (props: Props) => {
 
         //reset usersAnswers
         setUserAnswers([]);
-        //setAnswersCount(answersCount + 1);
+        setAnswersCount(answersCount + 1);
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +119,7 @@ const QuestionPage = (props: Props) => {
         return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
             <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
-                    <p className="text text-sm">{`Question 1/${totalQuestions}`}</p>
+                    <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
                     <form className="form">
                         <h3>{triviaCurrentQuestionSchema.questionText}</h3>
                         <div className="form__btn-wrap">
@@ -148,7 +148,13 @@ const QuestionPage = (props: Props) => {
             </div>
         </div>
     } else {
-        return <div className="message">No question found</div>
+        return <div className="question-page dark-background" >
+                <div className="page-inner dark-background-inner">
+                <div className="content-wrap">
+                    <div className="message" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>No question found</div>
+                </div>
+            </div>
+        </div>
     }
 }
 

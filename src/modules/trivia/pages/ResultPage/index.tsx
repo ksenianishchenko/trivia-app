@@ -7,6 +7,8 @@ import { RootState } from "../../../../redux/store";
 import { RouteComponentProps } from 'react-router';
 import { setTriviaScore } from "../../../../redux/modules/triviva/triviaResult/fetch";
 
+import "./styles.scss";
+
 type StateProps = {
     correctAnswersTotal: number;
     currentTriviaId: string;
@@ -55,15 +57,17 @@ const ReasultPage = (props: Props) => {
         history.push("/");
     }
 
-    return <div className="result-page">
+    return <div className="result-page dark-background text-white" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
         <div className="page-inner">
-            <h3>Trivia completed!</h3>
-            <h2>Your result: {correctAnswersTotal}</h2>
-            <Button
-                kind="button"
-                className="btn btn--outline"
-                handleClick={resetPath}
-            > Return </Button>
+            <div className="content-wrap">
+                <h3>Trivia completed!</h3>
+                <h2>Your result: {correctAnswersTotal}</h2>
+                <Button
+                    kind="button"
+                    className="btn btn--outline white"
+                    handleClick={resetPath}
+                > Return </Button>
+            </div>
         </div>
     </div>
 }

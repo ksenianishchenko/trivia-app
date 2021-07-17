@@ -1,5 +1,9 @@
 @import "../../../../mixins";
 
+.list-trivia {
+  padding-top: 50px;
+}
+
 .list-trivia__wrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

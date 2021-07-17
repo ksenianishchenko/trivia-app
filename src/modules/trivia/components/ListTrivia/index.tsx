@@ -11,7 +11,6 @@ interface ListProps {
 const ListTrivia = (props: ListProps) => {
     const {list} = props;
     return <div className="list-trivia">
-        <h2>Trivia list</h2>
         <div className="list-trivia__wrap">
             {
                 list.map((item: TriviaInfoItem, index: number) => {

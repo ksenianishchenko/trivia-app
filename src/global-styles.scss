@@ -5,6 +5,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: rgb(30, 30, 77);
+  color: white;
 }
 
 h1 {
@@ -62,6 +64,9 @@ a {
 
 .dark-background {
   position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   &::after {
     content: "";
     display: block;
@@ -92,4 +97,9 @@ a {
   margin: 0 auto;
   text-align: center;
   position: relative;
+  z-index: 100;
+}
+
+.text-white {
+  color: white;
 }
