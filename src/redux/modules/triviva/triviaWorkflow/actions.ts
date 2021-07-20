@@ -24,3 +24,7 @@ export const setCurrentAnswerStatus = (status: boolean) => ({
 export const setLocalScore = () => ({
     type: ActionTypes.SET_LOCAL_SCORE
 });
+
+export const resetLocalScore = () => ({
+    type: ActionTypes.RESET_LOCAL_SCORE
+});

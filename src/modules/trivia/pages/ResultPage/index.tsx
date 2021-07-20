@@ -8,17 +8,20 @@ import { RouteComponentProps } from 'react-router';
 import { setTriviaScore } from "../../../../redux/modules/triviva/triviaResult/fetch";
 
 import "./styles.scss";
+import { resetLocalScore } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 
 type StateProps = {
     correctAnswersTotal: number;
     currentTriviaId: string;
     localScore: number;
+    totalQuestions: number | undefined;
 }
 
 type DispatchProps = {
     onResetCurrentPath: () => void;
     onResetCurrentStepId: () => void;
     onGetTotalScore: (triviaId: string) => void;
+    onResetLocalScore: () => void;
 }
 
 type TriviaParams = {
@@ -35,12 +38,13 @@ const ReasultPage = (props: Props) => {
         onResetCurrentStepId,
         correctAnswersTotal,
         onGetTotalScore,
+        onResetLocalScore,
         localScore,
+        totalQuestions,
         match
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
-    const [score, setScore] = useState(0);
 
     let history = useHistory();
 
@@ -52,14 +56,10 @@ const ReasultPage = (props: Props) => {
         onGetTotalScore(triviaId);
     }, [triviaId]);
 
-    useEffect(() => {
-        console.log(localScore);
-        setScore(localScore);
-    });
-
     const resetPath = () => {
         onResetCurrentStepId();
         onResetCurrentPath();
+        onResetLocalScore();
 
         history.push("/");
     }
@@ -68,7 +68,7 @@ const ReasultPage = (props: Props) => {
         <div className="page-inner">
             <div className="content-wrap">
                 <h3>Trivia completed!</h3>
-                <h2>Your result: {score}</h2>
+                <h2>Your result: {localScore} of {totalQuestions}</h2>
                 <Button
                     kind="button"
                     className="btn btn--outline white"
@@ -82,13 +82,15 @@ const ReasultPage = (props: Props) => {
 const mapState = (state: RootState | any) => ({
     correctAnswersTotal: state.triviaResult.correctAnswersTotal,
     currentTriviaId: state.triviaWorkflow.currentTriviaId,
-    localScore: state.triviaWorkflow.localStore
+    localScore: state.triviaWorkflow.localScore,
+    totalQuestions: state.workflow.totalQuestions,
 })
 
 const mapDispatch = (dispatch: any) => ({
     onResetCurrentPath: () => dispatch(setCurrentPath(undefined)),
     onResetCurrentStepId: () => dispatch(setCurrentStepId(undefined)),
-    onGetTotalScore: (triviaId: string) => dispatch(setTriviaScore(triviaId))
+    onGetTotalScore: (triviaId: string) => dispatch(setTriviaScore(triviaId)),
+    onResetLocalScore: () => dispatch(resetLocalScore())
 })
 
 export default connect(mapState, mapDispatch)(ReasultPage);

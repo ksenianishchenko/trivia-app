@@ -41,6 +41,11 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
                 ...state,
                 localScore: state.localScore + 1
             }
+        case ActionTypes.RESET_LOCAL_SCORE:
+            return {
+                ...state,
+                localScore: 0
+            }
         default:
             return state;
     }
