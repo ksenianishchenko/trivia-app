@@ -13,7 +13,7 @@ type RadioGroupTypes = {
 }
 
 const RadioGroup = (props: RadioGroupTypes) => {
-  const {option, index, name, handleChange, classAdd, checked} = props;
+  const {option, name, handleChange, classAdd, checked} = props;
 
   return <div className={`radio-group ${classAdd}`} key={`radio_${option.id}`}>
     <input
@@ -23,6 +23,7 @@ const RadioGroup = (props: RadioGroupTypes) => {
         value={option.text}
         id={option.id}
         onChange={handleChange}
+        checked={checked}
     />
     <label className="radio-group__label" htmlFor={option.id}><span>{option.text}</span></label>
     <div className="toggle"></div>

@@ -31,11 +31,6 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
                 ...state,
                 isCurrentAnswerCorrect: action.payload
             }
-        case ActionTypes.SET_CURRENT_ANSWER_STATUS:
-            return {
-                ...state,
-                isCurrentAnswerCorrect: action.payload
-            }
         case ActionTypes.SET_LOCAL_SCORE:
             return {
                 ...state,

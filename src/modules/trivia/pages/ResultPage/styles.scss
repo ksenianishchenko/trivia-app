@@ -1,3 +1,27 @@
 .result-page {
   min-height: 100vh;
+
+  .page-inner {
+    padding-top: 50px;
+  }
+
+  h3 {
+    font-size: 42px;
+    margin-bottom: 50px;
+  }
+
+  .btn--outline {
+    margin-bottom: 15px;
+  }
+}
+
+.result-page__img {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 }

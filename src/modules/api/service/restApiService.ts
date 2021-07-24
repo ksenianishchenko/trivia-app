@@ -85,7 +85,9 @@ export class RestApiService implements IApiService {
             if (response.data.isCorrectAnswer === true) {
                 dispatch(setCurrentAnswerStatus(true));
                 dispatch(setLocalScore());
-            } 
+            } else {
+                dispatch(setCurrentAnswerStatus(false));
+            }
 
         }).catch((error) => {
             console.error(error);

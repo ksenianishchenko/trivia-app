@@ -31,7 +31,7 @@ const TriviaCard = (props: Props) => {
         history.push(`trivia/${item.id}`);
     }
 
-    return <div className="trivia-card" style={{backgroundImage: `url("./resourses/stars.jpg")`}}>
+    return <div className="trivia-card" style={{backgroundImage: `url("./resourses/harry-potter.jpg")`}}>
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
                 <h2 className="trivia-card__title">{item.title}</h2>
