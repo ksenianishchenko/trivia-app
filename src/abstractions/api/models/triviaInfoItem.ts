@@ -5,6 +5,7 @@ type TriviaProperties = {
 export type TriviaInfoItem = {
     id: string;
     title: string;
+    poster: string;
 }
 
 type RecordItemType = {

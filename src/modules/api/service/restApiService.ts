@@ -11,6 +11,7 @@ import { setScore } from "../../../redux/modules/triviva/triviaResult/actions";
 type RecordItemType = {
     id: string;
     title: string;
+    poster: string;
 }
 
 type TriviaItemType = {
@@ -30,6 +31,7 @@ export class RestApiService implements IApiService {
                 return {
                     id: item.record.id,
                     title: item.record.title,
+                    poster: item.record.poster
                 };
             });
 

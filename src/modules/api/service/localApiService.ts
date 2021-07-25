@@ -23,7 +23,8 @@ export class LocalApiService implements IApiService {
         trivia.results.map((item) => {
             return triviaList.push({
                 id: item.id,
-                title: item.title
+                title: item.title,
+                poster: item.properties.background
             })
         })
         dispatch(setTriviaItemsList(triviaList));
