@@ -15,6 +15,7 @@ type StateProps = {
     currentTriviaId: string;
     localScore: number;
     totalQuestions: number | undefined;
+    currentTriviaPoster: string;
 }
 
 type DispatchProps = {
@@ -41,6 +42,7 @@ const ReasultPage = (props: Props) => {
         onResetLocalScore,
         localScore,
         totalQuestions,
+        currentTriviaPoster,
         match
     } = props;
 
@@ -64,7 +66,7 @@ const ReasultPage = (props: Props) => {
         history.push("/");
     }
 
-    return <div className="result-page dark-background text-white" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
+    return <div className="result-page dark-background text-white" style={{backgroundImage: `url("/resourses/${currentTriviaPoster}")`}}>
         <div className="page-inner">
             <div className="content-wrap">
                 <div className="result-page__img">
@@ -91,6 +93,7 @@ const mapState = (state: RootState | any) => ({
     currentTriviaId: state.triviaWorkflow.currentTriviaId,
     localScore: state.triviaWorkflow.localScore,
     totalQuestions: state.workflow.totalQuestions,
+    currentTriviaPoster: state.triviaWorkflow.currentTriviaPoster
 })
 
 const mapDispatch = (dispatch: any) => ({

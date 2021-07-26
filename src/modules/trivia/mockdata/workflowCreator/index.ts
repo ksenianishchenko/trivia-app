@@ -40,6 +40,7 @@ stepsMap.set("display-results-step", hpResult);
 
 const harryPotterWorkflow : WorkflowDefinition = {
     startAt: "0",
+    poster: "",
     steps: stepsMap
 };
 export {harryPotterWorkflow};

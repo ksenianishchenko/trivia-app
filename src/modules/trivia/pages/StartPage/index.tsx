@@ -13,9 +13,9 @@ import Button from "../../../components/Button/index";
 import "./styles.scss";
 
 type StateProps = {
-    currentWorkflow: WorkflowDefinition | null;
     currentStep: any,
-    currentPath: string | undefined
+    currentPath: string | undefined,
+    currentTriviaPoster: string;
 }
 
 type DispatchProps = {
@@ -35,7 +35,8 @@ const StartPage = (props: Props) => {
 
     const {currentPath,
         onGetCurrentPath,
-        onSetTotalAnswers } = props;
+        onSetTotalAnswers,
+        currentTriviaPoster } = props;
 
     const navigateFirstStep = () => {
         onSetTotalAnswers(0);
@@ -46,7 +47,7 @@ const StartPage = (props: Props) => {
         return <Redirect to={currentPath} />
     }
 
-    return <div className="start-page dark-background" style={{backgroundImage: `url("../resourses/harry-potter.jpg")`}}>
+    return <div className="start-page dark-background" style={{backgroundImage: `url("../resourses/${currentTriviaPoster}")`}}>
         <div className="page-inner dark-background-inner">
             <div className="content-wrap">
                 <div className="row">
@@ -66,9 +67,9 @@ const StartPage = (props: Props) => {
 }
 
 const mapState = (state: RootState | any) => ({
-    currentWorkflow: state.workflow.workflowDefinition,
     currentStep: state.workflow.currentStep,
-    currentPath: state.workflow.currentPath
+    currentPath: state.workflow.currentPath,
+    currentTriviaPoster: state.triviaWorkflow.currentTriviaPoster
 })
 
 const mapDispatch = {

@@ -28,3 +28,8 @@ export const setLocalScore = () => ({
 export const resetLocalScore = () => ({
     type: ActionTypes.RESET_LOCAL_SCORE
 });
+
+export const setCurrentTriviaPoster = (poster: string | undefined) => ({
+    type: ActionTypes.SET_CURRENT_TRIVIA_POSTER,
+    payload: poster
+})

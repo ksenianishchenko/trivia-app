@@ -9,7 +9,8 @@ export type triviaWorkflowState = {
     currentTriviaId: string | any,
     correctAnswers: string[],
     isCurrentAnswerCorrect: boolean | undefined,
-    localScore: number
+    localScore: number,
+    currentTriviaPoster: string,
 }
 
 type triviaQuestionSchemaAction = {
@@ -22,6 +23,11 @@ type currentTriviaIdAction = {
     payload: string | any;
 }
 
-export type TriviaWorkflowActions = triviaQuestionSchemaAction | currentTriviaIdAction;
+type currentTriviaPoster = {
+    type: string;
+    payload: string;
+}
+
+export type TriviaWorkflowActions = triviaQuestionSchemaAction | currentTriviaIdAction | currentTriviaPoster;
 
 export type DispatchTypeTriviaWorkflow = (arg: TriviaWorkflowActions) => TriviaWorkflowActions

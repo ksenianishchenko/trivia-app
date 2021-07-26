@@ -19,6 +19,7 @@ type StateProps = {
     totalQuestions: number | undefined;
     correctAnswersTotal: number;
     isCurrentAnswerCorrect: boolean | undefined;
+    currentTriviaPoster: string;
 }
 
 type DispatchProps = {
@@ -49,6 +50,7 @@ const QuestionPage = (props: Props) => {
         match,
         onGetCorrectAnswers,
         totalQuestions,
+        currentTriviaPoster
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
@@ -116,7 +118,7 @@ const QuestionPage = (props: Props) => {
     }
 
     if (triviaCurrentQuestionSchema) { 
-        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
+        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/${currentTriviaPoster}")`}}>
             <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
                     <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
@@ -160,9 +162,7 @@ const QuestionPage = (props: Props) => {
     } else {
         return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
                 <div className="page-inner dark-background-inner">
-                <div className="content-wrap">
-
-                </div>
+                <div className="content-wrap"></div>
             </div>
         </div>
     }
@@ -174,7 +174,8 @@ const mapState = (state: RootState | any) => ({
     currentPath: state.workflow.currentPath,
     correctAnswers: state.triviaWorkflow.correctAnswers,
     correctAnswersTotal: state.triviaResult.correctAnswersTotal,
-    isCurrentAnswerCorrect: state.triviaWorkflow.isCurrentAnswerCorrect
+    isCurrentAnswerCorrect: state.triviaWorkflow.isCurrentAnswerCorrect,
+    currentTriviaPoster: state.triviaWorkflow.currentTriviaPoster
 })
 
 const mapDispatch = {

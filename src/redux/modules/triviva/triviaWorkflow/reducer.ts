@@ -6,7 +6,8 @@ const initialState: triviaWorkflowState = {
     currentTriviaId: "",
     correctAnswers: [],
     isCurrentAnswerCorrect: undefined,
-    localScore: 0
+    localScore: 0,
+    currentTriviaPoster: ""
 };
 
 const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action: TriviaWorkflowActions) => {
@@ -40,6 +41,11 @@ const triviaWorkflowReducer = (state: triviaWorkflowState = initialState, action
             return {
                 ...state,
                 localScore: 0
+            }
+        case ActionTypes.SET_CURRENT_TRIVIA_POSTER:
+            return {
+                ...state,
+                currentTriviaPoster: action.payload
             }
         default:
             return state;

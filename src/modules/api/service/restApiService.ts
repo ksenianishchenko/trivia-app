@@ -5,7 +5,7 @@ import { TriviaInfoItem } from "../../../abstractions/api/models/triviaInfoItem"
 import { setTriviaItemsList } from "../../../redux/modules/triviva/triviaList/actions";
 import { setCurrentPath, setCurrentStepId, setTotalQuestions, setWorkflowDefinition } from "../../../redux/workflow/actions";
 import WorkflowStep from "../../../abstractions/workflow/workflowStep";
-import { setCorrectAnswers, setCurrentAnswerStatus, setLocalScore, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setCorrectAnswers, setCurrentAnswerStatus, setCurrentTriviaPoster, setLocalScore, setTriviaCurrentQuestionShema } from "../../../redux/modules/triviva/triviaWorkflow/actions";
 import { setScore } from "../../../redux/modules/triviva/triviaResult/actions";
 
 type RecordItemType = {
@@ -47,6 +47,7 @@ export class RestApiService implements IApiService {
     getTriviaWorkflow(triviaId: string, dispatch: any): WorkflowDefinition {
         let workflow: WorkflowDefinition = {
             startAt: "0",
+            poster: "",
             steps: new Map<string, WorkflowStep>()
         };
 
@@ -58,6 +59,7 @@ export class RestApiService implements IApiService {
             dispatch(setCurrentStepId(workflow.startAt));
             dispatch(setCurrentPath(undefined));
             dispatch(setTotalQuestions(totalQuestions));
+            dispatch(setCurrentTriviaPoster(workflow.poster))
 
         }).catch((error) => {
             console.error(error);
