@@ -8,7 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { setTriviaScore } from "../../../../redux/modules/triviva/triviaResult/fetch";
 
 import "./styles.scss";
-import { resetLocalScore } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
+import { resetLocalScore, setCurrentTriviaPoster } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 
 type StateProps = {
     correctAnswersTotal: number;
@@ -23,6 +23,7 @@ type DispatchProps = {
     onResetCurrentStepId: () => void;
     onGetTotalScore: (triviaId: string) => void;
     onResetLocalScore: () => void;
+    onResetCurrentPoster: () => void;
 }
 
 type TriviaParams = {
@@ -43,6 +44,7 @@ const ReasultPage = (props: Props) => {
         localScore,
         totalQuestions,
         currentTriviaPoster,
+        onResetCurrentPoster,
         match
     } = props;
 
@@ -62,11 +64,12 @@ const ReasultPage = (props: Props) => {
         onResetCurrentStepId();
         onResetCurrentPath();
         onResetLocalScore();
+        onResetCurrentPoster();
 
         history.push("/");
     }
 
-    return <div className="result-page dark-background text-white" style={{backgroundImage: `url("/resourses/${currentTriviaPoster}")`}}>
+    return <div className="result-page dark-background text-white">
         <div className="page-inner">
             <div className="content-wrap">
                 <div className="result-page__img">
@@ -100,7 +103,8 @@ const mapDispatch = (dispatch: any) => ({
     onResetCurrentPath: () => dispatch(setCurrentPath(undefined)),
     onResetCurrentStepId: () => dispatch(setCurrentStepId(undefined)),
     onGetTotalScore: (triviaId: string) => dispatch(setTriviaScore(triviaId)),
-    onResetLocalScore: () => dispatch(resetLocalScore())
+    onResetLocalScore: () => dispatch(resetLocalScore()),
+    onResetCurrentPoster: () => dispatch(setCurrentTriviaPoster(""))
 })
 
 export default connect(mapState, mapDispatch)(ReasultPage);

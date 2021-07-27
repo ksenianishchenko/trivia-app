@@ -42,6 +42,12 @@ a {
   }
 }
 
+.app {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .page-inner {
   @include inner;
   height: 100%;

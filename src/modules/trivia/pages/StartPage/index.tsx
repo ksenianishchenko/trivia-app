@@ -47,7 +47,7 @@ const StartPage = (props: Props) => {
         return <Redirect to={currentPath} />
     }
 
-    return <div className="start-page dark-background" style={{backgroundImage: `url("../resourses/${currentTriviaPoster}")`}}>
+    return <div className="start-page dark-background">
         <div className="page-inner dark-background-inner">
             <div className="content-wrap">
                 <div className="row">

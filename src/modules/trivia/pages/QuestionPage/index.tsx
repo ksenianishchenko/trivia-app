@@ -118,7 +118,7 @@ const QuestionPage = (props: Props) => {
     }
 
     if (triviaCurrentQuestionSchema) { 
-        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/${currentTriviaPoster}")`}}>
+        return <div className="question-page dark-background">
             <div className="page-inner dark-background-inner">
                 <div className="content-wrap">
                     <p className="text text-sm">{`Question ${answersCount}/${totalQuestions}`}</p>
@@ -160,7 +160,7 @@ const QuestionPage = (props: Props) => {
             </div>
         </div>
     } else {
-        return <div className="question-page dark-background" style={{backgroundImage: `url("/resourses/harry-potter.jpg")`}}>
+        return <div className="question-page dark-background">
                 <div className="page-inner dark-background-inner">
                 <div className="content-wrap"></div>
             </div>
