@@ -1,3 +1,4 @@
+import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 import { ActionTypes } from "./actionTypes";
 
@@ -32,4 +33,9 @@ export const resetLocalScore = () => ({
 export const setCurrentTriviaPoster = (poster: string | undefined) => ({
     type: ActionTypes.SET_CURRENT_TRIVIA_POSTER,
     payload: poster
+})
+
+export const setCurrentTriviaItem = (item: TriviaInfoItem | undefined) => ({
+    type: ActionTypes.SET_CURRENT_TRIVIA_ITEM,
+    payload: item
 })

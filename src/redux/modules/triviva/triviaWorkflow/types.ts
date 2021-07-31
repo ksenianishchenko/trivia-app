@@ -1,3 +1,4 @@
+import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
 import TriviaQuestionItem from "../../../../abstractions/api/models/triviaQuestionItem";
 
 export type UserAnswer = {
@@ -11,6 +12,7 @@ export type triviaWorkflowState = {
     isCurrentAnswerCorrect: boolean | undefined,
     localScore: number,
     currentTriviaPoster: string,
+    currentTriviaItem: TriviaInfoItem | undefined
 }
 
 type triviaQuestionSchemaAction = {
@@ -28,6 +30,11 @@ type currentTriviaPoster = {
     payload: string;
 }
 
-export type TriviaWorkflowActions = triviaQuestionSchemaAction | currentTriviaIdAction | currentTriviaPoster;
+type currentTriviaItem = {
+    type: string;
+    payload: TriviaInfoItem;
+}
+
+export type TriviaWorkflowActions = triviaQuestionSchemaAction | currentTriviaIdAction | currentTriviaPoster | currentTriviaItem;
 
 export type DispatchTypeTriviaWorkflow = (arg: TriviaWorkflowActions) => TriviaWorkflowActions

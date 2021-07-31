@@ -24,7 +24,8 @@ export class LocalApiService implements IApiService {
             return triviaList.push({
                 id: item.id,
                 title: item.title,
-                poster: item.properties.background
+                poster: item.properties.background,
+                description: item.properties.description
             })
         })
         dispatch(setTriviaItemsList(triviaList));

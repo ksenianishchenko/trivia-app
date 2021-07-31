@@ -3,7 +3,7 @@ import Button from "../../../components/Button";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { initializeWorkflow } from "../../../../redux/workflow/fetch";
-import { setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
+import { setCurrentTriviaItem, setTriviaId } from "../../../../redux/modules/triviva/triviaWorkflow/actions";
 import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
 
 import "./styles.scss";
@@ -15,19 +15,21 @@ type TriviaCardProps = {
 
 type DispatchProps = {
     onInitializeWorkflow: (triviaId: string) => void;
-    handleTriviaId: (triviaId: string) => void
+    onHandleTriviaId: (triviaId: string) => void;
+    onSetCurrentTriviaItem: (item: TriviaInfoItem) => void;
 }
 
 type Props = TriviaCardProps & DispatchProps
 
 const TriviaCard = (props: Props) => {
-    const {item, onInitializeWorkflow, handleTriviaId} = props;
+    const {item, onInitializeWorkflow, onHandleTriviaId, onSetCurrentTriviaItem} = props;
 
     let history = useHistory();
 
     const handleInitializeWorkflow = () => {
-        handleTriviaId(item.id);
+        onHandleTriviaId(item.id);
         onInitializeWorkflow(item.id);
+        onSetCurrentTriviaItem(item);
         history.push(`trivia/${item.id}`);
     }
 
@@ -35,7 +37,7 @@ const TriviaCard = (props: Props) => {
         <div className="trivia-card__wrap">
             <div className="trivia-card__info">
                 <h2 className="trivia-card__title">{item.title}</h2>
-                <p>Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
+                <p>{item.description}</p>
                 <Button kind="button" className="btn btn--outline white" handleClick={handleInitializeWorkflow}>Start Trivia</Button>
             </div>
         </div>
@@ -44,7 +46,8 @@ const TriviaCard = (props: Props) => {
 
 const mapDispatch = {
     onInitializeWorkflow: (triviaId: string) => initializeWorkflow(triviaId),
-    handleTriviaId: (triviaId: string) => setTriviaId(triviaId),
+    onHandleTriviaId: (triviaId: string) => setTriviaId(triviaId),
+    onSetCurrentTriviaItem: (item: TriviaInfoItem) => setCurrentTriviaItem(item)
 }
 
 export default connect(null, mapDispatch)(TriviaCard);

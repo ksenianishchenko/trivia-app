@@ -6,6 +6,7 @@ export type TriviaInfoItem = {
     id: string;
     title: string;
     poster: string;
+    description: string;
 }
 
 type RecordItemType = {

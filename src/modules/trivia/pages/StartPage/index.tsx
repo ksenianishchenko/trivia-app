@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
+import { TriviaInfoItem } from "../../../../abstractions/api/models/triviaInfoItem";
 import WorkflowDefinition from "../../../../abstractions/workflow/workflowDefinition";
 import { setScore } from "../../../../redux/modules/triviva/triviaResult/actions";
 import { RootState } from "../../../../redux/store";
@@ -15,7 +16,7 @@ import "./styles.scss";
 type StateProps = {
     currentStep: any,
     currentPath: string | undefined,
-    currentTriviaPoster: string;
+    currentTriviaItem: TriviaInfoItem;
 }
 
 type DispatchProps = {
@@ -36,7 +37,7 @@ const StartPage = (props: Props) => {
     const {currentPath,
         onGetCurrentPath,
         onSetTotalAnswers,
-        currentTriviaPoster } = props;
+        currentTriviaItem } = props;
 
     const navigateFirstStep = () => {
         onSetTotalAnswers(0);
@@ -54,8 +55,10 @@ const StartPage = (props: Props) => {
                     <div className="column column--4">
                     </div>
                     <div className="column column--4">
-                        <h3 className="title-large">Harry Potter</h3>
-                        <p>No matter how good or bad you do on these Harry Potter trivia questions, though, you know you have friends at Hogwarts.</p>
+                        <h3 className="title-large">{currentTriviaItem.title}</h3>
+                        <p>Trivia consists 10 questions. Each question has only one correct answer.
+                            Choose your answer on each question and submit it by clicking "Answer" button, then move to the next question.
+                        </p>
                         <Button kind="button" className="btn btn--outline white" handleClick={navigateFirstStep}>Get Started!</Button>
                     </div>
                     <div className="column column--4">
@@ -69,7 +72,7 @@ const StartPage = (props: Props) => {
 const mapState = (state: RootState | any) => ({
     currentStep: state.workflow.currentStep,
     currentPath: state.workflow.currentPath,
-    currentTriviaPoster: state.triviaWorkflow.currentTriviaPoster
+    currentTriviaItem: state.triviaWorkflow.currentTriviaItem
 })
 
 const mapDispatch = {

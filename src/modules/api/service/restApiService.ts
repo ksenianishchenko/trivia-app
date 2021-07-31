@@ -12,6 +12,7 @@ type RecordItemType = {
     id: string;
     title: string;
     poster: string;
+    description: string;
 }
 
 type TriviaItemType = {
@@ -31,7 +32,8 @@ export class RestApiService implements IApiService {
                 return {
                     id: item.record.id,
                     title: item.record.title,
-                    poster: item.record.poster
+                    poster: item.record.poster,
+                    description: item.record.description
                 };
             });
 
