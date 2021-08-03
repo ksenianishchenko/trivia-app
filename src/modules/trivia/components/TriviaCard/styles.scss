@@ -3,7 +3,7 @@
 
 .trivia-card {
   min-width: 400px;
-  min-height: 400px;
+  min-height: 300px;
   background-color: rgba(0,0,0,0.5);
   @include flex-block;
   background-position: center;
@@ -28,7 +28,7 @@
 }
 
 .trivia-card__title {
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 800;
 }
 

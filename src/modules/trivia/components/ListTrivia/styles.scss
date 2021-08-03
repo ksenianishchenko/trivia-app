@@ -6,7 +6,7 @@
 
 .list-trivia__wrap {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(200px, auto);
   column-gap: 10px;
   row-gap: 10px;
