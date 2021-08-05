@@ -50,7 +50,7 @@ const QuestionPage = (props: Props) => {
         match,
         onGetCorrectAnswers,
         totalQuestions,
-        currentTriviaPoster
+        correctAnswers
     } = props;
 
     const [triviaId, setTriviaId] = useState(match.params.triviaId);
@@ -91,6 +91,7 @@ const QuestionPage = (props: Props) => {
         setUserAnswers([]);
         setAnswersCount(answersCount + 1);
         setActiveButton(true);
+        console.log(correctAnswers)
     }
 
     const handleUsersAnswers = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +132,7 @@ const QuestionPage = (props: Props) => {
                                 index={index}
                                 name={triviaCurrentQuestionSchema.questionText}
                                 handleChange={handleUsersAnswers}
-                                classAdd={""}
+                                classAdd={activeButton === false ? correctAnswers.includes(index.toString()) ? "correct" : "error" : ""}
                                 checked = {userAnswers.includes(option.id) ? true : false}
                             /></div>
                             })}
