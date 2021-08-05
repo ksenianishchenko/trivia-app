@@ -9,6 +9,7 @@ import { onSetRouter } from './redux/workflow/fetch';
 import TriviaQuestionWorkflowRouter from './services/triviaWorkflowRouter';
 import TriviaResultWorkflowRouter from './services/triviaResultWorkflowRouter';
 import { RootState } from './redux/store';
+import { setCurrentTriviaPoster } from './redux/modules/triviva/triviaWorkflow/actions';
 
 type moduleItem = {
     url: string,
@@ -21,7 +22,8 @@ type StateProps = {
 }
 
 type DispatchProps = {
-    onSetRouter: (router: IWorkflowRouter) => void
+    onSetRouter: (router: IWorkflowRouter) => void;
+    onResetCurrentTriviaPoster: () => void;
 }
 
 type Props = DispatchProps & StateProps;
@@ -32,11 +34,13 @@ const triviaResultRouter = new TriviaResultWorkflowRouter();
 
 const App = (props: Props) => {
 
-    const {onSetRouter, currentTriviaPoster} = props;
+    const {onSetRouter, 
+        currentTriviaPoster} = props;
 
     const [questionRouter, setQuestionRouter] = useState(triviaQuestionRouter);
     const [resultRouter, setResultRouter] = useState(triviaResultRouter);
 
+    
     useEffect(() => {
         setQuestionRouter(triviaQuestionRouter);
         setQuestionRouter(resultRouter);
@@ -67,7 +71,8 @@ const mapState = (state: RootState | any) => ({
 })
 
 const mapDispatch = {
-    onSetRouter: (router: IWorkflowRouter) => onSetRouter(router)
+    onSetRouter: (router: IWorkflowRouter) => onSetRouter(router),
+    onResetCurrentTriviaPoster: () => setCurrentTriviaPoster("")
 }
 
 export default connect(mapState, mapDispatch)(App);

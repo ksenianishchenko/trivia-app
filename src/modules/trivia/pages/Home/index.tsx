@@ -33,6 +33,10 @@ const HomePage = (props: Props) => {
 
     return <div className="home-page">
         <div className="page-inner" >
+            <div className="info-container">
+                <h1>Take a Quiz</h1>
+                <h2>Free fun trivia quizzes to challenge your current knowledge about famous TV Shows and movies.</h2>
+            </div>
             <ListTrivia list={triviaList} />
         </div>
         
