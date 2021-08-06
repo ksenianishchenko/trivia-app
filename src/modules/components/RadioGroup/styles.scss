@@ -1,11 +1,3 @@
-.radio-group.error {
-  color: crimson;
-}
-
-.radio-group.correct {
-  color: darkgreen;
-}
-
 .radio-group {
   position: relative;
   text-align: left;
@@ -77,4 +69,64 @@ input[type=radio]:checked ~ .toggle::before{
 
 input[type=radio]:checked ~ label{
   color: #0DFF92;
+}
+
+// correct answer status for unchecked
+
+.radio-group.error {
+  input[type=radio] ~ .toggle {
+    border: 5px solid #af0e03;
+  }
+  
+  input[type=radio] ~ .toggle::before{
+    background: #af0e03;
+  }
+  
+  input[type=radio] ~ label{
+    color: #af0e03;
+  }
+}
+
+.radio-group.correct {
+  input[type=radio] ~ .toggle {
+    border: 5px solid #0DFF92;
+  }
+  
+  input[type=radio] ~ .toggle::before{
+    background: #0DFF92;
+  }
+  
+  input[type=radio] ~ label{
+    color: #0DFF92;
+  }
+}
+
+// correct answer status for checked
+
+.radio-group.error {
+  input[type=radio]:checked ~ .toggle {
+    border: 5px solid #af0e03;
+  }
+  
+  input[type=radio]:checked ~ .toggle::before{
+    background: #af0e03;
+  }
+  
+  input[type=radio]:checked ~ label{
+    color: #af0e03;
+  }
+}
+
+.radio-group.correct {
+  input[type=radio]:checked ~ .toggle {
+    border: 5px solid #0DFF92;
+  }
+  
+  input[type=radio]:checked ~ .toggle::before{
+    background: #0DFF92;
+  }
+  
+  input[type=radio]:checked ~ label{
+    color: #0DFF92;
+  }
 }
