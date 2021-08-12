@@ -29,3 +29,14 @@ Here is a working <a href="#0">live demo</a>
 * Used Dynamo DB for keeping data about questions and trivia workflow.
 * Created lambda functions to trigger Amazon DynamoDB. 
 
+### Main Screen
+
+![Main Screen](/images/main-screen.png)
+
+### Question Screen
+
+![Question Screen](/images/question-screen.png)
+
+### Result Screen
+
+![Question Screen](/images/score-screen.png)
