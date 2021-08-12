@@ -31,12 +31,12 @@ Here is a working <a href="#0">live demo</a>
 
 ### Main Screen
 
-![Main Screen](/images/main-screen.png)
+![Main Screen](/image/main-screen.png)
 
 ### Question Screen
 
-![Question Screen](/images/question-screen.png)
+![Question Screen](/image/question-screen.png)
 
 ### Result Screen
 
-![Question Screen](/images/score-screen.png)
+![Question Screen](/image/score-screen.png)
