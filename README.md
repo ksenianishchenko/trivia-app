@@ -2,7 +2,6 @@
 This is an app that allows users to choose a specific trivia from the list and answer questions. 
 The main purpose of that project for me was to learn about AWS.
 
-## Demo
 Here is a working <a href="#0">live demo</a>
 
 ## Technologies
