@@ -1,13 +1,13 @@
 # TriviaApp
 This is an app that allows users to choose a specific trivia from the list and answer questions. 
-The main purpose of that project for me was to learn about AWS.
+The main purpose of that project for me was to learn about serverless applications.
 
 Here is a working <a href="#0">live demo</a>
 
 ## Technologies
 
 * Frontend: React / Redux / Typescript.
-* Backend: AWS (Dynamo DB, API Gateway, Lambda functions).
+* Backend: AWS Lambda, Amazon API Gateway, Amazon DynamoDB.
 
 ## Features
 * Choose a specific trivia from the list.
