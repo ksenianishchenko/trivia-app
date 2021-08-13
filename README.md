@@ -6,9 +6,8 @@ Here is a working <a href="#0">live demo</a>
 
 ## Technologies
 
-* React / Redux.
-* Typescript.
-* AWS (Dynamo DB, API Gateway, Lambda functions).
+* Frontend: React / Redux / Typescript.
+* Backend: AWS (Dynamo DB, API Gateway, Lambda functions).
 
 ## Features
 * Choose a specific trivia from the list.
